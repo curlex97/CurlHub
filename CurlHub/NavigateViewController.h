@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ACUser.h"
 
 @interface NavigateViewController : UIViewController
+@property ACUser* currentUser;
 
 
 @end

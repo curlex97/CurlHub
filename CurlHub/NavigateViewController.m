@@ -8,11 +8,11 @@
 
 #import "NavigateViewController.h"
 #import "MenuView.h"
-#import "NotificationsViewController.h"
 
 @interface NavigateViewController ()
 @property (weak, nonatomic) IBOutlet MenuView<UITableViewDelegate, UITableViewDataSource> *menu;
 @property (weak, nonatomic) IBOutlet UIView *mainView;
+@property NSMutableDictionary* viewControllers;
 @end
 
 @implementation NavigateViewController
@@ -20,7 +20,6 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(void)viewDidLoad
@@ -34,6 +33,8 @@
         [self closeMenu];
         [self displayViewController: selection];
     };
+    
+    [self setupViewControllers];
     [self displayViewController:[self.menu firstPage]];
 
     
@@ -45,12 +46,28 @@
     
 }
 
+-(void) setupViewControllers
+{
+    self.viewControllers = [NSMutableDictionary dictionary];
+    for(NSString* identifier in [self.menu allPages])
+    {
+        [self.viewControllers setObject:[self.storyboard instantiateViewControllerWithIdentifier:identifier] forKey:identifier];
+    }
+}
+
 - (void) displayViewController:(NSString*)identifier
 {
+    
+    UIViewController *vc = [self.childViewControllers lastObject];
+    [vc.view removeFromSuperview];
+    [vc removeFromParentViewController];
+    
     [self.view sendSubviewToBack:self.menu];
-    UIViewController *subController = [self.storyboard instantiateViewControllerWithIdentifier:identifier];
+    UIViewController *subController = [self.viewControllers objectForKey:identifier];
+    
     [self addChildViewController:subController];
     [subController.view setFrame:CGRectMake(0.0f, 0.0f, self.mainView.frame.size.width, self.mainView.frame.size.height)];
+    
     [self.mainView addSubview:subController.view];
     [subController didMoveToParentViewController:self];
 }

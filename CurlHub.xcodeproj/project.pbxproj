@@ -18,6 +18,11 @@
 		280DC15F1D46465500D6E10F /* NotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC15E1D46465500D6E10F /* NotificationsViewController.m */; };
 		280DC1621D464A5800D6E10F /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC1611D464A5800D6E10F /* NewsViewController.m */; };
 		280DC1651D464F4800D6E10F /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC1641D464F4800D6E10F /* EventsViewController.m */; };
+		280DC1691D46579100D6E10F /* ACHubDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC1681D46579100D6E10F /* ACHubDataManager.m */; };
+		280DC16D1D46808800D6E10F /* ACUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC16C1D46808800D6E10F /* ACUser.m */; };
+		280DC1711D4684C300D6E10F /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC1701D4684C300D6E10F /* LoginViewController.m */; };
+		280DC1741D46853500D6E10F /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC1731D46853500D6E10F /* WelcomeViewController.m */; };
+		280DC1771D468B6100D6E10F /* ACUserViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC1761D468B6100D6E10F /* ACUserViewModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +45,16 @@
 		280DC1611D464A5800D6E10F /* NewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsViewController.m; sourceTree = "<group>"; };
 		280DC1631D464F4800D6E10F /* EventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsViewController.h; sourceTree = "<group>"; };
 		280DC1641D464F4800D6E10F /* EventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsViewController.m; sourceTree = "<group>"; };
+		280DC1671D46579100D6E10F /* ACHubDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACHubDataManager.h; sourceTree = "<group>"; };
+		280DC1681D46579100D6E10F /* ACHubDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACHubDataManager.m; sourceTree = "<group>"; };
+		280DC16B1D46808800D6E10F /* ACUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACUser.h; sourceTree = "<group>"; };
+		280DC16C1D46808800D6E10F /* ACUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACUser.m; sourceTree = "<group>"; };
+		280DC16F1D4684C300D6E10F /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		280DC1701D4684C300D6E10F /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		280DC1721D46853500D6E10F /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
+		280DC1731D46853500D6E10F /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
+		280DC1751D468B6100D6E10F /* ACUserViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACUserViewModel.h; sourceTree = "<group>"; };
+		280DC1761D468B6100D6E10F /* ACUserViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACUserViewModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +89,9 @@
 			children = (
 				280DC1371D45637800D6E10F /* AppDelegate.h */,
 				280DC1381D45637800D6E10F /* AppDelegate.m */,
+				280DC1781D468B6700D6E10F /* ViewModels */,
+				280DC16E1D4682BE00D6E10F /* Managers */,
+				280DC16A1D46807000D6E10F /* Models */,
 				280DC15A1D46453300D6E10F /* MenuView */,
 				280DC15B1D46455000D6E10F /* Controllers */,
 				280DC15C1D46455C00D6E10F /* UI */,
@@ -112,6 +130,10 @@
 				280DC1611D464A5800D6E10F /* NewsViewController.m */,
 				280DC1631D464F4800D6E10F /* EventsViewController.h */,
 				280DC1641D464F4800D6E10F /* EventsViewController.m */,
+				280DC16F1D4684C300D6E10F /* LoginViewController.h */,
+				280DC1701D4684C300D6E10F /* LoginViewController.m */,
+				280DC1721D46853500D6E10F /* WelcomeViewController.h */,
+				280DC1731D46853500D6E10F /* WelcomeViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -132,6 +154,33 @@
 				280DC13B1D45637800D6E10F /* NavigateViewController.m */,
 			);
 			name = Home;
+			sourceTree = "<group>";
+		};
+		280DC16A1D46807000D6E10F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				280DC16B1D46808800D6E10F /* ACUser.h */,
+				280DC16C1D46808800D6E10F /* ACUser.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		280DC16E1D4682BE00D6E10F /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				280DC1671D46579100D6E10F /* ACHubDataManager.h */,
+				280DC1681D46579100D6E10F /* ACHubDataManager.m */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
+		280DC1781D468B6700D6E10F /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				280DC1751D468B6100D6E10F /* ACUserViewModel.h */,
+				280DC1761D468B6100D6E10F /* ACUserViewModel.m */,
+			);
+			name = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -210,8 +259,13 @@
 				280DC13C1D45637800D6E10F /* NavigateViewController.m in Sources */,
 				280DC1571D461D9400D6E10F /* MenuView.m in Sources */,
 				280DC1651D464F4800D6E10F /* EventsViewController.m in Sources */,
+				280DC1711D4684C300D6E10F /* LoginViewController.m in Sources */,
+				280DC1771D468B6100D6E10F /* ACUserViewModel.m in Sources */,
 				280DC1621D464A5800D6E10F /* NewsViewController.m in Sources */,
+				280DC1741D46853500D6E10F /* WelcomeViewController.m in Sources */,
+				280DC1691D46579100D6E10F /* ACHubDataManager.m in Sources */,
 				280DC1391D45637800D6E10F /* AppDelegate.m in Sources */,
+				280DC16D1D46808800D6E10F /* ACUser.m in Sources */,
 				280DC1361D45637800D6E10F /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
