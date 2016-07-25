@@ -9,10 +9,15 @@
 /* Begin PBXBuildFile section */
 		280DC1361D45637800D6E10F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC1351D45637800D6E10F /* main.m */; };
 		280DC1391D45637800D6E10F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC1381D45637800D6E10F /* AppDelegate.m */; };
-		280DC13C1D45637800D6E10F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC13B1D45637800D6E10F /* ViewController.m */; };
+		280DC13C1D45637800D6E10F /* NavigateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC13B1D45637800D6E10F /* NavigateViewController.m */; };
 		280DC13F1D45637800D6E10F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 280DC13D1D45637800D6E10F /* Main.storyboard */; };
 		280DC1411D45637800D6E10F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 280DC1401D45637800D6E10F /* Assets.xcassets */; };
 		280DC1441D45637800D6E10F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 280DC1421D45637800D6E10F /* LaunchScreen.storyboard */; };
+		280DC1571D461D9400D6E10F /* MenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC1561D461D9400D6E10F /* MenuView.m */; };
+		280DC1591D461DDF00D6E10F /* MenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 280DC1581D461DDF00D6E10F /* MenuView.xib */; };
+		280DC15F1D46465500D6E10F /* NotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC15E1D46465500D6E10F /* NotificationsViewController.m */; };
+		280DC1621D464A5800D6E10F /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC1611D464A5800D6E10F /* NewsViewController.m */; };
+		280DC1651D464F4800D6E10F /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC1641D464F4800D6E10F /* EventsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,12 +25,21 @@
 		280DC1351D45637800D6E10F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		280DC1371D45637800D6E10F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		280DC1381D45637800D6E10F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		280DC13A1D45637800D6E10F /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		280DC13B1D45637800D6E10F /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		280DC13A1D45637800D6E10F /* NavigateViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NavigateViewController.h; sourceTree = "<group>"; };
+		280DC13B1D45637800D6E10F /* NavigateViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NavigateViewController.m; sourceTree = "<group>"; };
 		280DC13E1D45637800D6E10F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		280DC1401D45637800D6E10F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		280DC1431D45637800D6E10F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		280DC1451D45637800D6E10F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		280DC1551D461D9400D6E10F /* MenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuView.h; sourceTree = "<group>"; };
+		280DC1561D461D9400D6E10F /* MenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuView.m; sourceTree = "<group>"; };
+		280DC1581D461DDF00D6E10F /* MenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuView.xib; sourceTree = "<group>"; };
+		280DC15D1D46465500D6E10F /* NotificationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationsViewController.h; sourceTree = "<group>"; };
+		280DC15E1D46465500D6E10F /* NotificationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationsViewController.m; sourceTree = "<group>"; };
+		280DC1601D464A5800D6E10F /* NewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsViewController.h; sourceTree = "<group>"; };
+		280DC1611D464A5800D6E10F /* NewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsViewController.m; sourceTree = "<group>"; };
+		280DC1631D464F4800D6E10F /* EventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsViewController.h; sourceTree = "<group>"; };
+		280DC1641D464F4800D6E10F /* EventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,11 +74,10 @@
 			children = (
 				280DC1371D45637800D6E10F /* AppDelegate.h */,
 				280DC1381D45637800D6E10F /* AppDelegate.m */,
-				280DC13A1D45637800D6E10F /* ViewController.h */,
-				280DC13B1D45637800D6E10F /* ViewController.m */,
-				280DC13D1D45637800D6E10F /* Main.storyboard */,
+				280DC15A1D46453300D6E10F /* MenuView */,
+				280DC15B1D46455000D6E10F /* Controllers */,
+				280DC15C1D46455C00D6E10F /* UI */,
 				280DC1401D45637800D6E10F /* Assets.xcassets */,
-				280DC1421D45637800D6E10F /* LaunchScreen.storyboard */,
 				280DC1451D45637800D6E10F /* Info.plist */,
 				280DC1341D45637800D6E10F /* Supporting Files */,
 			);
@@ -77,6 +90,48 @@
 				280DC1351D45637800D6E10F /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		280DC15A1D46453300D6E10F /* MenuView */ = {
+			isa = PBXGroup;
+			children = (
+				280DC1551D461D9400D6E10F /* MenuView.h */,
+				280DC1561D461D9400D6E10F /* MenuView.m */,
+				280DC1581D461DDF00D6E10F /* MenuView.xib */,
+			);
+			name = MenuView;
+			sourceTree = "<group>";
+		};
+		280DC15B1D46455000D6E10F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				280DC1661D46530600D6E10F /* Home */,
+				280DC15D1D46465500D6E10F /* NotificationsViewController.h */,
+				280DC15E1D46465500D6E10F /* NotificationsViewController.m */,
+				280DC1601D464A5800D6E10F /* NewsViewController.h */,
+				280DC1611D464A5800D6E10F /* NewsViewController.m */,
+				280DC1631D464F4800D6E10F /* EventsViewController.h */,
+				280DC1641D464F4800D6E10F /* EventsViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		280DC15C1D46455C00D6E10F /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				280DC13D1D45637800D6E10F /* Main.storyboard */,
+				280DC1421D45637800D6E10F /* LaunchScreen.storyboard */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		280DC1661D46530600D6E10F /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				280DC13A1D45637800D6E10F /* NavigateViewController.h */,
+				280DC13B1D45637800D6E10F /* NavigateViewController.m */,
+			);
+			name = Home;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,6 +193,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				280DC1441D45637800D6E10F /* LaunchScreen.storyboard in Resources */,
+				280DC1591D461DDF00D6E10F /* MenuView.xib in Resources */,
 				280DC1411D45637800D6E10F /* Assets.xcassets in Resources */,
 				280DC13F1D45637800D6E10F /* Main.storyboard in Resources */,
 			);
@@ -150,7 +206,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				280DC13C1D45637800D6E10F /* ViewController.m in Sources */,
+				280DC15F1D46465500D6E10F /* NotificationsViewController.m in Sources */,
+				280DC13C1D45637800D6E10F /* NavigateViewController.m in Sources */,
+				280DC1571D461D9400D6E10F /* MenuView.m in Sources */,
+				280DC1651D464F4800D6E10F /* EventsViewController.m in Sources */,
+				280DC1621D464A5800D6E10F /* NewsViewController.m in Sources */,
 				280DC1391D45637800D6E10F /* AppDelegate.m in Sources */,
 				280DC1361D45637800D6E10F /* main.m in Sources */,
 			);
