@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ACUser.h"
 
 @interface EventsViewController : UIViewController
+@property ACUser *currentUser;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @end

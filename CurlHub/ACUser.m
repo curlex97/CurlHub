@@ -10,7 +10,7 @@
 
 @implementation ACUser
 
-- (instancetype)initWithID:(NSString*)ID andLogin:(NSString*)login andAvatarUrl:(NSString*)avatarUrl andURL:(NSString*)URL andAccessToken:(NSString*)accessToken andName:(NSString*)name andCompany:(NSString*)company andLocation:(NSString*)location andEmail:(NSString*)email andFollowers:(NSString*)followers andFollowing:(NSString*)following
+- (instancetype)initWithID:(NSString*)ID andLogin:(NSString*)login andAvatar:(UIImage*)avatar andURL:(NSString*)URL andAccessToken:(NSString*)accessToken andName:(NSString*)name andCompany:(NSString*)company andLocation:(NSString*)location andEmail:(NSString*)email andFollowers:(NSString*)followers andFollowing:(NSString*)following
 {
     self = [super init];
     if (self) {
@@ -25,14 +25,7 @@
         self.followers = followers;
         self.following = following;
         
-        dispatch_async(dispatch_get_global_queue(0,0), ^{
-            NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: avatarUrl]];
-            if ( data == nil )
-                return;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.avatar = [UIImage imageWithData: data];
-            });
-        });
+        
         
         
     }

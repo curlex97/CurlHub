@@ -23,6 +23,9 @@
 		280DC1711D4684C300D6E10F /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC1701D4684C300D6E10F /* LoginViewController.m */; };
 		280DC1741D46853500D6E10F /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC1731D46853500D6E10F /* WelcomeViewController.m */; };
 		280DC1771D468B6100D6E10F /* ACUserViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC1761D468B6100D6E10F /* ACUserViewModel.m */; };
+		282D012F1D46C9B6001B82C9 /* ACEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 282D012E1D46C9B6001B82C9 /* ACEvent.m */; };
+		282D01321D46CD6F001B82C9 /* ACEventsViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 282D01311D46CD6F001B82C9 /* ACEventsViewModel.m */; };
+		282D01351D46D3A4001B82C9 /* ActionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 282D01341D46D3A4001B82C9 /* ActionTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +58,12 @@
 		280DC1731D46853500D6E10F /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
 		280DC1751D468B6100D6E10F /* ACUserViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACUserViewModel.h; sourceTree = "<group>"; };
 		280DC1761D468B6100D6E10F /* ACUserViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACUserViewModel.m; sourceTree = "<group>"; };
+		282D012D1D46C9B6001B82C9 /* ACEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACEvent.h; sourceTree = "<group>"; };
+		282D012E1D46C9B6001B82C9 /* ACEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACEvent.m; sourceTree = "<group>"; };
+		282D01301D46CD6F001B82C9 /* ACEventsViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACEventsViewModel.h; sourceTree = "<group>"; };
+		282D01311D46CD6F001B82C9 /* ACEventsViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACEventsViewModel.m; sourceTree = "<group>"; };
+		282D01331D46D3A4001B82C9 /* ActionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionTableViewCell.h; sourceTree = "<group>"; };
+		282D01341D46D3A4001B82C9 /* ActionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,10 +98,10 @@
 			children = (
 				280DC1371D45637800D6E10F /* AppDelegate.h */,
 				280DC1381D45637800D6E10F /* AppDelegate.m */,
+				282D01361D46D3AC001B82C9 /* Views */,
 				280DC1781D468B6700D6E10F /* ViewModels */,
 				280DC16E1D4682BE00D6E10F /* Managers */,
 				280DC16A1D46807000D6E10F /* Models */,
-				280DC15A1D46453300D6E10F /* MenuView */,
 				280DC15B1D46455000D6E10F /* Controllers */,
 				280DC15C1D46455C00D6E10F /* UI */,
 				280DC1401D45637800D6E10F /* Assets.xcassets */,
@@ -108,16 +117,6 @@
 				280DC1351D45637800D6E10F /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		280DC15A1D46453300D6E10F /* MenuView */ = {
-			isa = PBXGroup;
-			children = (
-				280DC1551D461D9400D6E10F /* MenuView.h */,
-				280DC1561D461D9400D6E10F /* MenuView.m */,
-				280DC1581D461DDF00D6E10F /* MenuView.xib */,
-			);
-			name = MenuView;
 			sourceTree = "<group>";
 		};
 		280DC15B1D46455000D6E10F /* Controllers */ = {
@@ -161,6 +160,8 @@
 			children = (
 				280DC16B1D46808800D6E10F /* ACUser.h */,
 				280DC16C1D46808800D6E10F /* ACUser.m */,
+				282D012D1D46C9B6001B82C9 /* ACEvent.h */,
+				282D012E1D46C9B6001B82C9 /* ACEvent.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -179,8 +180,22 @@
 			children = (
 				280DC1751D468B6100D6E10F /* ACUserViewModel.h */,
 				280DC1761D468B6100D6E10F /* ACUserViewModel.m */,
+				282D01301D46CD6F001B82C9 /* ACEventsViewModel.h */,
+				282D01311D46CD6F001B82C9 /* ACEventsViewModel.m */,
 			);
 			name = ViewModels;
+			sourceTree = "<group>";
+		};
+		282D01361D46D3AC001B82C9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				280DC1551D461D9400D6E10F /* MenuView.h */,
+				280DC1561D461D9400D6E10F /* MenuView.m */,
+				280DC1581D461DDF00D6E10F /* MenuView.xib */,
+				282D01331D46D3A4001B82C9 /* ActionTableViewCell.h */,
+				282D01341D46D3A4001B82C9 /* ActionTableViewCell.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,13 +273,16 @@
 				280DC15F1D46465500D6E10F /* NotificationsViewController.m in Sources */,
 				280DC13C1D45637800D6E10F /* NavigateViewController.m in Sources */,
 				280DC1571D461D9400D6E10F /* MenuView.m in Sources */,
+				282D012F1D46C9B6001B82C9 /* ACEvent.m in Sources */,
 				280DC1651D464F4800D6E10F /* EventsViewController.m in Sources */,
+				282D01321D46CD6F001B82C9 /* ACEventsViewModel.m in Sources */,
 				280DC1711D4684C300D6E10F /* LoginViewController.m in Sources */,
 				280DC1771D468B6100D6E10F /* ACUserViewModel.m in Sources */,
 				280DC1621D464A5800D6E10F /* NewsViewController.m in Sources */,
 				280DC1741D46853500D6E10F /* WelcomeViewController.m in Sources */,
 				280DC1691D46579100D6E10F /* ACHubDataManager.m in Sources */,
 				280DC1391D45637800D6E10F /* AppDelegate.m in Sources */,
+				282D01351D46D3A4001B82C9 /* ActionTableViewCell.m in Sources */,
 				280DC16D1D46808800D6E10F /* ACUser.m in Sources */,
 				280DC1361D45637800D6E10F /* main.m in Sources */,
 			);
@@ -417,6 +435,7 @@
 				280DC14A1D45637800D6E10F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -8,7 +8,7 @@
 
 #import "NavigateViewController.h"
 #import "MenuView.h"
-
+#import "EventsViewController.h"
 @interface NavigateViewController ()
 @property (weak, nonatomic) IBOutlet MenuView<UITableViewDelegate, UITableViewDataSource> *menu;
 @property (weak, nonatomic) IBOutlet UIView *mainView;
@@ -64,6 +64,12 @@
     
     [self.view sendSubviewToBack:self.menu];
     UIViewController *subController = [self.viewControllers objectForKey:identifier];
+    
+    if([subController isKindOfClass:[EventsViewController class]])
+    {
+        EventsViewController* evc = (EventsViewController*)subController;
+        evc.currentUser = self.currentUser;
+    }
     
     [self addChildViewController:subController];
     [subController.view setFrame:CGRectMake(0.0f, 0.0f, self.mainView.frame.size.width, self.mainView.frame.size.height)];

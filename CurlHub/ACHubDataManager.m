@@ -8,9 +8,25 @@
 
 #import "ACHubDataManager.h"
 
+@interface ACHubDataManager()
+
++(NSMutableDictionary*) picturesDictionary;
+@end
+
+static NSMutableDictionary *picturesDictionary;
 
 @implementation ACHubDataManager
 
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        if(!picturesDictionary)
+        picturesDictionary = [NSMutableDictionary dictionary];
+    }
+    return self;
+}
 
 -(ACUser*)userFromToken:(NSString*)token
 {
@@ -24,7 +40,28 @@
         
         if(!jsonError)
         {
-            ACUser *user = [[ACUser alloc] initWithID:jsonDictionary[@"id"] andLogin:jsonDictionary[@"login"] andAvatarUrl:jsonDictionary[@"avatar_url"] andURL:jsonDictionary[@"url"] andAccessToken:token andName:jsonDictionary[@"name"] andCompany:jsonDictionary[@"company"] andLocation:jsonDictionary[@"location"] andEmail:jsonDictionary[@"email"] andFollowers:jsonDictionary[@"followers"] andFollowing:jsonDictionary[@"following"]];
+            NSString* avatarUrl = jsonDictionary[@"avatar_url"];
+            
+            ACUser *user = [[ACUser alloc] initWithID:jsonDictionary[@"id"] andLogin:jsonDictionary[@"login"] andAvatar:nil andURL:jsonDictionary[@"url"] andAccessToken:token andName:jsonDictionary[@"name"] andCompany:jsonDictionary[@"company"] andLocation:jsonDictionary[@"location"] andEmail:jsonDictionary[@"email"] andFollowers:jsonDictionary[@"followers"] andFollowing:jsonDictionary[@"following"]];
+            
+            UIImage* ava = picturesDictionary[avatarUrl];
+            
+            if(ava) user.avatar = ava;
+            else
+            {
+              
+                    dispatch_async(dispatch_get_global_queue(0,0), ^{
+                        NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: avatarUrl]];
+                        if ( data == nil )
+                            return;
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            user.avatar = [UIImage imageWithData: data];
+                            [picturesDictionary setObject:[UIImage imageWithData: data] forKey:avatarUrl];
+                        });
+                    });
+                
+            }
+
             return user;
         }
         
@@ -44,6 +81,70 @@
         return page;
     }
     return nil;
+}
+
+
+-(NSArray<ACEvent *> *)eventsForUser:(ACUser *)user
+{
+    NSMutableArray *array = [NSMutableArray array];
+    NSString *path = [ACHubDataManager eventsUrl:user.login];
+    NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:path] encoding:NSUTF8StringEncoding error:nil];
+    
+    NSError *jsonError = nil;
+    NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
+    NSArray* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
+    
+    if(!jsonError)
+    {
+        for(NSDictionary* eventDictionary in jsonDictionary)
+        {
+            NSString* action = [eventDictionary valueForKeyPath:@"type"];
+            NSString* login = [eventDictionary valueForKeyPath:@"actor.display_login"];
+            NSString* avatarUrl = [eventDictionary valueForKeyPath:@"actor.avatar_url"];
+            NSString* repoName = [eventDictionary valueForKeyPath: @"repo.name"];
+            NSString* refType = [eventDictionary valueForKeyPath: @"payload.ref_type"];
+            NSString* ref = [eventDictionary valueForKeyPath: @"payload.ref"];
+            NSString* time = [eventDictionary valueForKeyPath: @"created_at"];
+            
+            if(!refType) refType = @"";
+            if(!login) login = user.login;
+            
+            
+            
+            ACEvent *event = [[ACEvent alloc] initWithLogin:login andAction:action andTime:time andRefType:refType andRepoName:repoName andRef:ref andAvatar:nil];
+            
+            UIImage* ava = picturesDictionary[avatarUrl];
+            
+            if(ava) event.avatar = ava;
+            
+            else
+            {
+                NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: avatarUrl]];
+                event.avatar = [UIImage imageWithData: data];
+                [picturesDictionary setObject:[UIImage imageWithData: data] forKey:avatarUrl];
+            }
+            
+            [array addObject:event];
+            
+        }
+    }
+    
+    return array;
+}
+
++(NSMutableDictionary*)picturesDictionary
+{
+    return picturesDictionary;
+}
+           
++(void)setPicturesDictionary:(NSMutableDictionary*)dictionary
+{
+    picturesDictionary = dictionary;
+}
+
++(NSString *)eventsUrl:(NSString *)userLogin
+{
+    return [NSString stringWithFormat:@"https://api.github.com/users/%@/events", userLogin];
 }
 
 +(NSString *)verificationUrl
