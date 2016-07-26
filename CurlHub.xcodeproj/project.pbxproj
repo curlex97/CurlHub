@@ -26,6 +26,14 @@
 		282D012F1D46C9B6001B82C9 /* ACEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 282D012E1D46C9B6001B82C9 /* ACEvent.m */; };
 		282D01321D46CD6F001B82C9 /* ACEventsViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 282D01311D46CD6F001B82C9 /* ACEventsViewModel.m */; };
 		282D01351D46D3A4001B82C9 /* ActionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 282D01341D46D3A4001B82C9 /* ActionTableViewCell.m */; };
+		28BE0F3A1D47825400110482 /* ACRepo.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F391D47825400110482 /* ACRepo.m */; };
+		28BE0F3D1D478B5200110482 /* ReposViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F3C1D478B5200110482 /* ReposViewController.m */; };
+		28BE0F401D478C1200110482 /* ACReposViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F3F1D478C1200110482 /* ACReposViewModel.m */; };
+		28BE0F431D478D5B00110482 /* RepoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F421D478D5B00110482 /* RepoTableViewCell.m */; };
+		28BE0F461D47A48D00110482 /* DetailRepoCountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F451D47A48D00110482 /* DetailRepoCountTableViewCell.m */; };
+		28BE0F531D47BA3A00110482 /* DetailRepoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F521D47BA3A00110482 /* DetailRepoViewController.m */; };
+		28BE0F561D47C1B400110482 /* DetailRepoDoubleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F551D47C1B400110482 /* DetailRepoDoubleTableViewCell.m */; };
+		28BE0F5B1D47E40B00110482 /* SearchReposViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F5A1D47E40B00110482 /* SearchReposViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +72,22 @@
 		282D01311D46CD6F001B82C9 /* ACEventsViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACEventsViewModel.m; sourceTree = "<group>"; };
 		282D01331D46D3A4001B82C9 /* ActionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionTableViewCell.h; sourceTree = "<group>"; };
 		282D01341D46D3A4001B82C9 /* ActionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionTableViewCell.m; sourceTree = "<group>"; };
+		28BE0F381D47825400110482 /* ACRepo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRepo.h; sourceTree = "<group>"; };
+		28BE0F391D47825400110482 /* ACRepo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACRepo.m; sourceTree = "<group>"; };
+		28BE0F3B1D478B5200110482 /* ReposViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReposViewController.h; sourceTree = "<group>"; };
+		28BE0F3C1D478B5200110482 /* ReposViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReposViewController.m; sourceTree = "<group>"; };
+		28BE0F3E1D478C1200110482 /* ACReposViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACReposViewModel.h; sourceTree = "<group>"; };
+		28BE0F3F1D478C1200110482 /* ACReposViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACReposViewModel.m; sourceTree = "<group>"; };
+		28BE0F411D478D5B00110482 /* RepoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepoTableViewCell.h; sourceTree = "<group>"; };
+		28BE0F421D478D5B00110482 /* RepoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepoTableViewCell.m; sourceTree = "<group>"; };
+		28BE0F441D47A48D00110482 /* DetailRepoCountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailRepoCountTableViewCell.h; sourceTree = "<group>"; };
+		28BE0F451D47A48D00110482 /* DetailRepoCountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailRepoCountTableViewCell.m; sourceTree = "<group>"; };
+		28BE0F511D47BA3A00110482 /* DetailRepoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailRepoViewController.h; sourceTree = "<group>"; };
+		28BE0F521D47BA3A00110482 /* DetailRepoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailRepoViewController.m; sourceTree = "<group>"; };
+		28BE0F541D47C1B400110482 /* DetailRepoDoubleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailRepoDoubleTableViewCell.h; sourceTree = "<group>"; };
+		28BE0F551D47C1B400110482 /* DetailRepoDoubleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailRepoDoubleTableViewCell.m; sourceTree = "<group>"; };
+		28BE0F591D47E40B00110482 /* SearchReposViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchReposViewController.h; sourceTree = "<group>"; };
+		28BE0F5A1D47E40B00110482 /* SearchReposViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchReposViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,16 +147,14 @@
 			isa = PBXGroup;
 			children = (
 				280DC1661D46530600D6E10F /* Home */,
-				280DC15D1D46465500D6E10F /* NotificationsViewController.h */,
-				280DC15E1D46465500D6E10F /* NotificationsViewController.m */,
-				280DC1601D464A5800D6E10F /* NewsViewController.h */,
-				280DC1611D464A5800D6E10F /* NewsViewController.m */,
-				280DC1631D464F4800D6E10F /* EventsViewController.h */,
-				280DC1641D464F4800D6E10F /* EventsViewController.m */,
-				280DC16F1D4684C300D6E10F /* LoginViewController.h */,
-				280DC1701D4684C300D6E10F /* LoginViewController.m */,
-				280DC1721D46853500D6E10F /* WelcomeViewController.h */,
-				280DC1731D46853500D6E10F /* WelcomeViewController.m */,
+				28BE0F471D47B97A00110482 /* Notifications */,
+				28BE0F481D47B98200110482 /* News */,
+				28BE0F491D47B98800110482 /* Events */,
+				28BE0F4A1D47B99000110482 /* Login */,
+				28BE0F4B1D47B99500110482 /* Welcome */,
+				28BE0F4C1D47B99C00110482 /* Repos */,
+				28BE0F501D47B9BA00110482 /* DetailRepo */,
+				28BE0F5C1D47E41100110482 /* SearchRepos */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -162,6 +184,8 @@
 				280DC16C1D46808800D6E10F /* ACUser.m */,
 				282D012D1D46C9B6001B82C9 /* ACEvent.h */,
 				282D012E1D46C9B6001B82C9 /* ACEvent.m */,
+				28BE0F381D47825400110482 /* ACRepo.h */,
+				28BE0F391D47825400110482 /* ACRepo.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -182,6 +206,8 @@
 				280DC1761D468B6100D6E10F /* ACUserViewModel.m */,
 				282D01301D46CD6F001B82C9 /* ACEventsViewModel.h */,
 				282D01311D46CD6F001B82C9 /* ACEventsViewModel.m */,
+				28BE0F3E1D478C1200110482 /* ACReposViewModel.h */,
+				28BE0F3F1D478C1200110482 /* ACReposViewModel.m */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -189,13 +215,107 @@
 		282D01361D46D3AC001B82C9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				28BE0F571D47E34B00110482 /* MenuView */,
+				28BE0F581D47E35700110482 /* Cells */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		28BE0F471D47B97A00110482 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				280DC15D1D46465500D6E10F /* NotificationsViewController.h */,
+				280DC15E1D46465500D6E10F /* NotificationsViewController.m */,
+			);
+			name = Notifications;
+			sourceTree = "<group>";
+		};
+		28BE0F481D47B98200110482 /* News */ = {
+			isa = PBXGroup;
+			children = (
+				280DC1601D464A5800D6E10F /* NewsViewController.h */,
+				280DC1611D464A5800D6E10F /* NewsViewController.m */,
+			);
+			name = News;
+			sourceTree = "<group>";
+		};
+		28BE0F491D47B98800110482 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				280DC1631D464F4800D6E10F /* EventsViewController.h */,
+				280DC1641D464F4800D6E10F /* EventsViewController.m */,
+			);
+			name = Events;
+			sourceTree = "<group>";
+		};
+		28BE0F4A1D47B99000110482 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				280DC16F1D4684C300D6E10F /* LoginViewController.h */,
+				280DC1701D4684C300D6E10F /* LoginViewController.m */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		28BE0F4B1D47B99500110482 /* Welcome */ = {
+			isa = PBXGroup;
+			children = (
+				280DC1721D46853500D6E10F /* WelcomeViewController.h */,
+				280DC1731D46853500D6E10F /* WelcomeViewController.m */,
+			);
+			name = Welcome;
+			sourceTree = "<group>";
+		};
+		28BE0F4C1D47B99C00110482 /* Repos */ = {
+			isa = PBXGroup;
+			children = (
+				28BE0F3B1D478B5200110482 /* ReposViewController.h */,
+				28BE0F3C1D478B5200110482 /* ReposViewController.m */,
+			);
+			name = Repos;
+			sourceTree = "<group>";
+		};
+		28BE0F501D47B9BA00110482 /* DetailRepo */ = {
+			isa = PBXGroup;
+			children = (
+				28BE0F511D47BA3A00110482 /* DetailRepoViewController.h */,
+				28BE0F521D47BA3A00110482 /* DetailRepoViewController.m */,
+			);
+			name = DetailRepo;
+			sourceTree = "<group>";
+		};
+		28BE0F571D47E34B00110482 /* MenuView */ = {
+			isa = PBXGroup;
+			children = (
 				280DC1551D461D9400D6E10F /* MenuView.h */,
 				280DC1561D461D9400D6E10F /* MenuView.m */,
 				280DC1581D461DDF00D6E10F /* MenuView.xib */,
+			);
+			name = MenuView;
+			sourceTree = "<group>";
+		};
+		28BE0F581D47E35700110482 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
 				282D01331D46D3A4001B82C9 /* ActionTableViewCell.h */,
 				282D01341D46D3A4001B82C9 /* ActionTableViewCell.m */,
+				28BE0F411D478D5B00110482 /* RepoTableViewCell.h */,
+				28BE0F421D478D5B00110482 /* RepoTableViewCell.m */,
+				28BE0F441D47A48D00110482 /* DetailRepoCountTableViewCell.h */,
+				28BE0F451D47A48D00110482 /* DetailRepoCountTableViewCell.m */,
+				28BE0F541D47C1B400110482 /* DetailRepoDoubleTableViewCell.h */,
+				28BE0F551D47C1B400110482 /* DetailRepoDoubleTableViewCell.m */,
 			);
-			name = Views;
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		28BE0F5C1D47E41100110482 /* SearchRepos */ = {
+			isa = PBXGroup;
+			children = (
+				28BE0F591D47E40B00110482 /* SearchReposViewController.h */,
+				28BE0F5A1D47E40B00110482 /* SearchReposViewController.m */,
+			);
+			name = SearchRepos;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,16 +395,24 @@
 				280DC1571D461D9400D6E10F /* MenuView.m in Sources */,
 				282D012F1D46C9B6001B82C9 /* ACEvent.m in Sources */,
 				280DC1651D464F4800D6E10F /* EventsViewController.m in Sources */,
+				28BE0F531D47BA3A00110482 /* DetailRepoViewController.m in Sources */,
 				282D01321D46CD6F001B82C9 /* ACEventsViewModel.m in Sources */,
+				28BE0F431D478D5B00110482 /* RepoTableViewCell.m in Sources */,
 				280DC1711D4684C300D6E10F /* LoginViewController.m in Sources */,
 				280DC1771D468B6100D6E10F /* ACUserViewModel.m in Sources */,
+				28BE0F401D478C1200110482 /* ACReposViewModel.m in Sources */,
+				28BE0F461D47A48D00110482 /* DetailRepoCountTableViewCell.m in Sources */,
+				28BE0F5B1D47E40B00110482 /* SearchReposViewController.m in Sources */,
 				280DC1621D464A5800D6E10F /* NewsViewController.m in Sources */,
 				280DC1741D46853500D6E10F /* WelcomeViewController.m in Sources */,
 				280DC1691D46579100D6E10F /* ACHubDataManager.m in Sources */,
 				280DC1391D45637800D6E10F /* AppDelegate.m in Sources */,
 				282D01351D46D3A4001B82C9 /* ActionTableViewCell.m in Sources */,
+				28BE0F3A1D47825400110482 /* ACRepo.m in Sources */,
 				280DC16D1D46808800D6E10F /* ACUser.m in Sources */,
+				28BE0F3D1D478B5200110482 /* ReposViewController.m in Sources */,
 				280DC1361D45637800D6E10F /* main.m in Sources */,
+				28BE0F561D47C1B400110482 /* DetailRepoDoubleTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,6 +9,9 @@
 #import "NavigateViewController.h"
 #import "MenuView.h"
 #import "EventsViewController.h"
+#import "ReposViewController.h"
+#import "SearchReposViewController.h"
+
 @interface NavigateViewController ()
 @property (weak, nonatomic) IBOutlet MenuView<UITableViewDelegate, UITableViewDataSource> *menu;
 @property (weak, nonatomic) IBOutlet UIView *mainView;
@@ -70,6 +73,14 @@
         EventsViewController* evc = (EventsViewController*)subController;
         evc.currentUser = self.currentUser;
     }
+    
+    if([subController isKindOfClass:[ReposViewController class]])
+    {
+        ReposViewController* rvc = (ReposViewController*)subController;
+        rvc.currentUser = self.currentUser;
+    }
+    
+
     
     [self addChildViewController:subController];
     [subController.view setFrame:CGRectMake(0.0f, 0.0f, self.mainView.frame.size.width, self.mainView.frame.size.height)];

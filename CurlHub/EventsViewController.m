@@ -33,7 +33,6 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    NSLog(@"Events");
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         self.sourceEvents = [[[ACEventsViewModel alloc] init] allEventsForUser:self.currentUser];
@@ -72,7 +71,8 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ActionTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"actionCell"];
-    if(!cell) cell = [[ActionTableViewCell alloc] init];
+    if(!cell) cell = [[ActionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"actionCell"];
+    
     ACEvent *event = self.tableEvents[indexPath.row];
     cell.timeLabel.text = event.time;
     cell.actionLabel.text = [event eventDescription];
