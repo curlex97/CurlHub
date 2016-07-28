@@ -73,10 +73,10 @@
 }
 
 
--(NSArray<ACEvent *> *)eventsForUser:(ACUser *)user
+-(NSArray<ACEvent *> *)eventsForUser:(ACUser *)user andPageNumber:(int)pageNumber
 {
     NSMutableArray *array = [NSMutableArray array];
-    NSString *path = [ACHubDataManager eventsUrl:user.login];
+    NSString *path = [ACHubDataManager eventsUrl:user.login andPageNumber:pageNumber];
     NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:path] encoding:NSUTF8StringEncoding error:nil];
     
     NSError *jsonError = nil;
@@ -122,9 +122,9 @@
 }
 
 
--(NSArray<ACRepo *> *)reposForUser:(ACUser *)user
+-(NSArray<ACRepo *> *)reposForUser:(ACUser *)user andPageNumber:(int)pageNumber
 {
-    NSString *path = [ACHubDataManager reposUrl:user.login];
+    NSString *path = [ACHubDataManager reposUrl:user.login andPageNumber:pageNumber];
     NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:path] encoding:NSUTF8StringEncoding error:nil];
     
     NSError *jsonError = nil;
@@ -227,9 +227,9 @@
 
 
 
-+(NSString *)eventsUrl:(NSString *)userLogin
++(NSString *)eventsUrl:(NSString *)userLogin andPageNumber:(int)pageNumber
 {
-    return [NSString stringWithFormat:@"https://api.github.com/users/%@/events", userLogin];
+    return [NSString stringWithFormat:@"https://api.github.com/users/%@/events?page=%i&per_page=3", userLogin, pageNumber];
 }
 
 +(NSString *)verificationUrl
@@ -247,9 +247,9 @@
     return [NSString stringWithFormat:@"https://api.github.com/user?access_token=%@", token];
 }
 
-+(NSString *)reposUrl:(NSString *)userLogin
++(NSString *)reposUrl:(NSString *)userLogin andPageNumber:(int)pageNumber
 {
-    return [NSString stringWithFormat:@"https://api.github.com/users/%@/repos", userLogin];
+    return [NSString stringWithFormat:@"https://api.github.com/users/%@/repos?page=%i&per_page=3", userLogin, pageNumber];
 }
 
 +(NSString *)searchReposUrl:(NSString *)query andPageNumber:(int)pageNumber

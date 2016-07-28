@@ -14,9 +14,10 @@
 #import "ACProgressBarDisplayer.h"
 
 @interface ReposViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
-@property NSArray *sourceRepos;
+@property NSMutableArray *sourceRepos;
 @property NSMutableArray *tableRepos;
 @property ACProgressBarDisplayer *progressBarDisplayer;
+@property int pageNumber;
 
 @end
 
@@ -38,18 +39,31 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
-    if(!self.tableRepos.count) [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[UIColor blueColor] andIndicator:YES andFaded:NO];
+    self.pageNumber = 1;
+    [self refreshTable];
+}
+
+-(void) refreshTable
+{
+    [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[UIColor blueColor] andIndicator:YES andFaded:NO];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        self.sourceRepos = [[[ACReposViewModel alloc] init] allReposForUser:self.currentUser];
+        
+        if(self.pageNumber == 1)
+        {
+            self.sourceRepos = [NSMutableArray arrayWithArray:[[[ACReposViewModel alloc] init] allReposForUser:self.currentUser andPageNumber:self.pageNumber]];
+        }
+        else
+        {
+            [self.sourceRepos addObjectsFromArray:[NSMutableArray arrayWithArray:[[[ACReposViewModel alloc] init] allReposForUser:self.currentUser andPageNumber:self.pageNumber]]];
+        }
+        
         dispatch_async(dispatch_get_main_queue(), ^{
-            if(!self.tableRepos.count) [self.progressBarDisplayer removeFromView:self.view];
+           [self.progressBarDisplayer removeFromView:self.view];
             self.tableRepos = [NSMutableArray arrayWithArray:self.sourceRepos];
             [self.tableView reloadData];
         });
     });
-    
 }
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
@@ -73,44 +87,59 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.tableRepos.count;
+    return self.tableRepos.count ? self.tableRepos.count + 1 : self.tableRepos.count;
 }
 
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    RepoTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ownRepoCell"];
-    if(!cell) cell = [[RepoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ownRepoCell"];
+    if(indexPath.row < self.tableRepos.count)
+    {
+        RepoTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ownRepoCell"];
+        if(!cell) cell = [[RepoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ownRepoCell"];
+        
+        ACRepo *repo = self.tableRepos[indexPath.row];
+        
+        cell.ownerImage.image = repo.ownerAvatar;
+        cell.ownerImage.layer.cornerRadius = cell.ownerImage.frame.size.height /2;
+        cell.ownerImage.layer.masksToBounds = YES;
+        cell.ownerImage.layer.borderWidth = 0;
+        cell.repoNameLabel.text = repo.name;
+        cell.forksLabel.text = [NSString stringWithFormat:@"%li", repo.forksCount];
+        cell.stargazersLabel.text = [NSString stringWithFormat:@"%li", repo.stargazersCount];
+        
+        return cell;
+    }
     
-    ACRepo *repo = self.tableRepos[indexPath.row];
-    
-    cell.ownerImage.image = repo.ownerAvatar;
-    cell.ownerImage.layer.cornerRadius = cell.ownerImage.frame.size.height /2;
-    cell.ownerImage.layer.masksToBounds = YES;
-    cell.ownerImage.layer.borderWidth = 0;
-    cell.repoNameLabel.text = repo.name;
-    cell.forksLabel.text = [NSString stringWithFormat:@"%li", repo.forksCount];
-    cell.stargazersLabel.text = [NSString stringWithFormat:@"%li", repo.stargazersCount];
-    
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    if(!cell) cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+    cell.textLabel.text = @"More...";
     return cell;
     
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DetailRepoViewController* drcontroller = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailRepoViewController"];
-    
-    if(drcontroller)
+    if(indexPath.row >= self.sourceRepos.count)
     {
-        drcontroller.currentRepo = self.tableRepos[indexPath.row];
-        [self.navigationController pushViewController:drcontroller animated:YES];
+        self.pageNumber ++;
+        [self refreshTable];
     }
-    
+    else
+    {
+        DetailRepoViewController* drcontroller = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailRepoViewController"];
+        
+        if(drcontroller)
+        {
+            drcontroller.currentRepo = self.tableRepos[indexPath.row];
+            [self.navigationController pushViewController:drcontroller animated:YES];
+        }
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 75.0f;
+    return indexPath.row < self.tableRepos.count ? 75.0f : 50.0f;
 }
 
 @end

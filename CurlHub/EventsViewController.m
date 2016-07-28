@@ -12,9 +12,10 @@
 #import "ACProgressBarDisplayer.h"
 
 @interface EventsViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
-@property NSArray *sourceEvents;
+@property NSMutableArray *sourceEvents;
 @property NSMutableArray *tableEvents;
 @property ACProgressBarDisplayer *progressBarDisplayer;
+@property int pageNumber;
 @end
 
 @implementation EventsViewController
@@ -36,17 +37,30 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
-   if(!self.tableEvents.count) [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[UIColor blueColor] andIndicator:YES andFaded:NO];
+    self.pageNumber = 1;
+    [self refreshTable];
+}
+
+-(void) refreshTable
+{
+     [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[UIColor blueColor] andIndicator:YES andFaded:NO];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        self.sourceEvents = [[[ACEventsViewModel alloc] init] allEventsForUser:self.currentUser];
+        if(self.pageNumber == 1)
+        {
+            self.sourceEvents = [NSMutableArray arrayWithArray:[[[ACEventsViewModel alloc] init] allEventsForUser:self.currentUser andPageNumber:self.pageNumber]];
+        }
+        else
+        {
+            [self.sourceEvents addObjectsFromArray:[NSMutableArray arrayWithArray:[[[ACEventsViewModel alloc] init] allEventsForUser:self.currentUser andPageNumber:self.pageNumber]]];
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
-            if(!self.tableEvents.count) [self.progressBarDisplayer removeFromView:self.view];
+            [self.progressBarDisplayer removeFromView:self.view];
             self.tableEvents = [NSMutableArray arrayWithArray:self.sourceEvents];
             [self.tableView reloadData];
         });
     });
+
 }
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
@@ -71,27 +85,46 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.tableEvents.count;
+    return self.tableEvents.count ? self.tableEvents.count + 1 : 0;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ActionTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"actionCell"];
-    if(!cell) cell = [[ActionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"actionCell"];
+    if(indexPath.row < self.tableEvents.count)
+    {
+        ActionTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"actionCell"];
+        if(!cell) cell = [[ActionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"actionCell"];
+        
+        ACEvent *event = self.tableEvents[indexPath.row];
+        cell.timeLabel.text = event.time;
+        cell.actionLabel.text = [event eventDescription];
+        cell.avatarView.image = event.avatar;
+        cell.avatarView.layer.cornerRadius = cell.avatarView.frame.size.height /2;
+        cell.avatarView.layer.masksToBounds = YES;
+        cell.avatarView.layer.borderWidth = 0;
+        return cell;
+    }
     
-    ACEvent *event = self.tableEvents[indexPath.row];
-    cell.timeLabel.text = event.time;
-    cell.actionLabel.text = [event eventDescription];
-    cell.avatarView.image = event.avatar;
-    cell.avatarView.layer.cornerRadius = cell.avatarView.frame.size.height /2;
-    cell.avatarView.layer.masksToBounds = YES;
-    cell.avatarView.layer.borderWidth = 0;
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    if(!cell) cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+    cell.textLabel.text = @"More...";
     return cell;
+    
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.row >= self.sourceEvents.count)
+    {
+        self.pageNumber ++;
+        [self refreshTable];
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100.0f;
+    return indexPath.row < self.tableEvents.count ? 100.0f : 50.0f;
+    
 }
 
 

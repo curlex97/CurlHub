@@ -16,8 +16,8 @@
 +(NSString*) verificationUrl;
 +(NSString*) tokenUrl :(NSString*)code;
 +(NSString*) userUrl :(NSString*)token;
-+(NSString*) eventsUrl :(NSString*)userLogin;
-+(NSString*) reposUrl :(NSString*)userLogin;
++(NSString*) eventsUrl :(NSString*)userLogin andPageNumber:(int)pageNumber;
++(NSString*) reposUrl :(NSString*)userLogin andPageNumber:(int)pageNumber;
 +(NSString*) searchReposUrl :(NSString*)query andPageNumber:(int)pageNumber;
 
 -(NSString*) formatDateWithString:(NSString*)string;
@@ -25,8 +25,8 @@
 -(ACUser*)userFromToken:(NSString*)token;
 -(NSString*) tokenFromCode:(NSString*)code;
 
--(NSArray<ACEvent*>*) eventsForUser:(ACUser*)user;
--(NSArray<ACRepo*>*) reposForUser:(ACUser*)user;
+-(NSArray<ACEvent*>*) eventsForUser:(ACUser*)user andPageNumber:(int)pageNumber;
+-(NSArray<ACRepo*>*) reposForUser:(ACUser*)user andPageNumber:(int)pageNumber;
 -(NSArray<ACRepo*>*) reposForQuery:(NSString*)query andPageNumber:(int)pageNumber;
 
 @end

@@ -11,7 +11,7 @@
 
 @interface ACReposViewModel : NSObject
 
--(NSArray*) allReposForUser:(ACUser*)user;
+-(NSArray*) allReposForUser:(ACUser*)user andPageNumber:(int)pageNumber;
 -(NSArray*) allReposForQuery:(NSString*)query andPageNumber:(int)pageNumber;
 
 @end

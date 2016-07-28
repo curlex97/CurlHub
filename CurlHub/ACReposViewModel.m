@@ -11,9 +11,9 @@
 
 @implementation ACReposViewModel
 
--(NSArray *)allReposForUser:(ACUser *)user
+-(NSArray *)allReposForUser:(ACUser *)user andPageNumber:(int)pageNumber
 {
-    return [[[ACHubDataManager alloc] init] reposForUser:user];
+    return [[[ACHubDataManager alloc] init] reposForUser:user andPageNumber:pageNumber];
 }
 
 -(NSArray *)allReposForQuery:(NSString *)query andPageNumber:(int)pageNumber

@@ -10,10 +10,10 @@
 
 @implementation ACEventsViewModel
 
--(NSArray *)allEventsForUser:(ACUser *)user
+-(NSArray *)allEventsForUser:(ACUser *)user andPageNumber:(int)pageNumber
 {
     ACHubDataManager *manager = [[ACHubDataManager alloc] init];
-    return [manager eventsForUser:user];
+    return [manager eventsForUser:user andPageNumber:pageNumber];
 }
 
 @end

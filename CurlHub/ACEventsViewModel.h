@@ -12,6 +12,6 @@
 
 @interface ACEventsViewModel : NSObject
 
--(NSArray*) allEventsForUser:(ACUser*)user;
+-(NSArray*) allEventsForUser:(ACUser*)user andPageNumber:(int)pageNumber;
 
 @end
