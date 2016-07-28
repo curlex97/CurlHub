@@ -11,9 +11,10 @@
 @interface MenuView : UIView
 @property (strong, nonatomic) IBOutlet UIView *view;
 @property (unsafe_unretained, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, copy) void (^didSelectRow)(NSString *page);
+@property (nonatomic, copy) void (^didSelectRow)(NSString *page, NSString* title);
 
 -(NSString*) firstPage;
+-(NSString*) firstTitle;
 -(NSArray*) allPages;
 
 @end

@@ -32,7 +32,9 @@
         
         
         [[NSBundle mainBundle] loadNibNamed:@"MenuView" owner:self options:nil];
+        [self.tableView setBackgroundColor:[UIColor colorWithRed:34.0/255.0 green:34.0/255.0 blue:34.0/255.0 alpha:1.0]];
         [self addSubview:self.view];
+        
     }
     return self;
 }
@@ -44,6 +46,12 @@
     if(!cell) cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@", self.keys[indexPath.row]];
+    cell.backgroundColor = [UIColor colorWithRed:34.0/255.0 green:34.0/255.0 blue:34.0/255.0 alpha:1.0];
+    cell.textLabel.textColor = [UIColor colorWithRed:252.0/255.0 green:252.0/255.0 blue:252.0/255.0 alpha:1.0];
+    
+    UIView* selectedView = [[UIView alloc] init];
+    selectedView.backgroundColor =[UIColor colorWithRed:45.0/255.0 green:45.0/255.0 blue:45.0/255.0 alpha:1.0];
+    cell.selectedBackgroundView = selectedView;
     
     return cell;
     
@@ -54,14 +62,21 @@
     return self.pages.count;
 }
 
+
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.didSelectRow(self.pages[self.keys[indexPath.row]]);
+    self.didSelectRow(self.pages[self.keys[indexPath.row]], self.keys[indexPath.row]);
 }
 
 -(NSString *)firstPage
 {
     return self.pages[@"News"];
+}
+
+-(NSString *)firstTitle
+{
+    return @"News";
 }
 
 -(NSArray *)allPages

@@ -25,6 +25,13 @@
     self.navigationController.navigationBar.translucent = NO;
     self.progressBarDisplayer = [[ACProgressBarDisplayer alloc] init];
     self.userModel = [[ACUserViewModel alloc] init];
+    
+    UINavigationBar *bar = [self.navigationController navigationBar];
+    [bar setBarTintColor:[UIColor colorWithRed:50.0/255.0 green:50.0/255.0 blue:50.0/255.0 alpha:1.0]];
+    [bar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:252.0/255.0 green:252.0/255.0 blue:252.0/255.0 alpha:1.0]}];
+    [bar setTintColor:[UIColor colorWithRed:252.0/255.0 green:252.0/255.0 blue:252.0/255.0 alpha:1.0]];
+    
+    
     [self login];
     
 }

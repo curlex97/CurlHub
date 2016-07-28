@@ -365,7 +365,7 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="84d-W8-Ipf">
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
-                                <color key="backgroundColor" red="0.15754084942868168" green="0.78626063479999997" blue="0.32661586732389641" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.90588235294117647" green="0.90588235294117647" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -404,7 +404,7 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eJ0-ga-g2A">
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
-                                <color key="backgroundColor" red="0.1706203492802161" green="0.34181521741109344" blue="0.78626063479999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.92549019607843142" green="0.92549019607843142" blue="0.92549019607843142" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -550,6 +550,9 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZjR-4G-wgB">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

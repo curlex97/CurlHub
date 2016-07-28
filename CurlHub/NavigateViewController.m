@@ -11,6 +11,7 @@
 #import "EventsViewController.h"
 #import "ReposViewController.h"
 #import "SearchReposViewController.h"
+#import "UIImage+ACImageResizing.h"
 
 @interface NavigateViewController ()
 @property (weak, nonatomic) IBOutlet MenuView<UITableViewDelegate, UITableViewDataSource> *menu;
@@ -30,18 +31,26 @@
     [super viewDidLoad];
     
     
+    
+    UINavigationBar *bar = [self.navigationController navigationBar];
+    [bar setBarTintColor:[UIColor colorWithRed:50.0/255.0 green:50.0/255.0 blue:50.0/255.0 alpha:1.0]];
+    [bar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:252.0/255.0 green:252.0/255.0 blue:252.0/255.0 alpha:1.0]}];
+    [bar setTintColor:[UIColor colorWithRed:252.0/255.0 green:252.0/255.0 blue:252.0/255.0 alpha:1.0]];
+    
     self.menu.tableView.delegate = _menu;
     self.menu.tableView.dataSource = _menu;
-    self.menu.didSelectRow = ^(NSString* selection){
+    self.menu.didSelectRow = ^(NSString* selection, NSString* title){
         [self closeMenu];
-        [self displayViewController: selection];
+        [self displayViewController: selection andTitle:title];
     };
     
     [self setupViewControllers];
-    [self displayViewController:[self.menu firstPage]];
+    [self displayViewController:[self.menu firstPage] andTitle: [self.menu firstTitle]];
 
     
-    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(buttonPressed:)];
+    UIImage *image = [UIImage imageWithImage:[UIImage imageNamed:@"menuIcon"] scaledToSize:CGSizeMake(36, 36)];
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStyleDone target:self action:@selector(buttonPressed:)];
+    
     UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
     [_mainView addGestureRecognizer:panGestureRecognizer];
     self.navigationItem.leftBarButtonItem = barButtonItem;
@@ -58,8 +67,9 @@
     }
 }
 
-- (void) displayViewController:(NSString*)identifier
+- (void) displayViewController:(NSString*)identifier andTitle:(NSString*) title
 {
+    self.navigationItem.title = title;
     
     UIViewController *vc = [self.childViewControllers lastObject];
     [vc.view removeFromSuperview];
