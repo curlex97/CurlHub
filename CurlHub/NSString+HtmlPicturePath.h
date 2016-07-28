@@ -10,4 +10,5 @@
 
 @interface NSString (HtmlPicturePath)
 -(NSString*) stringByHtmlPictureFormating;
+-(NSString *) stringByStrippingHTML;
 @end

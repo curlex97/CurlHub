@@ -8,6 +8,7 @@
 
 #import "ACHubDataManager.h"
 #import "ACPictureManager.h"
+#import "NSString+HtmlPicturePath.h"
 
 @interface ACHubDataManager()
 
@@ -183,6 +184,47 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
 }
 
+-(NSArray<ACNews *> *)news
+{
+    NSMutableArray *array = [NSMutableArray array];
+    
+    NSString *path = [ACHubDataManager newsUrl];
+    NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:path] encoding:NSUTF8StringEncoding error:nil];
+    
+    if(page)
+    {
+        page = [page substringFromIndex:[page rangeOfString:@"<div class=\"time\">"].location + @"<div class=\"time\">".length];
+        page = [page substringToIndex:[page rangeOfString:@"<div class=\"text-center\">"].location];
+        
+        NSArray *news = [page componentsSeparatedByString:@"<div class=\"time\">"];
+        
+        for(NSString* obn in news)
+        {
+            NSString* modobn = obn;
+            NSString* timeBlock = [modobn substringToIndex:[modobn rangeOfString:@"</div>"].location];
+            modobn = [modobn substringFromIndex:[modobn rangeOfString:@"</div>"].location + 6];
+            NSString* actionBLock = [[modobn substringToIndex:[modobn rangeOfString:@"</div>"].location] substringFromIndex:@"<div class=\"title\">".length + 2];
+            modobn = [modobn substringFromIndex:[modobn rangeOfString:@"</div>"].location + 6];
+            NSString* imageBlock =[modobn substringToIndex:[modobn rangeOfString:@"</div>"].location];
+            
+            NSString* image = [imageBlock substringFromIndex:[imageBlock rangeOfString:@"src=\""].location + 5];
+            image = [image substringToIndex:[image rangeOfString:@"\""].location];
+            
+            NSString *time = [timeBlock substringFromIndex:[timeBlock rangeOfString:@">"].location + 1];
+            time = [time substringToIndex:[time rangeOfString:@"<"].location];
+        
+            NSString* action = [[[actionBLock stringByStrippingHTML] stringByReplacingOccurrencesOfString:@"\n" withString:@""] stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]];
+            ACNews *news = [[ACNews alloc] initWithActionText:action andDate:time andOwnerUrl:image];
+            [array addObject:news];
+        }
+        
+    }
+    
+    return array;
+}
+
+
+
 
 -(NSString*) formatDateWithString:(NSString*)string
 {
@@ -225,6 +267,11 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 {
     return [NSString stringWithFormat:@"https://api.github.com/search/repositories?q=%@&sort=stars&order=desc&page=%i&per_page=10&client_id=%@&client_secret=%@", query, pageNumber, clientID, clientSecret];
     
+}
+
++(NSString *)newsUrl
+{
+    return @"https://github.com";
 }
 
 @end

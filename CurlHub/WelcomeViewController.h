@@ -10,6 +10,7 @@
 
 @interface WelcomeViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UIView *mainView;
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
 -(void) login;
 

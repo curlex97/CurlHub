@@ -22,6 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.loginButton.alpha = 0.0f;
     self.navigationController.navigationBar.translucent = NO;
     self.progressBarDisplayer = [[ACProgressBarDisplayer alloc] init];
     self.userModel = [[ACUserViewModel alloc] init];
@@ -55,6 +56,7 @@
 
 -(void)login
 {
+    [UIButton animateWithDuration:.2 animations:^{self.loginButton.alpha = 0.0f;}];
     [self.progressBarDisplayer displayOnView:self.mainView withMessage:@"Logging..." andColor:[UIColor blueColor] andIndicator:YES andFaded:NO];
     dispatch_async(dispatch_get_global_queue(0,0), ^{
         
@@ -81,6 +83,10 @@
                 
                 }];
 
+            }
+            else{
+                dispatch_async(dispatch_get_main_queue(), ^{[UIButton animateWithDuration:.2 animations:^{self.loginButton.alpha = 1.0f;}];
+});
             }
         }
         else
