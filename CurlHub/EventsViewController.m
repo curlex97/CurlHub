@@ -9,17 +9,20 @@
 #import "EventsViewController.h"
 #import "ACEventsViewModel.h"
 #import "ActionTableViewCell.h"
+#import "ACProgressBarDisplayer.h"
 
 @interface EventsViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property NSArray *sourceEvents;
 @property NSMutableArray *tableEvents;
-
+@property ACProgressBarDisplayer *progressBarDisplayer;
 @end
 
 @implementation EventsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationController.navigationBar.translucent = NO;
+    self.progressBarDisplayer = [[ACProgressBarDisplayer alloc] init];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.searchBar.delegate = self;
@@ -34,9 +37,12 @@
 {
     [super viewWillAppear:YES];
     
+   if(!self.tableEvents.count) [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[UIColor blueColor] andIndicator:YES andFaded:NO];
+    
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         self.sourceEvents = [[[ACEventsViewModel alloc] init] allEventsForUser:self.currentUser];
         dispatch_async(dispatch_get_main_queue(), ^{
+            if(!self.tableEvents.count) [self.progressBarDisplayer removeFromView:self.view];
             self.tableEvents = [NSMutableArray arrayWithArray:self.sourceEvents];
             [self.tableView reloadData];
         });

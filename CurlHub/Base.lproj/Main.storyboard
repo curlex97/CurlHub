@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Bck-6W-HS1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Bck-6W-HS1">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -34,6 +34,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ZZZ-xj-3XN"/>
+                    <connections>
+                        <outlet property="mainView" destination="Xbg-9M-aSt" id="liM-gs-D0f"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C2p-1G-a0Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -130,30 +133,31 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qdp-kp-lUT">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="156"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XNR-Vo-Gnn">
-                                        <rect key="frame" x="260" y="13" width="80" height="80"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="XNR-Vo-Gnn" secondAttribute="height" multiplier="1:1" id="OuK-3c-exI"/>
-                                        </constraints>
-                                    </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0h8-Qf-wb4">
                                         <rect key="frame" x="8" y="112" width="584" height="21"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="584" id="hGx-L0-bk4"/>
+                                            <constraint firstAttribute="width" constant="584" id="1ch-Ny-xE3"/>
+                                            <constraint firstAttribute="height" constant="21" id="DP8-mb-Zh3"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XNR-Vo-Gnn">
+                                        <rect key="frame" x="260" y="13" width="80" height="80"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="XNR-Vo-Gnn" secondAttribute="height" multiplier="1:1" id="7mc-w5-bbw"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="XNR-Vo-Gnn" firstAttribute="top" secondItem="Qdp-kp-lUT" secondAttribute="top" constant="13" id="1QE-Nd-Ghb"/>
-                                    <constraint firstAttribute="height" constant="156" id="AOv-fo-eAb"/>
-                                    <constraint firstItem="0h8-Qf-wb4" firstAttribute="centerX" secondItem="Qdp-kp-lUT" secondAttribute="centerX" id="c0o-ID-suE"/>
-                                    <constraint firstItem="XNR-Vo-Gnn" firstAttribute="centerX" secondItem="Qdp-kp-lUT" secondAttribute="centerX" id="cop-7s-P6H"/>
-                                    <constraint firstAttribute="bottom" secondItem="XNR-Vo-Gnn" secondAttribute="bottom" constant="63" id="hZr-sf-y0D"/>
-                                    <constraint firstItem="0h8-Qf-wb4" firstAttribute="top" secondItem="XNR-Vo-Gnn" secondAttribute="bottom" constant="19" id="uWR-se-QRx"/>
+                                    <constraint firstItem="XNR-Vo-Gnn" firstAttribute="top" secondItem="Qdp-kp-lUT" secondAttribute="top" constant="13" id="71a-BL-tmg"/>
+                                    <constraint firstItem="0h8-Qf-wb4" firstAttribute="centerX" secondItem="Qdp-kp-lUT" secondAttribute="centerX" id="LFj-e9-pgu"/>
+                                    <constraint firstItem="0h8-Qf-wb4" firstAttribute="top" secondItem="XNR-Vo-Gnn" secondAttribute="bottom" constant="19" id="Qqr-7H-cuo"/>
+                                    <constraint firstItem="XNR-Vo-Gnn" firstAttribute="centerX" secondItem="Qdp-kp-lUT" secondAttribute="centerX" id="Xxj-9Y-xse"/>
+                                    <constraint firstItem="0h8-Qf-wb4" firstAttribute="top" secondItem="XNR-Vo-Gnn" secondAttribute="bottom" constant="19" id="lB2-KS-jPZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="0h8-Qf-wb4" secondAttribute="bottom" constant="23" id="nad-5q-UPg"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="eT7-hl-3bS">

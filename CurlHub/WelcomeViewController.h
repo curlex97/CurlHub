@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface WelcomeViewController : UIViewController
+@property (strong, nonatomic) IBOutlet UIView *mainView;
 
 -(void) login;
 

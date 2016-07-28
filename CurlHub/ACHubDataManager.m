@@ -7,26 +7,14 @@
 //
 
 #import "ACHubDataManager.h"
+#import "ACPictureManager.h"
 
 @interface ACHubDataManager()
 
-+(NSMutableDictionary*) picturesDictionary;
 @end
 
-static NSMutableDictionary *picturesDictionary;
 
 @implementation ACHubDataManager
-
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        if(!picturesDictionary)
-        picturesDictionary = [NSMutableDictionary dictionary];
-    }
-    return self;
-}
 
 -(ACUser*)userFromToken:(NSString*)token
 {
@@ -36,6 +24,9 @@ static NSMutableDictionary *picturesDictionary;
     {
         NSError *jsonError = nil;
         NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
+        
+        if(!data) return nil;
+        
         NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
         
         if(!jsonError)
@@ -44,10 +35,8 @@ static NSMutableDictionary *picturesDictionary;
             
             ACUser *user = [[ACUser alloc] initWithID:jsonDictionary[@"id"] andLogin:jsonDictionary[@"login"] andAvatar:nil andURL:jsonDictionary[@"url"] andAccessToken:token andName:jsonDictionary[@"name"] andCompany:jsonDictionary[@"company"] andLocation:jsonDictionary[@"location"] andEmail:jsonDictionary[@"email"] andFollowers:jsonDictionary[@"followers"] andFollowing:jsonDictionary[@"following"]];
             
-            UIImage* ava = picturesDictionary[avatarUrl];
-            
-            if(ava) user.avatar = ava;
-            else
+            user.avatar = [ACPictureManager getPictureByName:avatarUrl];;
+            if(!user.avatar)
             {
               
                     dispatch_async(dispatch_get_global_queue(0,0), ^{
@@ -56,7 +45,7 @@ static NSMutableDictionary *picturesDictionary;
                             return;
                         dispatch_async(dispatch_get_main_queue(), ^{
                             user.avatar = [UIImage imageWithData: data];
-                            [picturesDictionary setObject:[UIImage imageWithData: data] forKey:avatarUrl];
+                            [ACPictureManager addPicture:[UIImage imageWithData: data] byName:avatarUrl];
                         });
                     });
                 
@@ -92,6 +81,9 @@ static NSMutableDictionary *picturesDictionary;
     
     NSError *jsonError = nil;
     NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
+    
+    if(!data) return nil;
+    
     NSArray* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
     
     if(!jsonError)
@@ -113,15 +105,12 @@ static NSMutableDictionary *picturesDictionary;
             
             ACEvent *event = [[ACEvent alloc] initWithLogin:login andAction:action andTime:time andRefType:refType andRepoName:repoName andRef:ref andAvatar:nil];
             
-            UIImage* ava = picturesDictionary[avatarUrl];
-            
-            if(ava) event.avatar = ava;
-            
-            else
+            event.avatar = [ACPictureManager getPictureByName:avatarUrl];;
+            if(!event.avatar)
             {
                 NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: avatarUrl]];
                 event.avatar = [UIImage imageWithData: data];
-                [picturesDictionary setObject:[UIImage imageWithData: data] forKey:avatarUrl];
+                [ACPictureManager addPicture:[UIImage imageWithData: data] byName:avatarUrl];
             }
             
             [array addObject:event];
@@ -177,17 +166,18 @@ static NSMutableDictionary *picturesDictionary;
         NSString* name = [repoDictionary valueForKeyPath:@"name"];
         NSString* ownerName = [repoDictionary valueForKeyPath:@"owner.login"];
         NSString* avatarUrl = [repoDictionary valueForKeyPath:@"owner.avatar_url"];
-        UIImage* ava = picturesDictionary[avatarUrl];
+        UIImage* ava = [ACPictureManager getPictureByName:avatarUrl];
         if(!ava)
         {
             NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: avatarUrl]];
             ava = [UIImage imageWithData: data];
-            [picturesDictionary setObject:[UIImage imageWithData: data] forKey:avatarUrl];
+            [ACPictureManager addPicture:[UIImage imageWithData: data] byName:avatarUrl];
         }
         NSString *language = [repoDictionary valueForKeyPath:@"language"];
         NSString* date = [self formatDateWithString:[repoDictionary valueForKeyPath:@"created_at"]];
         double size = [[repoDictionary valueForKeyPath:@"size"] doubleValue] / 1024;
         NSString* private = [repoDictionary valueForKeyPath:@"private"];
+        NSString* notificationsUrl = [repoDictionary valueForKeyPath:@"notifications_url"];
         int privateInt = [private intValue];
         BOOL isPrivate = privateInt > 0;
         long forksCount = [[repoDictionary valueForKeyPath:@"forks_count"] longValue];
@@ -195,8 +185,7 @@ static NSMutableDictionary *picturesDictionary;
         long stargazersCount = [[repoDictionary valueForKeyPath:@"stargazers_count"] longValue];
         long branchesCount = 0, issuesCount = 0;
         
-        
-        ACRepo *repo = [[ACRepo alloc] initWithName:name andOwnerName:ownerName andOwnerAvatar:ava andLanguage:language andCreateDate:date andSize:size andForksCount:forksCount andWatchersCount:watchersCount andBranchesCount:branchesCount andStargazersCount:stargazersCount andIssuesCount:issuesCount andPrivate:isPrivate];
+        ACRepo *repo = [[ACRepo alloc] initWithName:name andOwnerName:ownerName andOwnerAvatar:ava andLanguage:language andCreateDate:date andSize:size andForksCount:forksCount andWatchersCount:watchersCount andBranchesCount:branchesCount andStargazersCount:stargazersCount andIssuesCount:issuesCount andPrivate:isPrivate andNotificationsUrl:notificationsUrl];
         
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             
@@ -236,15 +225,7 @@ static NSMutableDictionary *picturesDictionary;
 
 
 
-+(NSMutableDictionary*)picturesDictionary
-{
-    return picturesDictionary;
-}
-           
-+(void)setPicturesDictionary:(NSMutableDictionary*)dictionary
-{
-    picturesDictionary = dictionary;
-}
+
 
 +(NSString *)eventsUrl:(NSString *)userLogin
 {

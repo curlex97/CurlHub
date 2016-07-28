@@ -11,11 +11,12 @@
 #import "ACRepo.h"
 #import "RepoTableViewCell.h"
 #import "DetailRepoViewController.h"
+#import "ACProgressBarDisplayer.h"
 
 @interface SearchReposViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property NSMutableArray *tableRepos;
 @property NSString *query;
-
+@property ACProgressBarDisplayer *progressBarDisplayer;
 @property int pageNumber;
 @end
 
@@ -23,7 +24,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.navigationController.navigationBar.translucent = NO;
+    self.progressBarDisplayer = [[ACProgressBarDisplayer alloc] init];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.searchBar.delegate = self;
@@ -59,6 +61,8 @@
 
 -(void) refreshSearch
 {
+    if(!self.tableRepos.count) [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[UIColor blueColor] andIndicator:YES andFaded:NO];
+    
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
         if(self.pageNumber == 1)
@@ -71,6 +75,7 @@
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            [self.progressBarDisplayer removeFromView:self.view];
             [self.tableView reloadData];
         });
     });
