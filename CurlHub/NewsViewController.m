@@ -73,7 +73,7 @@
             }
         }
         
-    }  
+    }
     else self.tableNews = [NSMutableArray arrayWithArray:self.sourceNews];
     [self.tableView reloadData];
     
