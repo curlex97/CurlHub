@@ -13,6 +13,8 @@
 
 @end
 
+static NSString* clientID =  @"07792de91a22f48d76a8";
+static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
 @implementation ACHubDataManager
 
@@ -33,24 +35,7 @@
         {
             NSString* avatarUrl = jsonDictionary[@"avatar_url"];
             
-            ACUser *user = [[ACUser alloc] initWithID:jsonDictionary[@"id"] andLogin:jsonDictionary[@"login"] andAvatar:nil andURL:jsonDictionary[@"url"] andAccessToken:token andName:jsonDictionary[@"name"] andCompany:jsonDictionary[@"company"] andLocation:jsonDictionary[@"location"] andEmail:jsonDictionary[@"email"] andFollowers:jsonDictionary[@"followers"] andFollowing:jsonDictionary[@"following"]];
-            
-            user.avatar = [ACPictureManager getPictureByName:avatarUrl];;
-            if(!user.avatar)
-            {
-              
-                    dispatch_async(dispatch_get_global_queue(0,0), ^{
-                        NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: avatarUrl]];
-                        if ( data == nil )
-                            return;
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            user.avatar = [UIImage imageWithData: data];
-                            [ACPictureManager addPicture:[UIImage imageWithData: data] byName:avatarUrl];
-                        });
-                    });
-                
-            }
-
+            ACUser *user = [[ACUser alloc] initWithID:jsonDictionary[@"id"] andLogin:jsonDictionary[@"login"] andAvatarUrl:avatarUrl andURL:jsonDictionary[@"url"] andAccessToken:token andName:jsonDictionary[@"name"] andCompany:jsonDictionary[@"company"] andLocation:jsonDictionary[@"location"] andEmail:jsonDictionary[@"email"] andFollowers:jsonDictionary[@"followers"] andFollowing:jsonDictionary[@"following"]];
             return user;
         }
         
@@ -103,16 +88,7 @@
             
             
             
-            ACEvent *event = [[ACEvent alloc] initWithLogin:login andAction:action andTime:time andRefType:refType andRepoName:repoName andRef:ref andAvatar:nil];
-            
-            event.avatar = [ACPictureManager getPictureByName:avatarUrl];;
-            if(!event.avatar)
-            {
-                NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: avatarUrl]];
-                event.avatar = [UIImage imageWithData: data];
-                [ACPictureManager addPicture:[UIImage imageWithData: data] byName:avatarUrl];
-            }
-            
+            ACEvent *event = [[ACEvent alloc] initWithLogin:login andAction:action andTime:time andRefType:refType andRepoName:repoName andRef:ref andAvatarUrl:avatarUrl];
             [array addObject:event];
             
         }
@@ -166,13 +142,6 @@
         NSString* name = [repoDictionary valueForKeyPath:@"name"];
         NSString* ownerName = [repoDictionary valueForKeyPath:@"owner.login"];
         NSString* avatarUrl = [repoDictionary valueForKeyPath:@"owner.avatar_url"];
-        UIImage* ava = [ACPictureManager getPictureByName:avatarUrl];
-        if(!ava)
-        {
-            NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: avatarUrl]];
-            ava = [UIImage imageWithData: data];
-            [ACPictureManager addPicture:[UIImage imageWithData: data] byName:avatarUrl];
-        }
         NSString *language = [repoDictionary valueForKeyPath:@"language"];
         NSString* date = [self formatDateWithString:[repoDictionary valueForKeyPath:@"created_at"]];
         double size = [[repoDictionary valueForKeyPath:@"size"] doubleValue] / 1024;
@@ -185,7 +154,7 @@
         long stargazersCount = [[repoDictionary valueForKeyPath:@"stargazers_count"] longValue];
         long branchesCount = 0, issuesCount = 0;
         
-        ACRepo *repo = [[ACRepo alloc] initWithName:name andOwnerName:ownerName andOwnerAvatar:ava andLanguage:language andCreateDate:date andSize:size andForksCount:forksCount andWatchersCount:watchersCount andBranchesCount:branchesCount andStargazersCount:stargazersCount andIssuesCount:issuesCount andPrivate:isPrivate andNotificationsUrl:notificationsUrl];
+        ACRepo *repo = [[ACRepo alloc] initWithName:name andOwnerName:ownerName andOwnerAvatarUrl:avatarUrl andLanguage:language andCreateDate:date andSize:size andForksCount:forksCount andWatchersCount:watchersCount andBranchesCount:branchesCount andStargazersCount:stargazersCount andIssuesCount:issuesCount andPrivate:isPrivate andNotificationsUrl:notificationsUrl];
         
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             
@@ -229,7 +198,7 @@
 
 +(NSString *)eventsUrl:(NSString *)userLogin andPageNumber:(int)pageNumber
 {
-    return [NSString stringWithFormat:@"https://api.github.com/users/%@/events?page=%i&per_page=3", userLogin, pageNumber];
+    return [NSString stringWithFormat:@"https://api.github.com/users/%@/events?page=%i&per_page=10&client_id=%@&client_secret=%@", userLogin, pageNumber, clientID, clientSecret];
 }
 
 +(NSString *)verificationUrl
@@ -244,19 +213,18 @@
 
 +(NSString *)userUrl:(NSString *)token
 {
-    return [NSString stringWithFormat:@"https://api.github.com/user?access_token=%@", token];
+    return [NSString stringWithFormat:@"https://api.github.com/user?access_token=%@&client_id=%@&client_secret=%@", token, clientID, clientSecret];
 }
 
 +(NSString *)reposUrl:(NSString *)userLogin andPageNumber:(int)pageNumber
 {
-    return [NSString stringWithFormat:@"https://api.github.com/users/%@/repos?page=%i&per_page=3", userLogin, pageNumber];
+    return [NSString stringWithFormat:@"https://api.github.com/users/%@/repos?page=%i&per_page=10&client_id=%@&client_secret=%@", userLogin, pageNumber, clientID, clientSecret];
 }
 
 +(NSString *)searchReposUrl:(NSString *)query andPageNumber:(int)pageNumber
 {
-    return [NSString stringWithFormat:@"https://api.github.com/search/repositories?q=%@&sort=stars&order=desc&page=%i&per_page=10", query, pageNumber];
+    return [NSString stringWithFormat:@"https://api.github.com/search/repositories?q=%@&sort=stars&order=desc&page=%i&per_page=10&client_id=%@&client_secret=%@", query, pageNumber, clientID, clientSecret];
+    
 }
-
-
 
 @end

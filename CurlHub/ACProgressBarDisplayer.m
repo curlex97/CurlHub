@@ -46,13 +46,13 @@
     
     [view addSubview:messageFrame];
     
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
         messageFrame.frame = CGRectMake(0, 0, view.frame.size.width, 50);
     }];
     
     if(faded)
     {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self removeFromView:view];
         });
     }
@@ -65,7 +65,7 @@
     {
         if(child.tag == 4400)
         {
-            [UIView animateWithDuration:0.5 animations:^{
+            [UIView animateWithDuration:0.2 animations:^{
                 child.frame = CGRectMake(0, -50, view.frame.size.width, 50);
             } completion:^(BOOL finished)
              {

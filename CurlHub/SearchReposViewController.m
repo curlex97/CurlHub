@@ -12,6 +12,7 @@
 #import "RepoTableViewCell.h"
 #import "DetailRepoViewController.h"
 #import "ACProgressBarDisplayer.h"
+#import "ACPictureManager.h"
 
 @interface SearchReposViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property NSMutableArray *tableRepos;
@@ -65,19 +66,24 @@
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
-        if(self.pageNumber == 1)
+        NSMutableArray *newData = [NSMutableArray arrayWithArray:[[[ACReposViewModel alloc] init] allReposForQuery:self.query andPageNumber:self.pageNumber]];
+        
+        if(newData.count || self.tableRepos.count)
         {
-            self.tableRepos = [NSMutableArray arrayWithArray:[[[ACReposViewModel alloc] init] allReposForQuery:self.query andPageNumber:self.pageNumber]];
+            self.pageNumber == 1 ? self.tableRepos = newData : [self.tableRepos addObjectsFromArray:[[[ACReposViewModel alloc] init] allReposForQuery:self.query andPageNumber:self.pageNumber]];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.progressBarDisplayer removeFromView:self.view];
+                [self.tableView reloadData];
+            });
+            
         }
         else
         {
-            [self.tableRepos addObjectsFromArray:[[[ACReposViewModel alloc] init] allReposForQuery:self.query andPageNumber:self.pageNumber]];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.progressBarDisplayer displayOnView:self.view withMessage:@"No internet" andColor:[UIColor redColor] andIndicator:NO andFaded:YES];
+            });
         }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.progressBarDisplayer removeFromView:self.view];
-            [self.tableView reloadData];
-        });
+
     });
 }
 
@@ -93,7 +99,10 @@
         RepoTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ownRepoCell"];
         if(!cell) cell = [[RepoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ownRepoCell"];
         ACRepo *repo = self.tableRepos[indexPath.row];
-        cell.ownerImage.image = repo.ownerAvatar;
+        [ACPictureManager downloadImageByUrlAsync:repo.ownerAvatarUrl andCompletion:^(UIImage* image)
+         {
+             cell.ownerImage.image = image;
+         }];
         cell.ownerImage.layer.cornerRadius = cell.ownerImage.frame.size.height /2;
         cell.ownerImage.layer.masksToBounds = YES;
         cell.ownerImage.layer.borderWidth = 0;
@@ -135,7 +144,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 75.0f;
+    return indexPath.row >= self.tableRepos.count ? 50.0f : 75.0f;
 }
 
 @end

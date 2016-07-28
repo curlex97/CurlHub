@@ -10,6 +10,7 @@
 #import "ACEventsViewModel.h"
 #import "ActionTableViewCell.h"
 #import "ACProgressBarDisplayer.h"
+#import "ACPictureManager.h"
 
 @interface EventsViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property NSMutableArray *sourceEvents;
@@ -46,19 +47,27 @@
      [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[UIColor blueColor] andIndicator:YES andFaded:NO];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        if(self.pageNumber == 1)
-        {
-            self.sourceEvents = [NSMutableArray arrayWithArray:[[[ACEventsViewModel alloc] init] allEventsForUser:self.currentUser andPageNumber:self.pageNumber]];
-        }
-        else
-        {
-            [self.sourceEvents addObjectsFromArray:[NSMutableArray arrayWithArray:[[[ACEventsViewModel alloc] init] allEventsForUser:self.currentUser andPageNumber:self.pageNumber]]];
-        }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.progressBarDisplayer removeFromView:self.view];
-            self.tableEvents = [NSMutableArray arrayWithArray:self.sourceEvents];
-            [self.tableView reloadData];
-        });
+        
+        NSMutableArray *newData = [NSMutableArray arrayWithArray:[[[ACEventsViewModel alloc] init] allEventsForUser:self.currentUser andPageNumber:self.pageNumber]];
+        
+       if(newData.count || self.tableEvents.count)
+       {
+           self.pageNumber == 1 ? self.sourceEvents = newData : [self.sourceEvents addObjectsFromArray:newData];
+           
+           dispatch_async(dispatch_get_main_queue(), ^{
+               [self.progressBarDisplayer removeFromView:self.view];
+               self.tableEvents = [NSMutableArray arrayWithArray:self.sourceEvents];
+               [self.tableView reloadData];
+           });
+           
+       }
+       else
+       {
+           dispatch_async(dispatch_get_main_queue(), ^{
+            [self.progressBarDisplayer displayOnView:self.view withMessage:@"No internet" andColor:[UIColor redColor] andIndicator:NO andFaded:YES];
+            });
+       }
+        
     });
 
 }
@@ -98,7 +107,7 @@
         ACEvent *event = self.tableEvents[indexPath.row];
         cell.timeLabel.text = event.time;
         cell.actionLabel.text = [event eventDescription];
-        cell.avatarView.image = event.avatar;
+        [ACPictureManager downloadImageByUrlAsync:event.avatarUrl andCompletion:^(UIImage* image){cell.avatarView.image = image;}];
         cell.avatarView.layer.cornerRadius = cell.avatarView.frame.size.height /2;
         cell.avatarView.layer.masksToBounds = YES;
         cell.avatarView.layer.borderWidth = 0;

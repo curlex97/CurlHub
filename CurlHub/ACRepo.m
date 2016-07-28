@@ -10,14 +10,14 @@
 
 @implementation ACRepo
 
--(instancetype)initWithName:(NSString *)name andOwnerName:(NSString *)ownerName andOwnerAvatar:(UIImage *)ownerAvatar andLanguage:(NSString *)language andCreateDate:(NSString *)createDate andSize:(double)size andForksCount:(long)forksCount andWatchersCount:(long)watchersCount andBranchesCount:(long)branchesCount andStargazersCount:(long)stargazersCount andIssuesCount:(long)issuesCount andPrivate:(BOOL)isPrivate andNotificationsUrl:(NSString *)notificationsUrl
+-(instancetype)initWithName:(NSString *)name andOwnerName:(NSString *)ownerName andOwnerAvatarUrl:(NSString *)ownerAvatarUrl andLanguage:(NSString *)language andCreateDate:(NSString *)createDate andSize:(double)size andForksCount:(long)forksCount andWatchersCount:(long)watchersCount andBranchesCount:(long)branchesCount andStargazersCount:(long)stargazersCount andIssuesCount:(long)issuesCount andPrivate:(BOOL)isPrivate andNotificationsUrl:(NSString *)notificationsUrl
 {
     self = [super init];
     if (self)
     {
         self.name = name;
         self.ownerName = ownerName;
-        self.ownerAvatar = ownerAvatar;
+        self.ownerAvatarUrl = ownerAvatarUrl;
         self.language = language;
         self.createDate = createDate;
         self.size = size;

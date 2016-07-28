@@ -13,7 +13,7 @@
 
 @property NSString* name;
 @property NSString* ownerName;
-@property UIImage *ownerAvatar;
+@property NSString *ownerAvatarUrl;
 @property NSString* language;
 @property NSString* notificationsUrl;
 @property NSString* createDate;
@@ -30,6 +30,6 @@
 
 
 
--(instancetype)initWithName:(NSString*)name andOwnerName:(NSString*)ownerName andOwnerAvatar:(UIImage*)ownerAvatar andLanguage:(NSString*)language andCreateDate:(NSString*)createDate andSize:(double)size andForksCount:(long)forksCount andWatchersCount:(long)watchersCount andBranchesCount:(long)branchesCount andStargazersCount:(long)stargazersCount andIssuesCount:(long)issuesCount andPrivate:(BOOL)isPrivate andNotificationsUrl:(NSString*)notificationsUrl;
+-(instancetype)initWithName:(NSString*)name andOwnerName:(NSString*)ownerName andOwnerAvatarUrl:(NSString*)ownerAvatarUrl andLanguage:(NSString*)language andCreateDate:(NSString*)createDate andSize:(double)size andForksCount:(long)forksCount andWatchersCount:(long)watchersCount andBranchesCount:(long)branchesCount andStargazersCount:(long)stargazersCount andIssuesCount:(long)issuesCount andPrivate:(BOOL)isPrivate andNotificationsUrl:(NSString*)notificationsUrl;
 
 @end

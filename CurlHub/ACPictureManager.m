@@ -57,4 +57,16 @@ static NSMutableDictionary *picturesDictionary;
     return picturesDictionary[realName];
 }
 
++(void)downloadImageByUrlAsync:(NSString *)url andCompletion:(void (^)(UIImage *))downloadComleted
+{
+    UIImage *image = [ACPictureManager getPictureByName:url];
+    if(!image)
+    {
+        NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: url]];
+        image = [UIImage imageWithData: data];
+        if(image) [ACPictureManager addPicture:[UIImage imageWithData: data] byName:url];
+    }
+    downloadComleted(image);
+}
+
 @end

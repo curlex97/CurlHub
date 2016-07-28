@@ -9,6 +9,7 @@
 #import "DetailRepoViewController.h"
 #import "DetailRepoCountTableViewCell.h"
 #import "DetailRepoDoubleTableViewCell.h"
+#import "ACPictureManager.h"
 
 @interface DetailRepoViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -21,7 +22,10 @@
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.ownerImage.image = self.currentRepo.ownerAvatar;
+[ACPictureManager downloadImageByUrlAsync:self.currentRepo.ownerAvatarUrl andCompletion:^(UIImage* image)
+    {
+        self.ownerImage.image = image;
+    }];
     self.ownerImage.layer.cornerRadius = self.ownerImage.frame.size.height /2;
     self.ownerImage.layer.masksToBounds = YES;
     self.ownerImage.layer.borderWidth = 0;

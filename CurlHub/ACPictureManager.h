@@ -12,4 +12,5 @@
 +(NSMutableDictionary*) picturesDictionary;
 +(void) addPicture:(UIImage*)picture byName:(NSString*)name;
 +(UIImage*) getPictureByName:(NSString*)name;
++(void) downloadImageByUrlAsync:(NSString*)url andCompletion: (void(^)(UIImage*))downloadComleted;
 @end

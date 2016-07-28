@@ -16,10 +16,10 @@
 @property NSString* refType;
 @property NSString* repoName;
 @property NSString* ref;
-@property UIImage* avatar;
+@property NSString* avatarUrl;
 
 
-- (instancetype)initWithLogin:(NSString*)login andAction:(NSString*)action andTime:(NSString*)time andRefType:(NSString*)refType andRepoName:(NSString*)repoName andRef:(NSString*)ref andAvatar:(UIImage*)avatar;
+- (instancetype)initWithLogin:(NSString*)login andAction:(NSString*)action andTime:(NSString*)time andRefType:(NSString*)refType andRepoName:(NSString*)repoName andRef:(NSString*)ref andAvatarUrl:(NSString*)avatarUrl;
 -(NSString*) eventDescription;
 
 @end

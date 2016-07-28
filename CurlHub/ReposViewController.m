@@ -12,6 +12,7 @@
 #import "RepoTableViewCell.h"
 #import "DetailRepoViewController.h"
 #import "ACProgressBarDisplayer.h"
+#import "ACPictureManager.h"
 
 @interface ReposViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property NSMutableArray *sourceRepos;
@@ -49,21 +50,28 @@
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
-        if(self.pageNumber == 1)
+        NSMutableArray *newData = [NSMutableArray arrayWithArray:[[[ACReposViewModel alloc] init] allReposForUser:self.currentUser andPageNumber:self.pageNumber]];
+        
+        if(newData.count || self.sourceRepos.count)
         {
-            self.sourceRepos = [NSMutableArray arrayWithArray:[[[ACReposViewModel alloc] init] allReposForUser:self.currentUser andPageNumber:self.pageNumber]];
-        }
-        else
-        {
-            [self.sourceRepos addObjectsFromArray:[NSMutableArray arrayWithArray:[[[ACReposViewModel alloc] init] allReposForUser:self.currentUser andPageNumber:self.pageNumber]]];
+            self.pageNumber == 1 ? self.sourceRepos = newData : [self.sourceRepos addObjectsFromArray:newData];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.progressBarDisplayer removeFromView:self.view];
+                self.tableRepos = [NSMutableArray arrayWithArray:self.sourceRepos];
+                [self.tableView reloadData];
+            });
         }
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-           [self.progressBarDisplayer removeFromView:self.view];
-            self.tableRepos = [NSMutableArray arrayWithArray:self.sourceRepos];
-            [self.tableView reloadData];
-        });
+        else
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.progressBarDisplayer displayOnView:self.view withMessage:@"No internet" andColor:[UIColor redColor] andIndicator:NO andFaded:YES];
+            });
+        }
+        
     });
+    
 }
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
@@ -100,7 +108,11 @@
         
         ACRepo *repo = self.tableRepos[indexPath.row];
         
-        cell.ownerImage.image = repo.ownerAvatar;
+        [ACPictureManager downloadImageByUrlAsync:repo.ownerAvatarUrl andCompletion:^(UIImage* image)
+         {
+             cell.ownerImage.image = image;
+         }];
+        
         cell.ownerImage.layer.cornerRadius = cell.ownerImage.frame.size.height /2;
         cell.ownerImage.layer.masksToBounds = YES;
         cell.ownerImage.layer.borderWidth = 0;
