@@ -10,7 +10,7 @@
 
 @implementation ACRepo
 
--(instancetype)initWithName:(NSString *)name andOwnerName:(NSString *)ownerName andOwnerAvatarUrl:(NSString *)ownerAvatarUrl andLanguage:(NSString *)language andCreateDate:(NSString *)createDate andSize:(double)size andForksCount:(long)forksCount andWatchersCount:(long)watchersCount andBranchesCount:(long)branchesCount andStargazersCount:(long)stargazersCount andIssuesCount:(long)issuesCount andPrivate:(BOOL)isPrivate andNotificationsUrl:(NSString *)notificationsUrl
+-(instancetype)initWithName:(NSString *)name andOwnerName:(NSString *)ownerName andOwnerAvatarUrl:(NSString *)ownerAvatarUrl andLanguage:(NSString *)language andCreateDate:(NSString *)createDate andSize:(double)size andForksCount:(long)forksCount andWatchersCount:(long)watchersCount andBranchesCount:(long)branchesCount andStargazersCount:(long)stargazersCount andIssuesCount:(long)issuesCount andPrivate:(BOOL)isPrivate andIssuesUrl:(NSString *)issuesUrl
 {
     self = [super init];
     if (self)
@@ -27,7 +27,7 @@
         self.stargazersCount = stargazersCount;
         self.issuesCount = issuesCount;
         self.isPrivate = isPrivate;
-        self.notificationsUrl = notificationsUrl;
+        self.issuesUrl = issuesUrl;
     }
     return self;
 }

@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ACUser.h"
 
 @interface IssuesViewController : UIViewController
+@property ACUser* currentUser;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @end

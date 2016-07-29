@@ -11,6 +11,7 @@
 #import "ACEvent.h"
 #import "ACRepo.h"
 #import "ACNews.h"
+#import "ACIssue.h"
 
 @interface ACHubDataManager : NSObject
 
@@ -21,6 +22,8 @@
 +(NSString*) reposUrl :(NSString*)userLogin andPageNumber:(int)pageNumber;
 +(NSString*) searchReposUrl :(NSString*)query andPageNumber:(int)pageNumber;
 +(NSString*) newsUrl;
++(NSString*) issuesUrlWithUrl:(NSString*)issuesUrl;
+
 
 -(NSString*) formatDateWithString:(NSString*)string;
 
@@ -31,5 +34,6 @@
 -(NSArray<ACRepo*>*) reposForUser:(ACUser*)user andPageNumber:(int)pageNumber;
 -(NSArray<ACRepo*>*) reposForQuery:(NSString*)query andPageNumber:(int)pageNumber;
 -(NSArray<ACNews*>*) news;
+-(NSArray<ACIssue*>*) issuesForUser:(ACUser*)user;
 
 @end

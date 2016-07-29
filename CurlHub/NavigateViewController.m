@@ -12,6 +12,7 @@
 #import "ReposViewController.h"
 #import "SearchReposViewController.h"
 #import "DetailUserViewController.h"
+#import "IssuesViewController.h"
 #import "UIImage+ACImageResizing.h"
 
 @interface NavigateViewController ()
@@ -95,6 +96,12 @@
     {
         DetailUserViewController* duvc = (DetailUserViewController*)subController;
         duvc.currentUser = self.currentUser;
+    }
+    
+    if([subController isKindOfClass:[IssuesViewController class]])
+    {
+        IssuesViewController* ivc = (IssuesViewController*)subController;
+        ivc.currentUser = self.currentUser;
     }
     
     [self addChildViewController:subController];
