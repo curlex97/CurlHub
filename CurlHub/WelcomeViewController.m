@@ -57,7 +57,8 @@
 -(void)login
 {
     [UIButton animateWithDuration:.2 animations:^{self.loginButton.alpha = 0.0f;}];
-    [self.progressBarDisplayer displayOnView:self.mainView withMessage:@"Logging..." andColor:[UIColor blueColor] andIndicator:YES andFaded:NO];
+    [self.progressBarDisplayer displayOnView:self.mainView withMessage:@"Logging..." andColor:[UIColor colorWithRed:0.0/255.0 green:128.0/255.0 blue:218.0/255.0 alpha:1.0] andIndicator:YES andFaded:NO];
+    
     dispatch_async(dispatch_get_global_queue(0,0), ^{
         
         NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:[ACHubDataManager verificationUrl]] encoding:NSUTF8StringEncoding  error:nil];

@@ -1,14 +1,14 @@
 //
-//  DetailRepoDoubleTableViewCell.m
+//  DetailRepoCountTableViewCell.m
 //  CurlHub
 //
 //  Created by Arthur Chistyak on 26.07.16.
 //  Copyright © 2016 ArthurChistyak. All rights reserved.
 //
 
-#import "DetailRepoDoubleTableViewCell.h"
+#import "DetailCountTableViewCell.h"
 
-@implementation DetailRepoDoubleTableViewCell
+@implementation DetailCountTableViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];

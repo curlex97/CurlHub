@@ -11,6 +11,7 @@
 #import "EventsViewController.h"
 #import "ReposViewController.h"
 #import "SearchReposViewController.h"
+#import "DetailUserViewController.h"
 #import "UIImage+ACImageResizing.h"
 
 @interface NavigateViewController ()
@@ -90,7 +91,11 @@
         rvc.currentUser = self.currentUser;
     }
     
-
+    if([subController isKindOfClass:[DetailUserViewController class]])
+    {
+        DetailUserViewController* duvc = (DetailUserViewController*)subController;
+        duvc.currentUser = self.currentUser;
+    }
     
     [self addChildViewController:subController];
     [subController.view setFrame:CGRectMake(0.0f, 0.0f, self.mainView.frame.size.width, self.mainView.frame.size.height)];

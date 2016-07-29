@@ -21,13 +21,14 @@
     self = [super initWithCoder:coder];
     if (self) {
         
-        self.keys = [NSArray arrayWithObjects:@"News", @"Events", @"Repos", @"Notifications", @"Search", nil];
+        self.keys = [NSArray arrayWithObjects:@"News", @"Profile", @"Events", @"Repos", @"Issues", @"Search", nil];
         self.pages = @{
           self.keys[0] : @"NewsViewController",
-          self.keys[1] : @"EventsViewController",
-          self.keys[2] : @"ReposViewController",
-          self.keys[3] : @"NotificationsViewController",
-          self.keys[4] : @"SearchReposViewController"
+          self.keys[1] : @"DetailUserViewController",
+          self.keys[2] : @"EventsViewController",
+          self.keys[3] : @"ReposViewController",
+          self.keys[4] : @"IssuesViewController",
+          self.keys[5] : @"SearchReposViewController"
           };
         
         

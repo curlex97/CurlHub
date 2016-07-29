@@ -7,8 +7,8 @@
 //
 
 #import "DetailRepoViewController.h"
-#import "DetailRepoCountTableViewCell.h"
-#import "DetailRepoDoubleTableViewCell.h"
+#import "DetailCountTableViewCell.h"
+#import "DetailDoubleTableViewCell.h"
 #import "ACPictureManager.h"
 
 @interface DetailRepoViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -46,8 +46,8 @@
 {
     if(indexPath.section == 0)
     {
-        DetailRepoCountTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"drcountCell"];
-        if(!cell) cell = [[DetailRepoCountTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"drcountCell"];
+        DetailCountTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"drcountCell"];
+        if(!cell) cell = [[DetailCountTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"drcountCell"];
         
         cell.forksLabel.text = [NSString stringWithFormat:@"%li", self.currentRepo.forksCount];
         cell.watchersLabel.text = [NSString stringWithFormat:@"%li", self.currentRepo.watchersCount];
@@ -58,8 +58,8 @@
     }
     else
     {
-        DetailRepoDoubleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"drdoubleCell"];
-        if(!cell) cell = [[DetailRepoDoubleTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"drdoubleCell"];
+        DetailDoubleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"drdoubleCell"];
+        if(!cell) cell = [[DetailDoubleTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"drdoubleCell"];
         
         switch (indexPath.row) {
             case 0:

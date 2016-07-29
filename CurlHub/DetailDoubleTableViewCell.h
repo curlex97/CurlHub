@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DetailRepoDoubleTableViewCell : UITableViewCell
+@interface DetailDoubleTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *leftImage;
 @property (weak, nonatomic) IBOutlet UIImageView *rightImage;
 @property (weak, nonatomic) IBOutlet UILabel *leftLabel;

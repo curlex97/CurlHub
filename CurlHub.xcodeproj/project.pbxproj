@@ -15,7 +15,7 @@
 		280DC1441D45637800D6E10F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 280DC1421D45637800D6E10F /* LaunchScreen.storyboard */; };
 		280DC1571D461D9400D6E10F /* MenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC1561D461D9400D6E10F /* MenuView.m */; };
 		280DC1591D461DDF00D6E10F /* MenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 280DC1581D461DDF00D6E10F /* MenuView.xib */; };
-		280DC15F1D46465500D6E10F /* NotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC15E1D46465500D6E10F /* NotificationsViewController.m */; };
+		280DC15F1D46465500D6E10F /* IssuesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC15E1D46465500D6E10F /* IssuesViewController.m */; };
 		280DC1621D464A5800D6E10F /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC1611D464A5800D6E10F /* NewsViewController.m */; };
 		280DC1651D464F4800D6E10F /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC1641D464F4800D6E10F /* EventsViewController.m */; };
 		280DC1691D46579100D6E10F /* ACHubDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC1681D46579100D6E10F /* ACHubDataManager.m */; };
@@ -30,9 +30,9 @@
 		28BE0F3D1D478B5200110482 /* ReposViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F3C1D478B5200110482 /* ReposViewController.m */; };
 		28BE0F401D478C1200110482 /* ACReposViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F3F1D478C1200110482 /* ACReposViewModel.m */; };
 		28BE0F431D478D5B00110482 /* RepoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F421D478D5B00110482 /* RepoTableViewCell.m */; };
-		28BE0F461D47A48D00110482 /* DetailRepoCountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F451D47A48D00110482 /* DetailRepoCountTableViewCell.m */; };
+		28BE0F461D47A48D00110482 /* DetailCountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F451D47A48D00110482 /* DetailCountTableViewCell.m */; };
 		28BE0F531D47BA3A00110482 /* DetailRepoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F521D47BA3A00110482 /* DetailRepoViewController.m */; };
-		28BE0F561D47C1B400110482 /* DetailRepoDoubleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F551D47C1B400110482 /* DetailRepoDoubleTableViewCell.m */; };
+		28BE0F561D47C1B400110482 /* DetailDoubleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F551D47C1B400110482 /* DetailDoubleTableViewCell.m */; };
 		28BE0F5B1D47E40B00110482 /* SearchReposViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F5A1D47E40B00110482 /* SearchReposViewController.m */; };
 		28CBF15D1D49DB9C0096F5EC /* ACPictureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CBF15C1D49DB9C0096F5EC /* ACPictureManager.m */; };
 		28CBF1601D49F5120096F5EC /* NSString+HtmlPicturePath.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CBF15F1D49F5120096F5EC /* NSString+HtmlPicturePath.m */; };
@@ -40,6 +40,7 @@
 		28CBF1681D4AA19B0096F5EC /* UIImage+ACImageResizing.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CBF1671D4AA19B0096F5EC /* UIImage+ACImageResizing.m */; };
 		28CBF16B1D4AABA90096F5EC /* ACNews.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CBF16A1D4AABA90096F5EC /* ACNews.m */; };
 		28CBF1711D4AB3FF0096F5EC /* ACNewsViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CBF1701D4AB3FF0096F5EC /* ACNewsViewModel.m */; };
+		28FBBC5B1D4B728F0020D1E3 /* DetailUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28FBBC5A1D4B728F0020D1E3 /* DetailUserViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,8 +57,8 @@
 		280DC1551D461D9400D6E10F /* MenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuView.h; sourceTree = "<group>"; };
 		280DC1561D461D9400D6E10F /* MenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuView.m; sourceTree = "<group>"; };
 		280DC1581D461DDF00D6E10F /* MenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuView.xib; sourceTree = "<group>"; };
-		280DC15D1D46465500D6E10F /* NotificationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationsViewController.h; sourceTree = "<group>"; };
-		280DC15E1D46465500D6E10F /* NotificationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationsViewController.m; sourceTree = "<group>"; };
+		280DC15D1D46465500D6E10F /* IssuesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IssuesViewController.h; sourceTree = "<group>"; };
+		280DC15E1D46465500D6E10F /* IssuesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IssuesViewController.m; sourceTree = "<group>"; };
 		280DC1601D464A5800D6E10F /* NewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsViewController.h; sourceTree = "<group>"; };
 		280DC1611D464A5800D6E10F /* NewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsViewController.m; sourceTree = "<group>"; };
 		280DC1631D464F4800D6E10F /* EventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsViewController.h; sourceTree = "<group>"; };
@@ -86,12 +87,12 @@
 		28BE0F3F1D478C1200110482 /* ACReposViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACReposViewModel.m; sourceTree = "<group>"; };
 		28BE0F411D478D5B00110482 /* RepoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepoTableViewCell.h; sourceTree = "<group>"; };
 		28BE0F421D478D5B00110482 /* RepoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepoTableViewCell.m; sourceTree = "<group>"; };
-		28BE0F441D47A48D00110482 /* DetailRepoCountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailRepoCountTableViewCell.h; sourceTree = "<group>"; };
-		28BE0F451D47A48D00110482 /* DetailRepoCountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailRepoCountTableViewCell.m; sourceTree = "<group>"; };
+		28BE0F441D47A48D00110482 /* DetailCountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailCountTableViewCell.h; sourceTree = "<group>"; };
+		28BE0F451D47A48D00110482 /* DetailCountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailCountTableViewCell.m; sourceTree = "<group>"; };
 		28BE0F511D47BA3A00110482 /* DetailRepoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailRepoViewController.h; sourceTree = "<group>"; };
 		28BE0F521D47BA3A00110482 /* DetailRepoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailRepoViewController.m; sourceTree = "<group>"; };
-		28BE0F541D47C1B400110482 /* DetailRepoDoubleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailRepoDoubleTableViewCell.h; sourceTree = "<group>"; };
-		28BE0F551D47C1B400110482 /* DetailRepoDoubleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailRepoDoubleTableViewCell.m; sourceTree = "<group>"; };
+		28BE0F541D47C1B400110482 /* DetailDoubleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailDoubleTableViewCell.h; sourceTree = "<group>"; };
+		28BE0F551D47C1B400110482 /* DetailDoubleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailDoubleTableViewCell.m; sourceTree = "<group>"; };
 		28BE0F591D47E40B00110482 /* SearchReposViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchReposViewController.h; sourceTree = "<group>"; };
 		28BE0F5A1D47E40B00110482 /* SearchReposViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchReposViewController.m; sourceTree = "<group>"; };
 		28CBF15B1D49DB9C0096F5EC /* ACPictureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACPictureManager.h; sourceTree = "<group>"; };
@@ -106,6 +107,8 @@
 		28CBF16A1D4AABA90096F5EC /* ACNews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACNews.m; sourceTree = "<group>"; };
 		28CBF16F1D4AB3FF0096F5EC /* ACNewsViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACNewsViewModel.h; sourceTree = "<group>"; };
 		28CBF1701D4AB3FF0096F5EC /* ACNewsViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACNewsViewModel.m; sourceTree = "<group>"; };
+		28FBBC591D4B728F0020D1E3 /* DetailUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailUserViewController.h; sourceTree = "<group>"; };
+		28FBBC5A1D4B728F0020D1E3 /* DetailUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailUserViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,7 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				280DC1661D46530600D6E10F /* Home */,
-				28BE0F471D47B97A00110482 /* Notifications */,
+				28BE0F471D47B97A00110482 /* Issues */,
 				28BE0F481D47B98200110482 /* News */,
 				28BE0F491D47B98800110482 /* Events */,
 				28BE0F4A1D47B99000110482 /* Login */,
@@ -174,6 +177,7 @@
 				28BE0F4C1D47B99C00110482 /* Repos */,
 				28BE0F501D47B9BA00110482 /* DetailRepo */,
 				28BE0F5C1D47E41100110482 /* SearchRepos */,
+				28FBBC5C1D4B72950020D1E3 /* DetailUser */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -247,13 +251,13 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
-		28BE0F471D47B97A00110482 /* Notifications */ = {
+		28BE0F471D47B97A00110482 /* Issues */ = {
 			isa = PBXGroup;
 			children = (
-				280DC15D1D46465500D6E10F /* NotificationsViewController.h */,
-				280DC15E1D46465500D6E10F /* NotificationsViewController.m */,
+				280DC15D1D46465500D6E10F /* IssuesViewController.h */,
+				280DC15E1D46465500D6E10F /* IssuesViewController.m */,
 			);
-			name = Notifications;
+			name = Issues;
 			sourceTree = "<group>";
 		};
 		28BE0F481D47B98200110482 /* News */ = {
@@ -327,10 +331,10 @@
 				282D01341D46D3A4001B82C9 /* ActionTableViewCell.m */,
 				28BE0F411D478D5B00110482 /* RepoTableViewCell.h */,
 				28BE0F421D478D5B00110482 /* RepoTableViewCell.m */,
-				28BE0F441D47A48D00110482 /* DetailRepoCountTableViewCell.h */,
-				28BE0F451D47A48D00110482 /* DetailRepoCountTableViewCell.m */,
-				28BE0F541D47C1B400110482 /* DetailRepoDoubleTableViewCell.h */,
-				28BE0F551D47C1B400110482 /* DetailRepoDoubleTableViewCell.m */,
+				28BE0F441D47A48D00110482 /* DetailCountTableViewCell.h */,
+				28BE0F451D47A48D00110482 /* DetailCountTableViewCell.m */,
+				28BE0F541D47C1B400110482 /* DetailDoubleTableViewCell.h */,
+				28BE0F551D47C1B400110482 /* DetailDoubleTableViewCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -362,6 +366,15 @@
 				28CBF1631D49FB290096F5EC /* ACProgressBarDisplayer.m */,
 			);
 			name = ProgressBarDisplayer;
+			sourceTree = "<group>";
+		};
+		28FBBC5C1D4B72950020D1E3 /* DetailUser */ = {
+			isa = PBXGroup;
+			children = (
+				28FBBC591D4B728F0020D1E3 /* DetailUserViewController.h */,
+				28FBBC5A1D4B728F0020D1E3 /* DetailUserViewController.m */,
+			);
+			name = DetailUser;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -437,7 +450,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				28CBF15D1D49DB9C0096F5EC /* ACPictureManager.m in Sources */,
-				280DC15F1D46465500D6E10F /* NotificationsViewController.m in Sources */,
+				280DC15F1D46465500D6E10F /* IssuesViewController.m in Sources */,
 				280DC13C1D45637800D6E10F /* NavigateViewController.m in Sources */,
 				280DC1571D461D9400D6E10F /* MenuView.m in Sources */,
 				282D012F1D46C9B6001B82C9 /* ACEvent.m in Sources */,
@@ -450,8 +463,9 @@
 				28CBF1711D4AB3FF0096F5EC /* ACNewsViewModel.m in Sources */,
 				280DC1771D468B6100D6E10F /* ACUserViewModel.m in Sources */,
 				28BE0F401D478C1200110482 /* ACReposViewModel.m in Sources */,
-				28BE0F461D47A48D00110482 /* DetailRepoCountTableViewCell.m in Sources */,
+				28BE0F461D47A48D00110482 /* DetailCountTableViewCell.m in Sources */,
 				28BE0F5B1D47E40B00110482 /* SearchReposViewController.m in Sources */,
+				28FBBC5B1D4B728F0020D1E3 /* DetailUserViewController.m in Sources */,
 				280DC1621D464A5800D6E10F /* NewsViewController.m in Sources */,
 				280DC1741D46853500D6E10F /* WelcomeViewController.m in Sources */,
 				280DC1691D46579100D6E10F /* ACHubDataManager.m in Sources */,
@@ -463,7 +477,7 @@
 				28CBF1641D49FB290096F5EC /* ACProgressBarDisplayer.m in Sources */,
 				28BE0F3D1D478B5200110482 /* ReposViewController.m in Sources */,
 				280DC1361D45637800D6E10F /* main.m in Sources */,
-				28BE0F561D47C1B400110482 /* DetailRepoDoubleTableViewCell.m in Sources */,
+				28BE0F561D47C1B400110482 /* DetailDoubleTableViewCell.m in Sources */,
 				28CBF1681D4AA19B0096F5EC /* UIImage+ACImageResizing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

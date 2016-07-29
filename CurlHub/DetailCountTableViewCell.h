@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DetailRepoCountTableViewCell : UITableViewCell
+@interface DetailCountTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *stargazersLabel;
 @property (weak, nonatomic) IBOutlet UILabel *watchersLabel;
 @property (weak, nonatomic) IBOutlet UILabel *forksLabel;

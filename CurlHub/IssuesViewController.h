@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NotificationsViewController : UIViewController
+@interface IssuesViewController : UIViewController
 
 @end

@@ -6,13 +6,13 @@
 //  Copyright © 2016 ArthurChistyak. All rights reserved.
 //
 
-#import "NotificationsViewController.h"
+#import "IssuesViewController.h"
 
-@interface NotificationsViewController ()
+@interface IssuesViewController ()
 
 @end
 
-@implementation NotificationsViewController
+@implementation IssuesViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
