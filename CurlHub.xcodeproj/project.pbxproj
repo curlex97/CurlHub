@@ -44,6 +44,7 @@
 		28FBBC621D4B7F770020D1E3 /* ACIssue.m in Sources */ = {isa = PBXBuildFile; fileRef = 28FBBC611D4B7F770020D1E3 /* ACIssue.m */; };
 		28FBBC651D4B82440020D1E3 /* ACIssuesViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 28FBBC641D4B82440020D1E3 /* ACIssuesViewModel.m */; };
 		28FBBC681D4B88EA0020D1E3 /* IssueTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28FBBC671D4B88EA0020D1E3 /* IssueTableViewCell.m */; };
+		28FBBC6B1D4BE7530020D1E3 /* ACColorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 28FBBC6A1D4BE7530020D1E3 /* ACColorManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -118,6 +119,8 @@
 		28FBBC641D4B82440020D1E3 /* ACIssuesViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACIssuesViewModel.m; sourceTree = "<group>"; };
 		28FBBC661D4B88EA0020D1E3 /* IssueTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IssueTableViewCell.h; sourceTree = "<group>"; };
 		28FBBC671D4B88EA0020D1E3 /* IssueTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IssueTableViewCell.m; sourceTree = "<group>"; };
+		28FBBC691D4BE7530020D1E3 /* ACColorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACColorManager.h; sourceTree = "<group>"; };
+		28FBBC6A1D4BE7530020D1E3 /* ACColorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACColorManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,6 +236,8 @@
 				280DC1681D46579100D6E10F /* ACHubDataManager.m */,
 				28CBF15B1D49DB9C0096F5EC /* ACPictureManager.h */,
 				28CBF15C1D49DB9C0096F5EC /* ACPictureManager.m */,
+				28FBBC691D4BE7530020D1E3 /* ACColorManager.h */,
+				28FBBC6A1D4BE7530020D1E3 /* ACColorManager.m */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -477,6 +482,7 @@
 				282D01321D46CD6F001B82C9 /* ACEventsViewModel.m in Sources */,
 				28BE0F431D478D5B00110482 /* RepoTableViewCell.m in Sources */,
 				280DC1711D4684C300D6E10F /* LoginViewController.m in Sources */,
+				28FBBC6B1D4BE7530020D1E3 /* ACColorManager.m in Sources */,
 				28CBF1711D4AB3FF0096F5EC /* ACNewsViewModel.m in Sources */,
 				280DC1771D468B6100D6E10F /* ACUserViewModel.m in Sources */,
 				28BE0F401D478C1200110482 /* ACReposViewModel.m in Sources */,

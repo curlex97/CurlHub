@@ -7,6 +7,10 @@
 //
 
 #import "MenuView.h"
+#import "UIImage+ACImageResizing.h"
+#import "ACColorManager.h"
+
+#define IMAGE_SIZE 20
 
 @interface MenuView() <UITableViewDelegate, UITableViewDataSource>
 @property NSDictionary *pages;
@@ -18,6 +22,8 @@
 
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
+   
+    
     self = [super initWithCoder:coder];
     if (self) {
         
@@ -33,7 +39,7 @@
         
         
         [[NSBundle mainBundle] loadNibNamed:@"MenuView" owner:self options:nil];
-        [self.tableView setBackgroundColor:[UIColor colorWithRed:34.0/255.0 green:34.0/255.0 blue:34.0/255.0 alpha:1.0]];
+        [self.tableView setBackgroundColor:[ACColorManager darkBackgroundColor]];
         [self addSubview:self.view];
         
     }
@@ -46,12 +52,22 @@
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell"];
     if(!cell) cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
     
+    NSString* imageName = @"";
+    switch (indexPath.row) {
+        case 0:imageName = @"newsIcon"; break;
+        case 1:imageName = @"profileIcon"; break;
+        case 2:imageName = @"eventsIcon"; break;
+        case 3:imageName = @"reposIcon"; break;
+        case 4:imageName = @"issuesIcon"; break;
+        case 5:imageName = @"searchIcon"; break;
+    }
+    cell.imageView.image = [UIImage imageWithImage:[UIImage imageNamed:imageName] scaledToSize:CGSizeMake(IMAGE_SIZE, IMAGE_SIZE)];
     cell.textLabel.text = [NSString stringWithFormat:@"%@", self.keys[indexPath.row]];
-    cell.backgroundColor = [UIColor colorWithRed:34.0/255.0 green:34.0/255.0 blue:34.0/255.0 alpha:1.0];
-    cell.textLabel.textColor = [UIColor colorWithRed:252.0/255.0 green:252.0/255.0 blue:252.0/255.0 alpha:1.0];
+    cell.backgroundColor = [ACColorManager darkBackgroundColor];
+    cell.textLabel.textColor = [ACColorManager foregroundColor];
     
     UIView* selectedView = [[UIView alloc] init];
-    selectedView.backgroundColor =[UIColor colorWithRed:45.0/255.0 green:45.0/255.0 blue:45.0/255.0 alpha:1.0];
+    selectedView.backgroundColor = [ACColorManager cellSelectionColor];
     cell.selectedBackgroundView = selectedView;
     
     return cell;

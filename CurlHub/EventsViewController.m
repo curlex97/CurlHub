@@ -11,6 +11,7 @@
 #import "ActionTableViewCell.h"
 #import "ACProgressBarDisplayer.h"
 #import "ACPictureManager.h"
+#import "ACColorManager.h"
 
 @interface EventsViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property NSMutableArray *sourceEvents;
@@ -44,7 +45,7 @@
 
 -(void) refreshTable
 {
-     [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[UIColor colorWithRed:0.0/255.0 green:128.0/255.0 blue:218.0/255.0 alpha:1.0] andIndicator:YES andFaded:NO];
+     if(!self.sourceEvents.count)[self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[ACColorManager messageColor] andIndicator:YES andFaded:NO];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
@@ -64,7 +65,7 @@
        else
        {
            dispatch_async(dispatch_get_main_queue(), ^{
-            [self.progressBarDisplayer displayOnView:self.view withMessage:@"No internet" andColor:[UIColor redColor] andIndicator:NO andFaded:YES];
+            [self.progressBarDisplayer displayOnView:self.view withMessage:@"No events" andColor:[ACColorManager alertColor]  andIndicator:NO andFaded:YES];
             });
        }
         

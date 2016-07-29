@@ -12,6 +12,7 @@
 #import "ACHubDataManager.h"
 #import "NavigateViewController.h"
 #import "ACProgressBarDisplayer.h"
+#import "ACColorManager.h"
 
 @interface WelcomeViewController ()
 @property ACUserViewModel *userModel;
@@ -28,9 +29,16 @@
     self.userModel = [[ACUserViewModel alloc] init];
     
     UINavigationBar *bar = [self.navigationController navigationBar];
-    [bar setBarTintColor:[UIColor colorWithRed:50.0/255.0 green:50.0/255.0 blue:50.0/255.0 alpha:1.0]];
-    [bar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:252.0/255.0 green:252.0/255.0 blue:252.0/255.0 alpha:1.0]}];
-    [bar setTintColor:[UIColor colorWithRed:252.0/255.0 green:252.0/255.0 blue:252.0/255.0 alpha:1.0]];
+    [bar setBarTintColor:[ACColorManager lightBackgroundColor]];
+    [bar setTitleTextAttributes:@{NSForegroundColorAttributeName : [ACColorManager foregroundColor]}];
+    [bar setTintColor:[ACColorManager foregroundColor]];
+    
+    
+    NavigateViewController *navigateViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NavigateViewController"];
+  //  navigateViewController.currentUser = user;
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:navigateViewController];
+    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self presentViewController:navigationController animated:YES completion:nil];
     
     
     [self login];
@@ -57,7 +65,7 @@
 -(void)login
 {
     [UIButton animateWithDuration:.2 animations:^{self.loginButton.alpha = 0.0f;}];
-    [self.progressBarDisplayer displayOnView:self.mainView withMessage:@"Logging..." andColor:[UIColor colorWithRed:0.0/255.0 green:128.0/255.0 blue:218.0/255.0 alpha:1.0] andIndicator:YES andFaded:NO];
+    [self.progressBarDisplayer displayOnView:self.mainView withMessage:@"Logging..." andColor:[ACColorManager messageColor] andIndicator:YES andFaded:NO];
     
     dispatch_async(dispatch_get_global_queue(0,0), ^{
         
@@ -92,7 +100,7 @@
         }
         else
         {dispatch_async(dispatch_get_main_queue(), ^{
-            [self.progressBarDisplayer displayOnView:self.mainView withMessage:@"No internet" andColor:[UIColor redColor] andIndicator:NO andFaded:YES];
+            [self.progressBarDisplayer displayOnView:self.mainView withMessage:@"No internet" andColor:[ACColorManager alertColor] andIndicator:NO andFaded:YES];
         });
         }
         

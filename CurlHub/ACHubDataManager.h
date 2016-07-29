@@ -15,6 +15,7 @@
 
 @interface ACHubDataManager : NSObject
 
++(NSString*) callbackUrl;
 +(NSString*) verificationUrl;
 +(NSString*) tokenUrl :(NSString*)code;
 +(NSString*) userUrl :(NSString*)token;

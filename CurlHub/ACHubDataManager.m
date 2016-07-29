@@ -315,5 +315,10 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     return [NSString stringWithFormat:@"%@?client_id=%@&client_secret=%@", path, clientID, clientSecret];
 }
 
++(NSString *)callbackUrl
+{
+    return @"curlex.adr.com.ua";
+}
+
 
 @end

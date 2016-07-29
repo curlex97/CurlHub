@@ -14,6 +14,9 @@
 #import "DetailUserViewController.h"
 #import "IssuesViewController.h"
 #import "UIImage+ACImageResizing.h"
+#import "ACColorManager.h"
+
+#define SLIDE_WIDTH 200
 
 @interface NavigateViewController ()
 @property (weak, nonatomic) IBOutlet MenuView<UITableViewDelegate, UITableViewDataSource> *menu;
@@ -35,9 +38,9 @@
     
     
     UINavigationBar *bar = [self.navigationController navigationBar];
-    [bar setBarTintColor:[UIColor colorWithRed:50.0/255.0 green:50.0/255.0 blue:50.0/255.0 alpha:1.0]];
-    [bar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:252.0/255.0 green:252.0/255.0 blue:252.0/255.0 alpha:1.0]}];
-    [bar setTintColor:[UIColor colorWithRed:252.0/255.0 green:252.0/255.0 blue:252.0/255.0 alpha:1.0]];
+    [bar setBarTintColor:[ACColorManager lightBackgroundColor]];
+    [bar setTitleTextAttributes:@{NSForegroundColorAttributeName : [ACColorManager foregroundColor]}];
+    [bar setTintColor:[ACColorManager foregroundColor]];
     
     self.menu.tableView.delegate = _menu;
     self.menu.tableView.dataSource = _menu;
@@ -128,7 +131,7 @@
     if (destination.origin.x > 0) {
         destination.origin.x = 0;
     } else {
-        destination.origin.x = 200;
+        destination.origin.x = SLIDE_WIDTH;
     }
     
     [UIView animateWithDuration:0.25 animations:^{
@@ -148,7 +151,8 @@
     {
         CGPoint translation = [recognizer translationInView:self.view];
         
-        if(originalCenter.x + translation.x > self.mainView.frame.size.width / 2){
+        if(originalCenter.x + translation.x > self.mainView.frame.size.width / 2 &&
+           originalCenter.x + translation.x < self.mainView.frame.size.width / 2 + SLIDE_WIDTH){
            self.mainView.center = CGPointMake(originalCenter.x + translation.x, originalCenter.y);
         }
     }
@@ -156,7 +160,7 @@
     {
         if (self.mainView.frame.origin.x > 80) {
             [UIView animateWithDuration:0.25 animations:^{
-               self.mainView.center = CGPointMake(self.mainView.frame.size.width / 2 + 200, self.mainView.center.y);
+               self.mainView.center = CGPointMake(self.mainView.frame.size.width / 2 + SLIDE_WIDTH, self.mainView.center.y);
             }];
         } else {
             [UIView animateWithDuration:0.25 animations:^{

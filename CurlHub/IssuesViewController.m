@@ -13,6 +13,7 @@
 #import "ACProgressBarDisplayer.h"
 #import "ACPictureManager.h"
 #import "ACIssue.h"
+#import "ACColorManager.h"
 
 @interface IssuesViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property NSMutableArray *sourceIssues;
@@ -39,15 +40,23 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[UIColor colorWithRed:0.0/255.0 green:128.0/255.0 blue:218.0/255.0 alpha:1.0] andIndicator:YES andFaded:NO];
+   if(!self.sourceIssues.count) [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[ACColorManager messageColor]  andIndicator:YES andFaded:NO];
 
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         self.sourceIssues =  [NSMutableArray arrayWithArray:[[[ACIssuesViewModel alloc] init] allIssuesForUser:self.currentUser]];
+        if(self.sourceIssues.count){
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.progressBarDisplayer removeFromView:self.view];
                 self.tableIssues = [NSMutableArray arrayWithArray:self.sourceIssues];
                 [self.tableView reloadData];
             });
+        }
+        else
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.progressBarDisplayer displayOnView:self.view withMessage:@"No issues" andColor:[ACColorManager alertColor] andIndicator:NO andFaded:YES];
+            });
+        }
 
         
     });

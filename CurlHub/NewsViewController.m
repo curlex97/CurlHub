@@ -12,6 +12,7 @@
 #import "ACProgressBarDisplayer.h"
 #import "ACPictureManager.h"
 #import "ACNews.h"
+#import "ACColorManager.h"
 
 @interface NewsViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property NSMutableArray *tableNews;
@@ -40,17 +41,25 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[UIColor colorWithRed:0.0/255.0 green:128.0/255.0 blue:218.0/255.0 alpha:1.0] andIndicator:YES andFaded:NO];
+   if(!self.sourceNews.count) [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[ACColorManager messageColor]  andIndicator:YES andFaded:NO];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
         self.sourceNews = [NSMutableArray arrayWithArray: [[[ACNewsViewModel alloc] init] allNews]];
         self.tableNews = [NSMutableArray arrayWithArray:self.sourceNews];
         
+        if(self.sourceNews.count){
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.progressBarDisplayer removeFromView:self.view];
             [self.tableView reloadData];
         });
+        }
+        else
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.progressBarDisplayer displayOnView:self.view withMessage:@"No news" andColor:[ACColorManager alertColor] andIndicator:NO andFaded:YES];
+            });
+        }
         
         
     });

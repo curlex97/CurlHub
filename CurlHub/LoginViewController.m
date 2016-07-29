@@ -31,7 +31,7 @@
 -(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     NSString *path = [request.URL absoluteString];
-    if([path containsString:@"curlex.adr.com.ua"])
+    if([path containsString:[ACHubDataManager callbackUrl]])
     {
         [self.welcomeController login];
         [self.navigationController popViewControllerAnimated:YES];
