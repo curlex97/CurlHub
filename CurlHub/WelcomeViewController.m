@@ -34,13 +34,6 @@
     [bar setTintColor:[ACColorManager foregroundColor]];
     
     
-    NavigateViewController *navigateViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NavigateViewController"];
-  //  navigateViewController.currentUser = user;
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:navigateViewController];
-    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-    [self presentViewController:navigationController animated:YES completion:nil];
-    
-    
     [self login];
     
 }

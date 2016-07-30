@@ -20,13 +20,14 @@
 @property NSMutableArray *tableRepos;
 @property ACProgressBarDisplayer *progressBarDisplayer;
 @property int pageNumber;
-
+@property NSString* reposFilter;
 @end
 
 @implementation ReposViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.reposFilter = @"all";
     self.navigationController.navigationBar.translucent = NO;
     self.progressBarDisplayer = [[ACProgressBarDisplayer alloc] init];
     self.tableView.delegate = self;
@@ -47,11 +48,12 @@
 
 -(void) refreshTable
 {
+    NSLog(@"%@", self.reposFilter);
     if(!self.sourceRepos.count)[self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[ACColorManager messageColor]  andIndicator:YES andFaded:NO];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
-        NSMutableArray *newData = [NSMutableArray arrayWithArray:[[[ACReposViewModel alloc] init] allReposForUser:self.currentUser andPageNumber:self.pageNumber]];
+        NSMutableArray *newData = [NSMutableArray arrayWithArray:[[[ACReposViewModel alloc] init] allReposForUser:self.currentUser andPageNumber:self.pageNumber andFilter:self.reposFilter]];
         
         if(newData.count || self.sourceRepos.count)
         {
@@ -154,5 +156,15 @@
 {
     return indexPath.row < self.tableRepos.count ? 75.0f : 50.0f;
 }
+
+- (IBAction)onFilterChanged:(id)sender
+{
+    [self.sourceRepos removeAllObjects];
+    [self.tableRepos removeAllObjects];
+        [self.tableView reloadData];
+    self.reposFilter = [self.segmentControl titleForSegmentAtIndex:self.segmentControl.selectedSegmentIndex].lowercaseString;
+    [self refreshTable];
+}
+
 
 @end

@@ -19,11 +19,13 @@
 @property NSMutableArray *sourceIssues;
 @property NSMutableArray *tableIssues;
 @property ACProgressBarDisplayer *progressBarDisplayer;
+@property NSString* issuesFilter;
 @end
 
 @implementation IssuesViewController
 
 - (void)viewDidLoad {
+    self.issuesFilter = @"all";
     [super viewDidLoad];
     self.navigationController.navigationBar.translucent = NO;
     self.progressBarDisplayer = [[ACProgressBarDisplayer alloc] init];
@@ -40,10 +42,16 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-   if(!self.sourceIssues.count) [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[ACColorManager messageColor]  andIndicator:YES andFaded:NO];
+    [self refreshTable];
+}
 
+-(void) refreshTable
+{
+    NSLog(@"%@",self.issuesFilter);
+    if(!self.sourceIssues.count) [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[ACColorManager messageColor]  andIndicator:YES andFaded:NO];
+    
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        self.sourceIssues =  [NSMutableArray arrayWithArray:[[[ACIssuesViewModel alloc] init] allIssuesForUser:self.currentUser]];
+        self.sourceIssues =  [NSMutableArray arrayWithArray:[[[ACIssuesViewModel alloc] init] allIssuesForUser:self.currentUser andFilter:self.issuesFilter]];
         if(self.sourceIssues.count){
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.progressBarDisplayer removeFromView:self.view];
@@ -57,7 +65,7 @@
                 [self.progressBarDisplayer displayOnView:self.view withMessage:@"No issues" andColor:[ACColorManager alertColor] andIndicator:NO andFaded:YES];
             });
         }
-
+        
         
     });
 }
@@ -113,4 +121,11 @@
     return 85.0f;
 }
 
+- (IBAction)onFilterChanged:(id)sender {
+    [self.sourceIssues removeAllObjects];
+    [self.tableIssues removeAllObjects];
+    [self.tableView reloadData];
+    self.issuesFilter = [self.segmentControl titleForSegmentAtIndex:self.segmentControl.selectedSegmentIndex].lowercaseString;
+    [self refreshTable];
+}
 @end

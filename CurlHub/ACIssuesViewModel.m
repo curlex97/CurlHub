@@ -10,9 +10,9 @@
 
 @implementation ACIssuesViewModel
 
--(NSArray *)allIssuesForUser:(ACUser*)user
+-(NSArray *)allIssuesForUser:(ACUser*)user andFilter:(NSString*)filter
 {
-    return [[[ACHubDataManager alloc] init] issuesForUser:user];
+    return [[[ACHubDataManager alloc] init] issuesForUser:user andFilter:filter];
 }
 
 @end

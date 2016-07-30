@@ -20,10 +20,10 @@
 +(NSString*) tokenUrl :(NSString*)code;
 +(NSString*) userUrl :(NSString*)token;
 +(NSString*) eventsUrl :(NSString*)userLogin andPageNumber:(int)pageNumber;
-+(NSString*) reposUrl :(NSString*)userLogin andPageNumber:(int)pageNumber;
++(NSString*) reposUrl :(NSString*)userLogin andPageNumber:(int)pageNumber andFilter:(NSString*)filter;
 +(NSString*) searchReposUrl :(NSString*)query andPageNumber:(int)pageNumber;
 +(NSString*) newsUrl;
-+(NSString*) issuesUrlWithUrl:(NSString*)issuesUrl;
++(NSString*) issuesUrlWithUrl:(NSString*)issuesUrl andFilter:(NSString*)filter;
 
 
 -(NSString*) formatDateWithString:(NSString*)string;
@@ -32,9 +32,9 @@
 -(NSString*) tokenFromCode:(NSString*)code;
 
 -(NSArray<ACEvent*>*) eventsForUser:(ACUser*)user andPageNumber:(int)pageNumber;
--(NSArray<ACRepo*>*) reposForUser:(ACUser*)user andPageNumber:(int)pageNumber;
+-(NSArray<ACRepo*>*) reposForUser:(ACUser*)user andPageNumber:(int)pageNumber andFilter:(NSString*)filter;
 -(NSArray<ACRepo*>*) reposForQuery:(NSString*)query andPageNumber:(int)pageNumber;
 -(NSArray<ACNews*>*) news;
--(NSArray<ACIssue*>*) issuesForUser:(ACUser*)user;
+-(NSArray<ACIssue*>*) issuesForUser:(ACUser*)user andFilter:(NSString*)filter;
 
 @end

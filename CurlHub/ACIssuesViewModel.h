@@ -12,6 +12,6 @@
 #import "ACUser.h"
 @interface ACIssuesViewModel : NSObject
 
--(NSArray*)allIssuesForUser:(ACUser*)user;
+-(NSArray*)allIssuesForUser:(ACUser*)user andFilter:(NSString*)filter;
 
 @end

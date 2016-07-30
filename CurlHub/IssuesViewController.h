@@ -13,5 +13,7 @@
 @property ACUser* currentUser;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentControl;
+- (IBAction)onFilterChanged:(id)sender;
 
 @end

@@ -99,9 +99,9 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 }
 
 
--(NSArray<ACRepo *> *)reposForUser:(ACUser *)user andPageNumber:(int)pageNumber
+-(NSArray<ACRepo *> *)reposForUser:(ACUser *)user andPageNumber:(int)pageNumber andFilter:(NSString*)filter
 {
-    NSString *path = [ACHubDataManager reposUrl:user.login andPageNumber:pageNumber];
+    NSString *path = [ACHubDataManager reposUrl:user.login andPageNumber:pageNumber andFilter:filter];
     NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:path] encoding:NSUTF8StringEncoding error:nil];
     
     NSError *jsonError = nil;
@@ -223,15 +223,15 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     return array;
 }
 
--(NSArray<ACIssue *> *)issuesForUser:(ACUser *)user
+-(NSArray<ACIssue *> *)issuesForUser:(ACUser *)user andFilter:(NSString*)filter
 {
     NSMutableArray *array = [NSMutableArray array];
-    NSArray *userRepos = [self reposForUser:user andPageNumber:1];
+    NSArray *userRepos = [self reposForUser:user andPageNumber:1 andFilter:@"all"];
     
     for(ACRepo* userRepo in userRepos)
     {
         
-        NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:[ACHubDataManager issuesUrlWithUrl:userRepo.issuesUrl]] encoding:NSUTF8StringEncoding error:nil];
+        NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:[ACHubDataManager issuesUrlWithUrl:userRepo.issuesUrl andFilter:filter]] encoding:NSUTF8StringEncoding error:nil];
         
         NSError *jsonError = nil;
         NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
@@ -293,9 +293,9 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     return [NSString stringWithFormat:@"https://api.github.com/user?access_token=%@&client_id=%@&client_secret=%@", token, clientID, clientSecret];
 }
 
-+(NSString *)reposUrl:(NSString *)userLogin andPageNumber:(int)pageNumber
++(NSString *)reposUrl:(NSString *)userLogin andPageNumber:(int)pageNumber andFilter:(NSString*)filter
 {
-    return [NSString stringWithFormat:@"https://api.github.com/users/%@/repos?page=%i&per_page=10&client_id=%@&client_secret=%@", userLogin, pageNumber, clientID, clientSecret];
+    return [NSString stringWithFormat:@"https://api.github.com/users/%@/repos?page=%i&per_page=10&client_id=%@&client_secret=%@&state=%@", userLogin, pageNumber, clientID, clientSecret, filter];
 }
 
 +(NSString *)searchReposUrl:(NSString *)query andPageNumber:(int)pageNumber
@@ -309,10 +309,10 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     return @"https://github.com";
 }
 
-+(NSString *)issuesUrlWithUrl:(NSString *)issuesUrl
++(NSString *)issuesUrlWithUrl:(NSString *)issuesUrl andFilter:(NSString*)filter
 {
     NSString* path = [issuesUrl substringToIndex:[issuesUrl rangeOfString:@"issues"].location + 6];
-    return [NSString stringWithFormat:@"%@?client_id=%@&client_secret=%@", path, clientID, clientSecret];
+    return [NSString stringWithFormat:@"%@?client_id=%@&client_secret=%@&state=%@", path, clientID, clientSecret, filter];
 }
 
 +(NSString *)callbackUrl
