@@ -48,7 +48,6 @@
 
 -(void) refreshTable
 {
-    NSLog(@"%@", self.reposFilter);
     if(!self.sourceRepos.count)[self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[ACColorManager messageColor]  andIndicator:YES andFaded:NO];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{

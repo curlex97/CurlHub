@@ -16,6 +16,7 @@
 @property NSString *ownerAvatarUrl;
 @property NSString* language;
 @property NSString* issuesUrl;
+@property NSString* contentsUrl;
 @property NSString* createDate;
 
 @property double size;
@@ -30,6 +31,6 @@
 
 
 
--(instancetype)initWithName:(NSString*)name andOwnerName:(NSString*)ownerName andOwnerAvatarUrl:(NSString*)ownerAvatarUrl andLanguage:(NSString*)language andCreateDate:(NSString*)createDate andSize:(double)size andForksCount:(long)forksCount andWatchersCount:(long)watchersCount andBranchesCount:(long)branchesCount andStargazersCount:(long)stargazersCount andIssuesCount:(long)issuesCount andPrivate:(BOOL)isPrivate andIssuesUrl:(NSString*)issuesUrl;
+-(instancetype)initWithName:(NSString*)name andOwnerName:(NSString*)ownerName andOwnerAvatarUrl:(NSString*)ownerAvatarUrl andLanguage:(NSString*)language andCreateDate:(NSString*)createDate andSize:(double)size andForksCount:(long)forksCount andWatchersCount:(long)watchersCount andBranchesCount:(long)branchesCount andStargazersCount:(long)stargazersCount andIssuesCount:(long)issuesCount andPrivate:(BOOL)isPrivate andIssuesUrl:(NSString*)issuesUrl andContentsUrl:(NSString*)contentsUrl;
 
 @end

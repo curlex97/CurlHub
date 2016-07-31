@@ -12,6 +12,8 @@
 #import "ACRepo.h"
 #import "ACNews.h"
 #import "ACIssue.h"
+#import "ACRepoFile.h"
+#import "ACRepoDirectory.h"
 
 @interface ACHubDataManager : NSObject
 
@@ -24,6 +26,7 @@
 +(NSString*) searchReposUrl :(NSString*)query andPageNumber:(int)pageNumber;
 +(NSString*) newsUrl;
 +(NSString*) issuesUrlWithUrl:(NSString*)issuesUrl andFilter:(NSString*)filter;
++(NSString*) contentsUrlWithUrl:(NSString*)url;
 
 
 -(NSString*) formatDateWithString:(NSString*)string;
@@ -36,5 +39,7 @@
 -(NSArray<ACRepo*>*) reposForQuery:(NSString*)query andPageNumber:(int)pageNumber;
 -(NSArray<ACNews*>*) news;
 -(NSArray<ACIssue*>*) issuesForUser:(ACUser*)user andFilter:(NSString*)filter;
+
+-(NSArray*) filesAndDirectoriesFromUrl:(NSString*)url;
 
 @end

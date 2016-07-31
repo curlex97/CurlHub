@@ -47,7 +47,6 @@
 
 -(void) refreshTable
 {
-    NSLog(@"%@",self.issuesFilter);
     if(!self.sourceIssues.count) [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[ACColorManager messageColor]  andIndicator:YES andFaded:NO];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{

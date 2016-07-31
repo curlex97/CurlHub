@@ -14,5 +14,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *ownerImage;
 @property (weak, nonatomic) IBOutlet UILabel *repoNameLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+- (IBAction)watchRepoTapped:(id)sender;
 
 @end

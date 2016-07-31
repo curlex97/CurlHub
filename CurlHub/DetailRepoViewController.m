@@ -10,6 +10,7 @@
 #import "DetailCountTableViewCell.h"
 #import "DetailDoubleTableViewCell.h"
 #import "ACPictureManager.h"
+#import "RepoContentsViewController.h"
 
 @interface DetailRepoViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -97,5 +98,16 @@
 }
 
 
-
+- (IBAction)watchRepoTapped:(id)sender {
+    
+    RepoContentsViewController* rcvc = [self.storyboard instantiateViewControllerWithIdentifier:@"RepoContentsViewController"];
+    
+    if(rcvc)
+    {
+        rcvc.navigationItem.title = self.currentRepo.name;
+        rcvc.currentUrl = self.currentRepo.contentsUrl;
+        [self.navigationController pushViewController:rcvc animated:YES];
+    }
+    
+}
 @end

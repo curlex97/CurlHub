@@ -40,6 +40,12 @@
 		28CBF1681D4AA19B0096F5EC /* UIImage+ACImageResizing.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CBF1671D4AA19B0096F5EC /* UIImage+ACImageResizing.m */; };
 		28CBF16B1D4AABA90096F5EC /* ACNews.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CBF16A1D4AABA90096F5EC /* ACNews.m */; };
 		28CBF1711D4AB3FF0096F5EC /* ACNewsViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CBF1701D4AB3FF0096F5EC /* ACNewsViewModel.m */; };
+		28F1C9761D4D5BE90007BF8B /* ACRepoFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F1C9751D4D5BE90007BF8B /* ACRepoFile.m */; };
+		28F1C9791D4D5C790007BF8B /* ACRepoDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F1C9781D4D5C790007BF8B /* ACRepoDirectory.m */; };
+		28F1C97C1D4D60900007BF8B /* ACRepoContentsViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F1C97B1D4D60900007BF8B /* ACRepoContentsViewModel.m */; };
+		28F1C97F1D4D61FB0007BF8B /* RepoContentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F1C97E1D4D61FB0007BF8B /* RepoContentsViewController.m */; };
+		28F1C9831D4D70250007BF8B /* FileTextContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F1C9821D4D70250007BF8B /* FileTextContentViewController.m */; };
+		28F1C9881D4D752E0007BF8B /* FileImageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F1C9871D4D752E0007BF8B /* FileImageContentViewController.m */; };
 		28FBBC5B1D4B728F0020D1E3 /* DetailUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28FBBC5A1D4B728F0020D1E3 /* DetailUserViewController.m */; };
 		28FBBC621D4B7F770020D1E3 /* ACIssue.m in Sources */ = {isa = PBXBuildFile; fileRef = 28FBBC611D4B7F770020D1E3 /* ACIssue.m */; };
 		28FBBC651D4B82440020D1E3 /* ACIssuesViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 28FBBC641D4B82440020D1E3 /* ACIssuesViewModel.m */; };
@@ -111,6 +117,18 @@
 		28CBF16A1D4AABA90096F5EC /* ACNews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACNews.m; sourceTree = "<group>"; };
 		28CBF16F1D4AB3FF0096F5EC /* ACNewsViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACNewsViewModel.h; sourceTree = "<group>"; };
 		28CBF1701D4AB3FF0096F5EC /* ACNewsViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACNewsViewModel.m; sourceTree = "<group>"; };
+		28F1C9741D4D5BE90007BF8B /* ACRepoFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRepoFile.h; sourceTree = "<group>"; };
+		28F1C9751D4D5BE90007BF8B /* ACRepoFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACRepoFile.m; sourceTree = "<group>"; };
+		28F1C9771D4D5C790007BF8B /* ACRepoDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRepoDirectory.h; sourceTree = "<group>"; };
+		28F1C9781D4D5C790007BF8B /* ACRepoDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACRepoDirectory.m; sourceTree = "<group>"; };
+		28F1C97A1D4D60900007BF8B /* ACRepoContentsViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRepoContentsViewModel.h; sourceTree = "<group>"; };
+		28F1C97B1D4D60900007BF8B /* ACRepoContentsViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACRepoContentsViewModel.m; sourceTree = "<group>"; };
+		28F1C97D1D4D61FB0007BF8B /* RepoContentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepoContentsViewController.h; sourceTree = "<group>"; };
+		28F1C97E1D4D61FB0007BF8B /* RepoContentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepoContentsViewController.m; sourceTree = "<group>"; };
+		28F1C9811D4D70250007BF8B /* FileTextContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileTextContentViewController.h; sourceTree = "<group>"; };
+		28F1C9821D4D70250007BF8B /* FileTextContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileTextContentViewController.m; sourceTree = "<group>"; };
+		28F1C9861D4D752E0007BF8B /* FileImageContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileImageContentViewController.h; sourceTree = "<group>"; };
+		28F1C9871D4D752E0007BF8B /* FileImageContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileImageContentViewController.m; sourceTree = "<group>"; };
 		28FBBC591D4B728F0020D1E3 /* DetailUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailUserViewController.h; sourceTree = "<group>"; };
 		28FBBC5A1D4B728F0020D1E3 /* DetailUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailUserViewController.m; sourceTree = "<group>"; };
 		28FBBC601D4B7F770020D1E3 /* ACIssue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACIssue.h; sourceTree = "<group>"; };
@@ -190,6 +208,8 @@
 				28BE0F501D47B9BA00110482 /* DetailRepo */,
 				28BE0F5C1D47E41100110482 /* SearchRepos */,
 				28FBBC5C1D4B72950020D1E3 /* DetailUser */,
+				28F1C9801D4D6BA30007BF8B /* RepoContents */,
+				28F1C9841D4D70510007BF8B /* FileContent */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -225,6 +245,10 @@
 				28CBF16A1D4AABA90096F5EC /* ACNews.m */,
 				28FBBC601D4B7F770020D1E3 /* ACIssue.h */,
 				28FBBC611D4B7F770020D1E3 /* ACIssue.m */,
+				28F1C9741D4D5BE90007BF8B /* ACRepoFile.h */,
+				28F1C9751D4D5BE90007BF8B /* ACRepoFile.m */,
+				28F1C9771D4D5C790007BF8B /* ACRepoDirectory.h */,
+				28F1C9781D4D5C790007BF8B /* ACRepoDirectory.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -255,6 +279,8 @@
 				28CBF1701D4AB3FF0096F5EC /* ACNewsViewModel.m */,
 				28FBBC631D4B82440020D1E3 /* ACIssuesViewModel.h */,
 				28FBBC641D4B82440020D1E3 /* ACIssuesViewModel.m */,
+				28F1C97A1D4D60900007BF8B /* ACRepoContentsViewModel.h */,
+				28F1C97B1D4D60900007BF8B /* ACRepoContentsViewModel.m */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -388,6 +414,42 @@
 			name = ProgressBarDisplayer;
 			sourceTree = "<group>";
 		};
+		28F1C9801D4D6BA30007BF8B /* RepoContents */ = {
+			isa = PBXGroup;
+			children = (
+				28F1C97D1D4D61FB0007BF8B /* RepoContentsViewController.h */,
+				28F1C97E1D4D61FB0007BF8B /* RepoContentsViewController.m */,
+			);
+			name = RepoContents;
+			sourceTree = "<group>";
+		};
+		28F1C9841D4D70510007BF8B /* FileContent */ = {
+			isa = PBXGroup;
+			children = (
+				28F1C9851D4D75170007BF8B /* TextContent */,
+				28F1C9891D4D761C0007BF8B /* ImageContent */,
+			);
+			name = FileContent;
+			sourceTree = "<group>";
+		};
+		28F1C9851D4D75170007BF8B /* TextContent */ = {
+			isa = PBXGroup;
+			children = (
+				28F1C9811D4D70250007BF8B /* FileTextContentViewController.h */,
+				28F1C9821D4D70250007BF8B /* FileTextContentViewController.m */,
+			);
+			name = TextContent;
+			sourceTree = "<group>";
+		};
+		28F1C9891D4D761C0007BF8B /* ImageContent */ = {
+			isa = PBXGroup;
+			children = (
+				28F1C9861D4D752E0007BF8B /* FileImageContentViewController.h */,
+				28F1C9871D4D752E0007BF8B /* FileImageContentViewController.m */,
+			);
+			name = ImageContent;
+			sourceTree = "<group>";
+		};
 		28FBBC5C1D4B72950020D1E3 /* DetailUser */ = {
 			isa = PBXGroup;
 			children = (
@@ -469,10 +531,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28F1C9881D4D752E0007BF8B /* FileImageContentViewController.m in Sources */,
 				28CBF15D1D49DB9C0096F5EC /* ACPictureManager.m in Sources */,
 				28FBBC621D4B7F770020D1E3 /* ACIssue.m in Sources */,
 				280DC15F1D46465500D6E10F /* IssuesViewController.m in Sources */,
 				280DC13C1D45637800D6E10F /* NavigateViewController.m in Sources */,
+				28F1C9831D4D70250007BF8B /* FileTextContentViewController.m in Sources */,
 				280DC1571D461D9400D6E10F /* MenuView.m in Sources */,
 				28FBBC681D4B88EA0020D1E3 /* IssueTableViewCell.m in Sources */,
 				282D012F1D46C9B6001B82C9 /* ACEvent.m in Sources */,
@@ -483,12 +547,15 @@
 				28BE0F431D478D5B00110482 /* RepoTableViewCell.m in Sources */,
 				280DC1711D4684C300D6E10F /* LoginViewController.m in Sources */,
 				28FBBC6B1D4BE7530020D1E3 /* ACColorManager.m in Sources */,
+				28F1C97F1D4D61FB0007BF8B /* RepoContentsViewController.m in Sources */,
 				28CBF1711D4AB3FF0096F5EC /* ACNewsViewModel.m in Sources */,
+				28F1C97C1D4D60900007BF8B /* ACRepoContentsViewModel.m in Sources */,
 				280DC1771D468B6100D6E10F /* ACUserViewModel.m in Sources */,
 				28BE0F401D478C1200110482 /* ACReposViewModel.m in Sources */,
 				28BE0F461D47A48D00110482 /* DetailCountTableViewCell.m in Sources */,
 				28BE0F5B1D47E40B00110482 /* SearchReposViewController.m in Sources */,
 				28FBBC5B1D4B728F0020D1E3 /* DetailUserViewController.m in Sources */,
+				28F1C9761D4D5BE90007BF8B /* ACRepoFile.m in Sources */,
 				280DC1621D464A5800D6E10F /* NewsViewController.m in Sources */,
 				280DC1741D46853500D6E10F /* WelcomeViewController.m in Sources */,
 				280DC1691D46579100D6E10F /* ACHubDataManager.m in Sources */,
@@ -503,6 +570,7 @@
 				280DC1361D45637800D6E10F /* main.m in Sources */,
 				28BE0F561D47C1B400110482 /* DetailDoubleTableViewCell.m in Sources */,
 				28CBF1681D4AA19B0096F5EC /* UIImage+ACImageResizing.m in Sources */,
+				28F1C9791D4D5C790007BF8B /* ACRepoDirectory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

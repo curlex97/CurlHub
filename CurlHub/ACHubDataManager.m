@@ -148,6 +148,8 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
         double size = [[repoDictionary valueForKeyPath:@"size"] doubleValue] / 1024;
         NSString* private = [repoDictionary valueForKeyPath:@"private"];
         NSString* issuesUrl = [repoDictionary valueForKeyPath:@"issues_url"];
+        NSString* contentsUrl = [repoDictionary valueForKeyPath:@"contents_url"];
+        contentsUrl = [contentsUrl substringToIndex:[contentsUrl rangeOfString:@"/{"].location];
         int privateInt = [private intValue];
         BOOL isPrivate = privateInt > 0;
         long forksCount = [[repoDictionary valueForKeyPath:@"forks_count"] longValue];
@@ -155,7 +157,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
         long stargazersCount = [[repoDictionary valueForKeyPath:@"stargazers_count"] longValue];
         long branchesCount = 0, issuesCount = 0;
         
-        ACRepo *repo = [[ACRepo alloc] initWithName:name andOwnerName:ownerName andOwnerAvatarUrl:avatarUrl andLanguage:language andCreateDate:date andSize:size andForksCount:forksCount andWatchersCount:watchersCount andBranchesCount:branchesCount andStargazersCount:stargazersCount andIssuesCount:issuesCount andPrivate:isPrivate andIssuesUrl:issuesUrl];
+        ACRepo *repo = [[ACRepo alloc] initWithName:name andOwnerName:ownerName andOwnerAvatarUrl:avatarUrl andLanguage:language andCreateDate:date andSize:size andForksCount:forksCount andWatchersCount:watchersCount andBranchesCount:branchesCount andStargazersCount:stargazersCount andIssuesCount:issuesCount andPrivate:isPrivate andIssuesUrl:issuesUrl andContentsUrl:contentsUrl];
         
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             
@@ -258,6 +260,38 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     return array;
 }
 
+-(NSArray*)filesAndDirectoriesFromUrl:(NSString *)url
+{
+    NSMutableArray *array = [NSMutableArray array];
+
+    NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:[ACHubDataManager contentsUrlWithUrl:url]] encoding:NSUTF8StringEncoding error:nil];
+    NSError *jsonError = nil;
+    NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
+    
+    if(data){
+        NSArray* jsonArray = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
+        if(!jsonError && jsonArray.count)
+        {
+            for(NSDictionary* typefs in jsonArray)
+            {
+                NSString* type = [typefs valueForKeyPath:@"type"];
+                if([type isEqualToString:@"dir"])
+                {
+                    ACRepoDirectory *dir = [[ACRepoDirectory alloc] initWithName:[typefs valueForKeyPath:@"name"] andUrl:[typefs valueForKeyPath:@"url"]];
+                    [array addObject:dir];
+                }
+                else if([type isEqualToString:@"file"])
+                {
+                    ACRepoFile *file = [[ACRepoFile alloc] initWithName:[typefs valueForKeyPath:@"name"] andSize:[[typefs valueForKeyPath:@"size"] longValue] andDownloadUrl:[typefs valueForKeyPath:@"download_url"]];
+                    [array addObject:file];
+                }
+            }
+        }
+    }
+    
+    return array;
+}
+
 
 
 
@@ -320,5 +354,11 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     return @"curlex.adr.com.ua";
 }
 
+
++(NSString *)contentsUrlWithUrl:(NSString *)url
+{
+    NSString* sep = [url containsString:@"?"] ? @"&" : @"?";
+    return [NSString stringWithFormat:@"%@%@client_id=%@&client_secret=%@", url, sep, clientID, clientSecret];
+}
 
 @end
