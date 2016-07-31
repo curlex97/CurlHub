@@ -153,6 +153,7 @@
                 if(fcvc)
                 {
                     fcvc.url = file.downloadUrl;
+                    fcvc.navigationItem.title = file.name;
                     [self.navigationController pushViewController:fcvc animated:YES];
                 }
             }
@@ -167,6 +168,7 @@
                 if(fcvc)
                 {
                     fcvc.url = file.downloadUrl;
+                    fcvc.navigationItem.title = file.name;
                     [self.navigationController pushViewController:fcvc animated:YES];
                 }
             }

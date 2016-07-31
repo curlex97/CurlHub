@@ -146,6 +146,7 @@
         if(drcontroller)
         {
             drcontroller.currentRepo = self.tableRepos[indexPath.row];
+            drcontroller.navigationItem.title = drcontroller.currentRepo.name;
             [self.navigationController pushViewController:drcontroller animated:YES];
         }
     }

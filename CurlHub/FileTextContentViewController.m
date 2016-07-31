@@ -16,6 +16,9 @@
     [super viewDidLoad];
     self.navigationController.navigationBar.translucent = NO;
 
+    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(sharingPressed)];
+    self.navigationItem.rightBarButtonItem = shareButton;
+    
     [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[ACColorManager messageColor] andIndicator:YES andFaded:NO];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
@@ -34,6 +37,13 @@
             });
         }
     });
+}
+
+-(void) sharingPressed
+{
+    NSArray *toShare = @[self.url];
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:toShare applicationActivities:nil];
+    [self presentViewController:activityVC animated:YES completion:nil];
 }
 
 @end

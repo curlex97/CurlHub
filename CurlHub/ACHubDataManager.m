@@ -150,6 +150,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
         NSString* issuesUrl = [repoDictionary valueForKeyPath:@"issues_url"];
         NSString* contentsUrl = [repoDictionary valueForKeyPath:@"contents_url"];
         contentsUrl = [contentsUrl substringToIndex:[contentsUrl rangeOfString:@"/{"].location];
+        NSString* htmlUrl = [repoDictionary valueForKeyPath:@"html_url"];
         int privateInt = [private intValue];
         BOOL isPrivate = privateInt > 0;
         long forksCount = [[repoDictionary valueForKeyPath:@"forks_count"] longValue];
@@ -157,7 +158,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
         long stargazersCount = [[repoDictionary valueForKeyPath:@"stargazers_count"] longValue];
         long branchesCount = 0, issuesCount = 0;
         
-        ACRepo *repo = [[ACRepo alloc] initWithName:name andOwnerName:ownerName andOwnerAvatarUrl:avatarUrl andLanguage:language andCreateDate:date andSize:size andForksCount:forksCount andWatchersCount:watchersCount andBranchesCount:branchesCount andStargazersCount:stargazersCount andIssuesCount:issuesCount andPrivate:isPrivate andIssuesUrl:issuesUrl andContentsUrl:contentsUrl];
+        ACRepo *repo = [[ACRepo alloc] initWithName:name andOwnerName:ownerName andOwnerAvatarUrl:avatarUrl andLanguage:language andCreateDate:date andSize:size andForksCount:forksCount andWatchersCount:watchersCount andBranchesCount:branchesCount andStargazersCount:stargazersCount andIssuesCount:issuesCount andPrivate:isPrivate andIssuesUrl:issuesUrl andContentsUrl:contentsUrl andHtmlUrl:htmlUrl];
         
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             

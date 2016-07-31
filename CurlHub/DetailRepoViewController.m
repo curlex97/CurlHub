@@ -21,6 +21,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(sharingPressed)];
+    self.navigationItem.rightBarButtonItem = shareButton;
+    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
 [ACPictureManager downloadImageByUrlAsync:self.currentRepo.ownerAvatarUrl andCompletion:^(UIImage* image)
@@ -31,6 +34,14 @@
     self.ownerImage.layer.masksToBounds = YES;
     self.ownerImage.layer.borderWidth = 0;
     self.repoNameLabel.text = self.currentRepo.name;
+}
+
+
+-(void) sharingPressed
+{
+    NSArray *toShare = @[self.currentRepo.htmlUrl];
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:toShare applicationActivities:nil];
+    [self presentViewController:activityVC animated:YES completion:nil];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
