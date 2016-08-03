@@ -24,6 +24,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     self.navigationController.navigationBar.translucent = NO;
     self.progressBarDisplayer = [[ACProgressBarDisplayer alloc] init];
     self.tableView.delegate = self;

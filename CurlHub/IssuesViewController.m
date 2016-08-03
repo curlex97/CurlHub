@@ -25,6 +25,8 @@
 @implementation IssuesViewController
 
 - (void)viewDidLoad {
+    self.tableView.allowsSelection = NO;
+
     self.issuesFilter = @"all";
     [super viewDidLoad];
     self.navigationController.navigationBar.translucent = NO;

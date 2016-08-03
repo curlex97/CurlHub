@@ -24,7 +24,17 @@
         if(image)
         {
             UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-            imageView.frame = CGRectMake(self.view.frame.size.width / 2 - imageView.frame.size.width / 2, self.view.frame.size.height / 2 - imageView.frame.size.height / 2, image.size.width, image.size.height);
+            imageView.frame = CGRectMake(0,0, image.size.width, image.size.height);
+            
+            imageView.center = CGPointMake(self.view.frame.size.width / 2 - imageView.frame.size.width / 2, self.view.frame.size.height / 2 - imageView.frame.size.height / 2);
+            
+            if(imageView.frame.size.width > self.view.frame.size.width ||
+               imageView.frame.size.height > self.view.frame.size.height)
+            {
+                imageView.frame = CGRectMake(0,0, self.view.frame.size.width / 2, image.size.width / 2);
+                imageView.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
+                imageView.contentMode = UIViewContentModeScaleAspectFit;
+            }
             [self.view addSubview:imageView];
         }
         else

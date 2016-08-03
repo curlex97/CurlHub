@@ -147,7 +147,7 @@
         
         if(isImage)
         {
-            if(file.size < MAX_OPEN_IMAGE_FILE_SIZE)
+            if(file.size < MAX_OPEN_IMAGE_FILE_SIZE && file.size > 0)
             {
                 FileImageContentViewController* fcvc = [self.storyboard instantiateViewControllerWithIdentifier:@"FileImageContentViewController"];
                 if(fcvc)
@@ -157,12 +157,13 @@
                     [self.navigationController pushViewController:fcvc animated:YES];
                 }
             }
+            else if(file.size == 0) [self.progressBarDisplayer displayOnView:self.view withMessage:@"File is empty" andColor:[ACColorManager alertColor]  andIndicator:NO andFaded:YES];
             else [self.progressBarDisplayer displayOnView:self.view withMessage:@"File is too large" andColor:[ACColorManager alertColor]  andIndicator:NO andFaded:YES];
         }
         
         else
         {
-            if(file.size < MAX_OPEN_TEXT_FILE_SIZE)
+            if(file.size < MAX_OPEN_TEXT_FILE_SIZE && file.size > 0)
             {
                 FileTextContentViewController* fcvc = [self.storyboard instantiateViewControllerWithIdentifier:@"FileTextContentViewController"];
                 if(fcvc)
@@ -172,6 +173,7 @@
                     [self.navigationController pushViewController:fcvc animated:YES];
                 }
             }
+            else if(file.size == 0) [self.progressBarDisplayer displayOnView:self.view withMessage:@"File is empty" andColor:[ACColorManager alertColor]  andIndicator:NO andFaded:YES];
             else [self.progressBarDisplayer displayOnView:self.view withMessage:@"File is too large" andColor:[ACColorManager alertColor]  andIndicator:NO andFaded:YES];
         }
         

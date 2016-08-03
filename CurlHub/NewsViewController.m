@@ -24,7 +24,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.tableView.allowsSelection = NO;
+
     self.navigationController.navigationBar.translucent = NO;
     self.progressBarDisplayer = [[ACProgressBarDisplayer alloc] init];
     self.tableView.delegate = self;
@@ -44,6 +45,7 @@
    if(!self.sourceNews.count) [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[ACColorManager messageColor]  andIndicator:YES andFaded:NO];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
+    
         
         self.sourceNews = [NSMutableArray arrayWithArray: [[[ACNewsViewModel alloc] init] allNews]];
         self.tableNews = [NSMutableArray arrayWithArray:self.sourceNews];

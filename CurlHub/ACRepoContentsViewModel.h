@@ -15,4 +15,9 @@
 
 -(NSArray*) filesListFromUrl:(NSString*)url;
 
+
+//Not used
+
++(NSURLRequest *)highlightedTextUrlWithUrl:(NSString *)url;
+
 @end

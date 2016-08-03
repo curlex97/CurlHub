@@ -20,6 +20,8 @@
 
 -(void) viewDidLoad
 {
+    self.tableView.allowsSelection = NO;
+
     [super viewDidLoad];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;

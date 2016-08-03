@@ -342,14 +342,14 @@
                                     <constraint firstAttribute="height" constant="30" id="8lj-uv-qNh"/>
                                 </constraints>
                                 <state key="normal" title="Watch the repository">
-                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="watchRepoTapped:" destination="izQ-19-ltD" eventType="touchUpInside" id="PyQ-hG-2br"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.13" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Qdp-kp-lUT" firstAttribute="leading" secondItem="6BW-ro-Zwd" secondAttribute="leading" id="1Sx-pb-kIP"/>
                             <constraint firstItem="a9Y-8K-ZI8" firstAttribute="trailing" secondItem="6BW-ro-Zwd" secondAttribute="trailingMargin" id="CdA-qw-n9e"/>
@@ -695,7 +695,6 @@
         <!--File Text Content View Controller-->
         <scene sceneID="obW-h8-iFY">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WOI-hZ-BS8" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="FileTextContentViewController" id="7J1-FB-cbG" customClass="FileTextContentViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="N1D-fS-gwp"/>
@@ -724,6 +723,7 @@
                         <outlet property="contentView" destination="NJJ-qa-daB" id="UG4-cA-OLo"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WOI-hZ-BS8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1674" y="1645"/>
         </scene>

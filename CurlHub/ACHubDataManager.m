@@ -203,22 +203,28 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
         
         for(NSString* obn in news)
         {
-            NSString* modobn = obn;
-            NSString* timeBlock = [modobn substringToIndex:[modobn rangeOfString:@"</div>"].location];
-            modobn = [modobn substringFromIndex:[modobn rangeOfString:@"</div>"].location + 6];
-            NSString* actionBLock = [[modobn substringToIndex:[modobn rangeOfString:@"</div>"].location] substringFromIndex:@"<div class=\"title\">".length + 2];
-            modobn = [modobn substringFromIndex:[modobn rangeOfString:@"</div>"].location + 6];
-            NSString* imageBlock =[modobn substringToIndex:[modobn rangeOfString:@"</div>"].location];
+            @try
+            {
+                NSString* modobn = obn;
+                NSString* timeBlock = [modobn substringToIndex:[modobn rangeOfString:@"</div>"].location];
+                modobn = [modobn substringFromIndex:[modobn rangeOfString:@"</div>"].location + 6];
+                NSString* actionBLock = [[modobn substringToIndex:[modobn rangeOfString:@"</div>"].location] substringFromIndex:@"<div class=\"title\">".length + 2];
+                modobn = [modobn substringFromIndex:[modobn rangeOfString:@"</div>"].location + 6];
+                NSString* imageBlock =[modobn substringToIndex:[modobn rangeOfString:@"</div>"].location];
+                
+                NSString* image = [imageBlock substringFromIndex:[imageBlock rangeOfString:@"src=\""].location + 5];
+                image = [image substringToIndex:[image rangeOfString:@"\""].location];
+                
+                NSString *time = [timeBlock substringFromIndex:[timeBlock rangeOfString:@">"].location + 1];
+                time = [time substringToIndex:[time rangeOfString:@"<"].location];
             
-            NSString* image = [imageBlock substringFromIndex:[imageBlock rangeOfString:@"src=\""].location + 5];
-            image = [image substringToIndex:[image rangeOfString:@"\""].location];
-            
-            NSString *time = [timeBlock substringFromIndex:[timeBlock rangeOfString:@">"].location + 1];
-            time = [time substringToIndex:[time rangeOfString:@"<"].location];
-        
-            NSString* action = [[[actionBLock stringByStrippingHTML] stringByReplacingOccurrencesOfString:@"\n" withString:@""] stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]];
-            ACNews *news = [[ACNews alloc] initWithActionText:action andDate:time andOwnerUrl:image];
-            [array addObject:news];
+                NSString* action = [[[actionBLock stringByStrippingHTML] stringByReplacingOccurrencesOfString:@"\n" withString:@""] stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]];
+                ACNews *news = [[ACNews alloc] initWithActionText:action andDate:time andOwnerUrl:image];
+                [array addObject:news];
+            }
+            @catch (NSException *exception) {
+              //  NSLog(@"%@", exception.reason);
+            }
         }
         
     }
@@ -264,7 +270,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 -(NSArray*)filesAndDirectoriesFromUrl:(NSString *)url
 {
     NSMutableArray *array = [NSMutableArray array];
-
+    
     NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:[ACHubDataManager contentsUrlWithUrl:url]] encoding:NSUTF8StringEncoding error:nil];
     NSError *jsonError = nil;
     NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
@@ -361,5 +367,35 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     NSString* sep = [url containsString:@"?"] ? @"&" : @"?";
     return [NSString stringWithFormat:@"%@%@client_id=%@&client_secret=%@", url, sep, clientID, clientSecret];
 }
+
+
+//Not used
++(NSURLRequest *)contentTextUrlWithText:(NSString *)text
+{
+    NSString* path = [NSString stringWithFormat:@"http://curlex.adr.com.ua/hub.php"];
+    
+    //
+    
+    NSString *post = [NSString stringWithFormat:@"action=highlight&text=%@", text];
+//stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+    
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:path]];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
+    
+
+    
+    return request;
+}
+
+
+
 
 @end

@@ -28,6 +28,9 @@
 +(NSString*) issuesUrlWithUrl:(NSString*)issuesUrl andFilter:(NSString*)filter;
 +(NSString*) contentsUrlWithUrl:(NSString*)url;
 
+//Not used
+
++(NSURLRequest*) contentTextUrlWithText:(NSString*)text;
 
 -(NSString*) formatDateWithString:(NSString*)string;
 
@@ -41,5 +44,6 @@
 -(NSArray<ACIssue*>*) issuesForUser:(ACUser*)user andFilter:(NSString*)filter;
 
 -(NSArray*) filesAndDirectoriesFromUrl:(NSString*)url;
+
 
 @end
