@@ -9,7 +9,7 @@
 #import "ReposViewController.h"
 #import "ACReposViewModel.h"
 #import "ACRepo.h"
-#import "RepoTableViewCell.h"
+#import "ContentTableViewCell.h"
 #import "DetailRepoViewController.h"
 #import "ACProgressBarDisplayer.h"
 #import "ACPictureManager.h"
@@ -118,22 +118,24 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    RepoTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ownRepoCell"];
-    if(!cell) cell = [[RepoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ownRepoCell"];
+    ContentTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ownContentCell"];
+    if(!cell) cell = [[ContentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ownContentCell"];
     
     ACRepo *repo = self.tableRepos[indexPath.row];
     
     [ACPictureManager downloadImageByUrlAsync:repo.ownerAvatarUrl andCompletion:^(UIImage* image)
      {
-         cell.ownerImage.image = image;
+         cell.mainImage.image = image;
      }];
     
-    cell.ownerImage.layer.cornerRadius = cell.ownerImage.frame.size.height /2;
-    cell.ownerImage.layer.masksToBounds = YES;
-    cell.ownerImage.layer.borderWidth = 0;
-    cell.repoNameLabel.text = repo.name;
-    cell.forksLabel.text = [NSString stringWithFormat:@"%li", repo.forksCount];
-    cell.stargazersLabel.text = [NSString stringWithFormat:@"%li", repo.stargazersCount];
+    cell.mainImage.layer.cornerRadius = cell.mainImage.frame.size.height /2;
+    cell.mainImage.layer.masksToBounds = YES;
+    cell.mainImage.layer.borderWidth = 0;
+    cell.mainLabel.text = repo.name;
+    cell.rightLabel.text = [NSString stringWithFormat:@"%li", repo.forksCount];
+    cell.leftLabel.text = [NSString stringWithFormat:@"%li", repo.stargazersCount];
+    cell.leftImage.image = [UIImage imageNamed:@"starIcon"];
+    cell.rightImage.image = [UIImage imageNamed:@"forkIcon"];
     
     if(indexPath.row == self.tableRepos.count - 1 && !self.isRefreshing)
     {

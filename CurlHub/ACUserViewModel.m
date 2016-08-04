@@ -45,6 +45,11 @@
     });
 }
 
+-(NSArray *)allUsersForQuery:(NSString *)query andPageNumber:(int)pageNumber
+{
+    return [[[ACHubDataManager alloc] init] usersForQuery:query andPageNumber:pageNumber];
+}
+
 -(void) writeTokenToFile
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);

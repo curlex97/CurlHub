@@ -14,4 +14,5 @@
 
 -(void)loginWithCode:(NSString*)code completion:(void (^)(ACUser*))completed;
 -(void) logout;
+-(NSArray*)allUsersForQuery:(NSString *)query andPageNumber:(int)pageNumber;
 @end

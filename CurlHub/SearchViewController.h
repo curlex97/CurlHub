@@ -12,5 +12,6 @@
 @interface SearchViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
-
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentControl;
+- (IBAction)searchingTypeChanged:(id)sender;
 @end

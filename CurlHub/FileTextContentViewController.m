@@ -23,7 +23,7 @@
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         NSString* text = [NSString stringWithContentsOfURL:[NSURL URLWithString:self.url] encoding:NSUTF8StringEncoding error:nil];
-        if(text.length)
+        if(text && text.length)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.progressBarDisplayer removeFromView:self.view];

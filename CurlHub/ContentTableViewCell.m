@@ -6,9 +6,13 @@
 //  Copyright © 2016 ArthurChistyak. All rights reserved.
 //
 
-#import "RepoTableViewCell.h"
+#import "ContentTableViewCell.h"
 
-@implementation RepoTableViewCell
+
+
+@implementation ContentTableViewCell
+
+
 
 - (void)awakeFromNib {
     [super awakeFromNib];

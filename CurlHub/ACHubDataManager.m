@@ -8,17 +8,12 @@
 
 /*
  -> PATCH
- -> Sign out
- -> Refresh everything in background WITH ETAG
  -> Also search by users, etc.
- -> Profile detail from ReposDetail
- -> Refresh token
  
  <<<--EXT-->>>
  -> Stars
  -> Comments in repos
- -> Issues details
- */
+ */ //
 
 #import "ACHubDataManager.h"
 #import "ACPictureManager.h"
@@ -33,48 +28,33 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
 @implementation ACHubDataManager
 
+
 -(ACUser*)userFromToken:(NSString*)token
 {
-    NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:[ACHubDataManager userUrl:token]] encoding:NSUTF8StringEncoding error:nil];
-    
-    if(![page containsString:@"Bad credentials"])
-    {
-        ACUser* user = [self userFromPage:page];
-        user.accessToken = token;
-        return user;
-    }
-    
+    [self usersForQuery:@"John" andPageNumber:2];
+    ACUser* user = [self userFromUrl:[ACHubDataManager userUrl:token]];
+    user.accessToken = token;
+    return user;
     return nil;
 }
 
--(ACUser *)userFromUrl:(NSString *)url
+-(ACUser*) userFromUrl:(NSString*)url
 {
     NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:[ACHubDataManager anotherUrl:url]] encoding:NSUTF8StringEncoding error:nil];
-    if(page)
+    
+    if(page && page.length && ![page containsString:@"Bad credentials"])
     {
-        ACUser* user = [self userFromPage:page];
-        return user;
-    }
-    
-    return nil;
-}
-
--(ACUser*) userFromPage:(NSString*)page
-{
-
-    NSError *jsonError = nil;
-    NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
-    
-    if(!data) return nil;
-    
-    NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
-    
-    if(!jsonError)
-    {
-        NSString* avatarUrl = jsonDictionary[@"avatar_url"];
+        NSError *jsonError = nil;
+        NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
+        if(!data) return nil;
+        NSDictionary* dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
         
-        ACUser *user = [[ACUser alloc] initWithID:jsonDictionary[@"id"] andLogin:jsonDictionary[@"login"] andAvatarUrl:avatarUrl andURL:jsonDictionary[@"url"] andAccessToken:@"" andName:jsonDictionary[@"name"] andCompany:jsonDictionary[@"company"] andLocation:jsonDictionary[@"location"] andEmail:jsonDictionary[@"email"] andFollowers:jsonDictionary[@"followers"] andFollowing:jsonDictionary[@"following"]];
-        return user;
+        if(!jsonError)
+        {
+            NSString* avatarUrl = dictionary[@"avatar_url"];
+            ACUser *user = [[ACUser alloc] initWithID:dictionary[@"id"] andLogin:dictionary[@"login"] andAvatarUrl:avatarUrl andURL:dictionary[@"url"] andAccessToken:@"" andName:dictionary[@"name"] andCompany:dictionary[@"company"] andLocation:dictionary[@"location"] andEmail:dictionary[@"email"] andFollowers:dictionary[@"followers"] andFollowing:dictionary[@"following"]];
+            return user;
+        }
     }
     return nil;
 }
@@ -162,6 +142,36 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
     NSArray* reposArray = [jsonDictionary valueForKeyPath:@"items"];
     return (jsonError && reposArray) ? nil : [self reposFromJsonDictionary:reposArray];
+    }
+    return nil;
+}
+
+-(NSArray<ACUser *> *)usersForQuery:(NSString *)query andPageNumber:(int)pageNumber
+{
+    NSString* formatedQuery = [query.lowercaseString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    
+    NSString *path = [ACHubDataManager searchUsersUrl:formatedQuery andPageNumber:pageNumber];
+    NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:path] encoding:NSUTF8StringEncoding error:nil];
+    
+    NSError *jsonError = nil;
+    NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
+    
+    if(data){
+        NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
+        NSArray* reposArray = [jsonDictionary valueForKeyPath:@"items"];
+        
+        if(reposArray)
+        {
+            NSMutableArray *users = [NSMutableArray array];
+            for(NSDictionary* userDictionary in reposArray)
+            {
+                NSString* url = [userDictionary valueForKeyPath:@"url"];
+                ACUser* user = [self userFromUrl:url];
+                if(user)[users addObject:user];
+            }
+            return users;
+        }
+        
     }
     return nil;
 }
@@ -366,7 +376,13 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
 +(NSString *)userUrl:(NSString *)token
 {
+    if(token && token.length){
     return [NSString stringWithFormat:@"https://api.github.com/user?access_token=%@&client_id=%@&client_secret=%@", token, clientID, clientSecret];
+    }
+    else
+    {
+        return [NSString stringWithFormat:@"https://api.github.com/user?client_id=%@&client_secret=%@", clientID, clientSecret];
+    }
 }
 
 +(NSString *)reposUrl:(NSString *)userLogin andPageNumber:(int)pageNumber andFilter:(NSString*)filter
@@ -377,6 +393,12 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 +(NSString *)searchReposUrl:(NSString *)query andPageNumber:(int)pageNumber
 {
     return [NSString stringWithFormat:@"https://api.github.com/search/repositories?q=%@&sort=stars&order=desc&page=%i&per_page=10&client_id=%@&client_secret=%@", query, pageNumber, clientID, clientSecret];
+    
+}
+
++(NSString *)searchUsersUrl:(NSString *)query andPageNumber:(int)pageNumber
+{
+    return [NSString stringWithFormat:@"https://api.github.com/search/users?q=%@&sort=followers&order=desc&page=%i&per_page=10&client_id=%@&client_secret=%@", query, pageNumber, clientID, clientSecret];
     
 }
 

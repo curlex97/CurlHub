@@ -30,7 +30,7 @@
 		28BE0F3A1D47825400110482 /* ACRepo.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F391D47825400110482 /* ACRepo.m */; };
 		28BE0F3D1D478B5200110482 /* ReposViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F3C1D478B5200110482 /* ReposViewController.m */; };
 		28BE0F401D478C1200110482 /* ACReposViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F3F1D478C1200110482 /* ACReposViewModel.m */; };
-		28BE0F431D478D5B00110482 /* RepoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F421D478D5B00110482 /* RepoTableViewCell.m */; };
+		28BE0F431D478D5B00110482 /* ContentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F421D478D5B00110482 /* ContentTableViewCell.m */; };
 		28BE0F461D47A48D00110482 /* DetailCountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F451D47A48D00110482 /* DetailCountTableViewCell.m */; };
 		28BE0F531D47BA3A00110482 /* DetailRepoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F521D47BA3A00110482 /* DetailRepoViewController.m */; };
 		28BE0F561D47C1B400110482 /* DetailDoubleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F551D47C1B400110482 /* DetailDoubleTableViewCell.m */; };
@@ -97,8 +97,8 @@
 		28BE0F3C1D478B5200110482 /* ReposViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReposViewController.m; sourceTree = "<group>"; };
 		28BE0F3E1D478C1200110482 /* ACReposViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACReposViewModel.h; sourceTree = "<group>"; };
 		28BE0F3F1D478C1200110482 /* ACReposViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACReposViewModel.m; sourceTree = "<group>"; };
-		28BE0F411D478D5B00110482 /* RepoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepoTableViewCell.h; sourceTree = "<group>"; };
-		28BE0F421D478D5B00110482 /* RepoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepoTableViewCell.m; sourceTree = "<group>"; };
+		28BE0F411D478D5B00110482 /* ContentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentTableViewCell.h; sourceTree = "<group>"; };
+		28BE0F421D478D5B00110482 /* ContentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentTableViewCell.m; sourceTree = "<group>"; };
 		28BE0F441D47A48D00110482 /* DetailCountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailCountTableViewCell.h; sourceTree = "<group>"; };
 		28BE0F451D47A48D00110482 /* DetailCountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailCountTableViewCell.m; sourceTree = "<group>"; };
 		28BE0F511D47BA3A00110482 /* DetailRepoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailRepoViewController.h; sourceTree = "<group>"; };
@@ -371,8 +371,8 @@
 			children = (
 				282D01331D46D3A4001B82C9 /* ActionTableViewCell.h */,
 				282D01341D46D3A4001B82C9 /* ActionTableViewCell.m */,
-				28BE0F411D478D5B00110482 /* RepoTableViewCell.h */,
-				28BE0F421D478D5B00110482 /* RepoTableViewCell.m */,
+				28BE0F411D478D5B00110482 /* ContentTableViewCell.h */,
+				28BE0F421D478D5B00110482 /* ContentTableViewCell.m */,
 				28BE0F441D47A48D00110482 /* DetailCountTableViewCell.h */,
 				28BE0F451D47A48D00110482 /* DetailCountTableViewCell.m */,
 				28BE0F541D47C1B400110482 /* DetailDoubleTableViewCell.h */,
@@ -544,7 +544,7 @@
 				28BE0F531D47BA3A00110482 /* DetailRepoViewController.m in Sources */,
 				28CBF1601D49F5120096F5EC /* NSString+HtmlPicturePath.m in Sources */,
 				282D01321D46CD6F001B82C9 /* ACEventsViewModel.m in Sources */,
-				28BE0F431D478D5B00110482 /* RepoTableViewCell.m in Sources */,
+				28BE0F431D478D5B00110482 /* ContentTableViewCell.m in Sources */,
 				280DC1711D4684C300D6E10F /* LoginViewController.m in Sources */,
 				28F1C97F1D4D61FB0007BF8B /* RepoContentsViewController.m in Sources */,
 				28CBF1711D4AB3FF0096F5EC /* ACNewsViewModel.m in Sources */,

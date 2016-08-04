@@ -106,7 +106,7 @@
     if(rvc)
     {
         rvc.currentUser = self.currentUser;
-        rvc.navigationItem.title = [NSString stringWithFormat:@"%@'s Repos", self.currentUser.name];
+        rvc.navigationItem.title = [NSString stringWithFormat:@"%@ Repos", self.currentUser.login];
         [self.navigationController pushViewController:rvc animated:YES];
     }
     
