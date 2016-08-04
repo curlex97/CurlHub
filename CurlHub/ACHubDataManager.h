@@ -26,15 +26,13 @@
 +(NSString*) searchReposUrl :(NSString*)query andPageNumber:(int)pageNumber;
 +(NSString*) newsUrl;
 +(NSString*) issuesUrlWithUrl:(NSString*)issuesUrl andFilter:(NSString*)filter;
-+(NSString*) contentsUrlWithUrl:(NSString*)url;
++(NSString*) anotherUrl:(NSString*)url;
 
-//Not used
-
-+(NSURLRequest*) contentTextUrlWithText:(NSString*)text;
 
 -(NSString*) formatDateWithString:(NSString*)string;
 
 -(ACUser*)userFromToken:(NSString*)token;
+-(ACUser*)userFromUrl:(NSString*)url;
 -(NSString*) tokenFromCode:(NSString*)code;
 
 -(NSArray<ACEvent*>*) eventsForUser:(ACUser*)user andPageNumber:(int)pageNumber;
@@ -45,5 +43,8 @@
 
 -(NSArray*) filesAndDirectoriesFromUrl:(NSString*)url;
 
+
+//Not used
++(NSURLRequest*) contentTextUrlWithText:(NSString*)text;
 
 @end

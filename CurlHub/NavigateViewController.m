@@ -10,11 +10,11 @@
 #import "MenuView.h"
 #import "EventsViewController.h"
 #import "ReposViewController.h"
-#import "SearchReposViewController.h"
+#import "SearchViewController.h"
 #import "DetailUserViewController.h"
 #import "IssuesViewController.h"
 #import "UIImage+ACImageResizing.h"
-#import "ACColorManager.h"
+#import "UIColor+ACAppColors.h"
 
 #define SLIDE_WIDTH 200
 
@@ -38,9 +38,9 @@
     
     
     UINavigationBar *bar = [self.navigationController navigationBar];
-    [bar setBarTintColor:[ACColorManager lightBackgroundColor]];
-    [bar setTitleTextAttributes:@{NSForegroundColorAttributeName : [ACColorManager foregroundColor]}];
-    [bar setTintColor:[ACColorManager foregroundColor]];
+    [bar setBarTintColor:[UIColor lightBackgroundColor]];
+    [bar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor foregroundColor]}];
+    [bar setTintColor:[UIColor foregroundColor]];
     
     self.menu.tableView.delegate = _menu;
     self.menu.tableView.dataSource = _menu;
@@ -68,12 +68,20 @@
     self.viewControllers = [NSMutableDictionary dictionary];
     for(NSString* identifier in [self.menu allPages])
     {
+        if(identifier.length){
         [self.viewControllers setObject:[self.storyboard instantiateViewControllerWithIdentifier:identifier] forKey:identifier];
+        }
     }
 }
 
 - (void) displayViewController:(NSString*)identifier andTitle:(NSString*) title
 {
+    if(identifier.length == 0)
+    {
+        [self.navigationController dismissViewControllerAnimated:YES completion:^{[self.parentController signOut];}];
+        return;
+    }
+    
     self.navigationItem.title = title;
     
     UIViewController *vc = [self.childViewControllers lastObject];

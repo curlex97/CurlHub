@@ -19,7 +19,7 @@
     UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(sharingPressed)];
     self.navigationItem.rightBarButtonItem = shareButton;
     
-    [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[ACColorManager messageColor] andIndicator:YES andFaded:NO];
+    [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[UIColor messageColor] andIndicator:YES andFaded:NO];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         NSString* text = [NSString stringWithContentsOfURL:[NSURL URLWithString:self.url] encoding:NSUTF8StringEncoding error:nil];
@@ -33,7 +33,7 @@
         else
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.progressBarDisplayer displayOnView:self.view withMessage:@"No File Content" andColor:[ACColorManager alertColor]  andIndicator:NO andFaded:YES];
+                [self.progressBarDisplayer displayOnView:self.view withMessage:@"No File Content" andColor:[UIColor alertColor]  andIndicator:NO andFaded:YES];
             });
         }
     });

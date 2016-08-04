@@ -6,6 +6,20 @@
 //  Copyright © 2016 ArthurChistyak. All rights reserved.
 //
 
+/*
+ -> PATCH
+ -> Sign out
+ -> Refresh everything in background WITH ETAG
+ -> Also search by users, etc.
+ -> Profile detail from ReposDetail
+ -> Refresh token
+ 
+ <<<--EXT-->>>
+ -> Stars
+ -> Comments in repos
+ -> Issues details
+ */
+
 #import "ACHubDataManager.h"
 #import "ACPictureManager.h"
 #import "NSString+HtmlPicturePath.h"
@@ -25,24 +39,43 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     
     if(![page containsString:@"Bad credentials"])
     {
-        NSError *jsonError = nil;
-        NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
-        
-        if(!data) return nil;
-        
-        NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
-        
-        if(!jsonError)
-        {
-            NSString* avatarUrl = jsonDictionary[@"avatar_url"];
-            
-            ACUser *user = [[ACUser alloc] initWithID:jsonDictionary[@"id"] andLogin:jsonDictionary[@"login"] andAvatarUrl:avatarUrl andURL:jsonDictionary[@"url"] andAccessToken:token andName:jsonDictionary[@"name"] andCompany:jsonDictionary[@"company"] andLocation:jsonDictionary[@"location"] andEmail:jsonDictionary[@"email"] andFollowers:jsonDictionary[@"followers"] andFollowing:jsonDictionary[@"following"]];
-            return user;
-        }
-        
-        
+        ACUser* user = [self userFromPage:page];
+        user.accessToken = token;
+        return user;
     }
     
+    return nil;
+}
+
+-(ACUser *)userFromUrl:(NSString *)url
+{
+    NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:[ACHubDataManager anotherUrl:url]] encoding:NSUTF8StringEncoding error:nil];
+    if(page)
+    {
+        ACUser* user = [self userFromPage:page];
+        return user;
+    }
+    
+    return nil;
+}
+
+-(ACUser*) userFromPage:(NSString*)page
+{
+
+    NSError *jsonError = nil;
+    NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
+    
+    if(!data) return nil;
+    
+    NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
+    
+    if(!jsonError)
+    {
+        NSString* avatarUrl = jsonDictionary[@"avatar_url"];
+        
+        ACUser *user = [[ACUser alloc] initWithID:jsonDictionary[@"id"] andLogin:jsonDictionary[@"login"] andAvatarUrl:avatarUrl andURL:jsonDictionary[@"url"] andAccessToken:@"" andName:jsonDictionary[@"name"] andCompany:jsonDictionary[@"company"] andLocation:jsonDictionary[@"location"] andEmail:jsonDictionary[@"email"] andFollowers:jsonDictionary[@"followers"] andFollowing:jsonDictionary[@"following"]];
+        return user;
+    }
     return nil;
 }
 
@@ -149,6 +182,8 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
         NSString* private = [repoDictionary valueForKeyPath:@"private"];
         NSString* issuesUrl = [repoDictionary valueForKeyPath:@"issues_url"];
         NSString* contentsUrl = [repoDictionary valueForKeyPath:@"contents_url"];
+        NSString* ownerUrl = [repoDictionary valueForKeyPath:@"owner.url"];
+
         contentsUrl = [contentsUrl substringToIndex:[contentsUrl rangeOfString:@"/{"].location];
         NSString* htmlUrl = [repoDictionary valueForKeyPath:@"html_url"];
         int privateInt = [private intValue];
@@ -158,7 +193,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
         long stargazersCount = [[repoDictionary valueForKeyPath:@"stargazers_count"] longValue];
         long branchesCount = 0, issuesCount = 0;
         
-        ACRepo *repo = [[ACRepo alloc] initWithName:name andOwnerName:ownerName andOwnerAvatarUrl:avatarUrl andLanguage:language andCreateDate:date andSize:size andForksCount:forksCount andWatchersCount:watchersCount andBranchesCount:branchesCount andStargazersCount:stargazersCount andIssuesCount:issuesCount andPrivate:isPrivate andIssuesUrl:issuesUrl andContentsUrl:contentsUrl andHtmlUrl:htmlUrl];
+        ACRepo *repo = [[ACRepo alloc] initWithName:name andOwnerName:ownerName andOwnerAvatarUrl:avatarUrl andLanguage:language andCreateDate:date andSize:size andForksCount:forksCount andWatchersCount:watchersCount andBranchesCount:branchesCount andStargazersCount:stargazersCount andIssuesCount:issuesCount andPrivate:isPrivate andIssuesUrl:issuesUrl andContentsUrl:contentsUrl andHtmlUrl:htmlUrl andOwnerUrl:ownerUrl];
         
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             
@@ -271,7 +306,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 {
     NSMutableArray *array = [NSMutableArray array];
     
-    NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:[ACHubDataManager contentsUrlWithUrl:url]] encoding:NSUTF8StringEncoding error:nil];
+    NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:[ACHubDataManager anotherUrl:url]] encoding:NSUTF8StringEncoding error:nil];
     NSError *jsonError = nil;
     NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -362,12 +397,6 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 }
 
 
-+(NSString *)contentsUrlWithUrl:(NSString *)url
-{
-    NSString* sep = [url containsString:@"?"] ? @"&" : @"?";
-    return [NSString stringWithFormat:@"%@%@client_id=%@&client_secret=%@", url, sep, clientID, clientSecret];
-}
-
 
 //Not used
 +(NSURLRequest *)contentTextUrlWithText:(NSString *)text
@@ -393,6 +422,12 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
     
     return request;
+}
+
++(NSString *)anotherUrl:(NSString *)url
+{
+    NSString* sep = [url containsString:@"?"] ? @"&" : @"?";
+    return [NSString stringWithFormat:@"%@%@client_id=%@&client_secret=%@", url, sep, clientID, clientSecret];
 }
 
 

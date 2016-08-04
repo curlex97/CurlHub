@@ -9,7 +9,7 @@
 #import "RepoContentsViewController.h"
 #import "ACRepoContentsViewModel.h"
 #import "ACProgressBarDisplayer.h"
-#import "ACColorManager.h"
+#import "UIColor+ACAppColors.h"
 #import "ActionTableViewCell.h"
 #import "FileTextContentViewController.h"
 #import "FileImageContentViewController.h"
@@ -40,7 +40,7 @@
 
 -(void) refreshTable
 {
-    if(!self.sourceFiles.count)[self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[ACColorManager messageColor] andIndicator:YES andFaded:NO];
+    if(!self.sourceFiles.count)[self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[UIColor messageColor] andIndicator:YES andFaded:NO];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         self.sourceFiles = [NSMutableArray arrayWithArray:[[[ACRepoContentsViewModel alloc] init]filesListFromUrl:self.currentUrl]];
@@ -55,7 +55,7 @@
         else
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.progressBarDisplayer displayOnView:self.view withMessage:@"No Files" andColor:[ACColorManager alertColor]  andIndicator:NO andFaded:YES];
+                [self.progressBarDisplayer displayOnView:self.view withMessage:@"No Files" andColor:[UIColor alertColor]  andIndicator:NO andFaded:YES];
             });
         }
     });
@@ -157,8 +157,8 @@
                     [self.navigationController pushViewController:fcvc animated:YES];
                 }
             }
-            else if(file.size == 0) [self.progressBarDisplayer displayOnView:self.view withMessage:@"File is empty" andColor:[ACColorManager alertColor]  andIndicator:NO andFaded:YES];
-            else [self.progressBarDisplayer displayOnView:self.view withMessage:@"File is too large" andColor:[ACColorManager alertColor]  andIndicator:NO andFaded:YES];
+            else if(file.size == 0) [self.progressBarDisplayer displayOnView:self.view withMessage:@"File is empty" andColor:[UIColor alertColor]  andIndicator:NO andFaded:YES];
+            else [self.progressBarDisplayer displayOnView:self.view withMessage:@"File is too large" andColor:[UIColor alertColor]  andIndicator:NO andFaded:YES];
         }
         
         else
@@ -173,8 +173,8 @@
                     [self.navigationController pushViewController:fcvc animated:YES];
                 }
             }
-            else if(file.size == 0) [self.progressBarDisplayer displayOnView:self.view withMessage:@"File is empty" andColor:[ACColorManager alertColor]  andIndicator:NO andFaded:YES];
-            else [self.progressBarDisplayer displayOnView:self.view withMessage:@"File is too large" andColor:[ACColorManager alertColor]  andIndicator:NO andFaded:YES];
+            else if(file.size == 0) [self.progressBarDisplayer displayOnView:self.view withMessage:@"File is empty" andColor:[UIColor alertColor]  andIndicator:NO andFaded:YES];
+            else [self.progressBarDisplayer displayOnView:self.view withMessage:@"File is too large" andColor:[UIColor alertColor]  andIndicator:NO andFaded:YES];
         }
         
     }

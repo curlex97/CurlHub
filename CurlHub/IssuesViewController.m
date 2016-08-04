@@ -13,7 +13,7 @@
 #import "ACProgressBarDisplayer.h"
 #import "ACPictureManager.h"
 #import "ACIssue.h"
-#import "ACColorManager.h"
+#import "UIColor+ACAppColors.h"
 
 @interface IssuesViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property NSMutableArray *sourceIssues;
@@ -49,7 +49,7 @@
 
 -(void) refreshTable
 {
-    if(!self.sourceIssues.count) [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[ACColorManager messageColor]  andIndicator:YES andFaded:NO];
+    if(!self.sourceIssues.count) [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[UIColor messageColor]  andIndicator:YES andFaded:NO];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         self.sourceIssues =  [NSMutableArray arrayWithArray:[[[ACIssuesViewModel alloc] init] allIssuesForUser:self.currentUser andFilter:self.issuesFilter]];
@@ -63,12 +63,22 @@
         else
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.progressBarDisplayer displayOnView:self.view withMessage:@"No issues" andColor:[ACColorManager alertColor] andIndicator:NO andFaded:YES];
+                [self.progressBarDisplayer displayOnView:self.view withMessage:@"No issues" andColor:[UIColor alertColor] andIndicator:NO andFaded:YES];
             });
         }
         
         
     });
+}
+
+-(void) searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [self.view endEditing:YES];
+}
+
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self.view endEditing:YES];
 }
 
 

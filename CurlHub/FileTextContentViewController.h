@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ACProgressBarDisplayer.h"
-#import "ACColorManager.h"
+#import "UIColor+ACAppColors.h"
 
 @interface FileTextContentViewController : UIViewController
 @property NSString* url;

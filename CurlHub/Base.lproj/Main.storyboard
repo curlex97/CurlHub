@@ -341,8 +341,8 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="8lj-uv-qNh"/>
                                 </constraints>
-                                <state key="normal" title="Watch the repository">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Watch Repository">
+                                    <color key="titleColor" red="0.2470588235" green="0.57647058819999997" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="watchRepoTapped:" destination="izQ-19-ltD" eventType="touchUpInside" id="PyQ-hG-2br"/>
@@ -1051,10 +1051,10 @@
             </objects>
             <point key="canvasLocation" x="2930" y="964"/>
         </scene>
-        <!--Search Repos View Controller-->
+        <!--Search View Controller-->
         <scene sceneID="AzZ-Ix-Joc">
             <objects>
-                <viewController storyboardIdentifier="SearchReposViewController" id="lSD-Ay-LQD" customClass="SearchReposViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SearchViewController" id="lSD-Ay-LQD" customClass="SearchViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="XJG-4c-bJP"/>
                         <viewControllerLayoutGuide type="bottom" id="ZqT-P5-1YL"/>
@@ -1220,7 +1220,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="gyj-Sf-V7e">
-                                        <rect key="frame" x="0.0" y="176" width="600" height="424"/>
+                                        <rect key="frame" x="0.0" y="176" width="600" height="378"/>
                                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="drdoubleCell" id="6F3-hz-95H" customClass="DetailDoubleTableViewCell">
@@ -1315,19 +1315,34 @@
                                             <constraint firstAttribute="height" constant="176" id="y6g-rt-0Uy"/>
                                         </constraints>
                                     </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="odl-Xo-Fvc">
+                                        <rect key="frame" x="8" y="562" width="584" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="Gmk-w9-dWk"/>
+                                        </constraints>
+                                        <state key="normal" title="Watch User's Repositries">
+                                            <color key="titleColor" red="0.24705882352941178" green="0.57647058823529407" blue="0.87450980392156863" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="watchRepositoriesAction:" destination="qhL-Dm-yzG" eventType="touchUpInside" id="jsP-h5-3gd"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.13" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Zhp-ut-fIW" secondAttribute="trailing" id="1A2-EV-FUo"/>
                                     <constraint firstItem="gyj-Sf-V7e" firstAttribute="leading" secondItem="A5P-Wy-VJ9" secondAttribute="leading" id="96B-cS-8TH"/>
+                                    <constraint firstAttribute="bottom" secondItem="odl-Xo-Fvc" secondAttribute="bottom" constant="8" id="AQa-Ux-eLU"/>
                                     <constraint firstAttribute="trailing" secondItem="gyj-Sf-V7e" secondAttribute="trailing" id="C9S-Oi-b9B"/>
+                                    <constraint firstAttribute="trailing" secondItem="odl-Xo-Fvc" secondAttribute="trailing" constant="8" id="FBa-nS-mWv"/>
                                     <constraint firstItem="gyj-Sf-V7e" firstAttribute="top" secondItem="Zhp-ut-fIW" secondAttribute="bottom" id="GHg-td-yOw"/>
                                     <constraint firstAttribute="trailing" secondItem="gyj-Sf-V7e" secondAttribute="trailing" id="Kun-f4-ERQ"/>
+                                    <constraint firstItem="odl-Xo-Fvc" firstAttribute="top" secondItem="gyj-Sf-V7e" secondAttribute="bottom" constant="8" id="LmB-ck-4oR"/>
                                     <constraint firstItem="Zhp-ut-fIW" firstAttribute="leading" secondItem="A5P-Wy-VJ9" secondAttribute="leading" id="dkb-9c-EgZ"/>
-                                    <constraint firstAttribute="bottom" secondItem="gyj-Sf-V7e" secondAttribute="bottom" id="evB-1v-SL4"/>
                                     <constraint firstItem="Zhp-ut-fIW" firstAttribute="top" secondItem="A5P-Wy-VJ9" secondAttribute="top" id="grE-DA-gDB"/>
                                     <constraint firstItem="gyj-Sf-V7e" firstAttribute="leading" secondItem="A5P-Wy-VJ9" secondAttribute="leading" id="mO7-tO-bnz"/>
                                     <constraint firstItem="gyj-Sf-V7e" firstAttribute="top" secondItem="Zhp-ut-fIW" secondAttribute="bottom" id="p8N-ch-zMc"/>
+                                    <constraint firstItem="odl-Xo-Fvc" firstAttribute="leading" secondItem="A5P-Wy-VJ9" secondAttribute="leading" constant="8" id="rHN-lz-thh"/>
                                 </constraints>
                             </view>
                         </subviews>

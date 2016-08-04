@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ACProgressBarDisplayer.h"
-#import "ACColorManager.h"
+#import "UIColor+ACAppColors.h"
 #import "ACPictureManager.h"
 
 @interface FileImageContentViewController : UIViewController

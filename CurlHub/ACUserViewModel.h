@@ -13,5 +13,5 @@
 @property ACUser *currentUser;
 
 -(void)loginWithCode:(NSString*)code completion:(void (^)(ACUser*))completed;
-
+-(void) logout;
 @end

@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "ACUser.h"
+#import "WelcomeViewController.h"
 
 @interface NavigateViewController : UIViewController
 @property ACUser* currentUser;
-
+@property WelcomeViewController *parentController;
 
 @end
 

@@ -8,7 +8,7 @@
 
 #import "MenuView.h"
 #import "UIImage+ACImageResizing.h"
-#import "ACColorManager.h"
+#import "UIColor+ACAppColors.h"
 
 #define IMAGE_SIZE 20
 
@@ -23,23 +23,24 @@
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
    
-    
     self = [super initWithCoder:coder];
     if (self) {
         
-        self.keys = [NSArray arrayWithObjects:@"News", @"Profile", @"Events", @"Repos", @"Issues", @"Search", nil];
+        self.keys = [NSArray arrayWithObjects:@"News", @"Profile", @"Events", @"Repos", @"Issues", @"Search", @"Sign out", nil];
         self.pages = @{
           self.keys[0] : @"NewsViewController",
           self.keys[1] : @"DetailUserViewController",
           self.keys[2] : @"EventsViewController",
           self.keys[3] : @"ReposViewController",
           self.keys[4] : @"IssuesViewController",
-          self.keys[5] : @"SearchReposViewController"
+          self.keys[5] : @"SearchViewController",
+          self.keys[6] : @""
+
           };
         
         
         [[NSBundle mainBundle] loadNibNamed:@"MenuView" owner:self options:nil];
-        [self.tableView setBackgroundColor:[ACColorManager darkBackgroundColor]];
+        [self.tableView setBackgroundColor:[UIColor darkBackgroundColor]];
         [self addSubview:self.view];
         
     }
@@ -60,15 +61,18 @@
         case 3:imageName = @"reposIcon"; break;
         case 4:imageName = @"issuesIcon"; break;
         case 5:imageName = @"searchIcon"; break;
+        case 6:imageName = @"exitIcon"; break;
+
     }
     cell.imageView.image = [UIImage imageWithImage:[UIImage imageNamed:imageName] scaledToSize:CGSizeMake(IMAGE_SIZE, IMAGE_SIZE)];
     cell.textLabel.text = [NSString stringWithFormat:@"%@", self.keys[indexPath.row]];
-    cell.backgroundColor = [ACColorManager darkBackgroundColor];
-    cell.textLabel.textColor = [ACColorManager foregroundColor];
+    cell.backgroundColor = [UIColor darkBackgroundColor];
+    cell.textLabel.textColor = [UIColor foregroundColor];
     
     UIView* selectedView = [[UIView alloc] init];
-    selectedView.backgroundColor = [ACColorManager cellSelectionColor];
+    selectedView.backgroundColor = [UIColor cellSelectionColor];
     cell.selectedBackgroundView = selectedView;
+    
     
     return cell;
     
@@ -99,6 +103,11 @@
 -(NSArray *)allPages
 {
     return self.pages.allValues;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    // This will create a "invisible" footer
+    return 0.01f;
 }
 
 

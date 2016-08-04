@@ -13,7 +13,7 @@
 #import "DetailRepoViewController.h"
 #import "ACProgressBarDisplayer.h"
 #import "ACPictureManager.h"
-#import "ACColorManager.h"
+#import "UIColor+ACAppColors.h"
 
 @interface ReposViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property NSMutableArray *sourceRepos;
@@ -21,12 +21,15 @@
 @property ACProgressBarDisplayer *progressBarDisplayer;
 @property int pageNumber;
 @property NSString* reposFilter;
+@property BOOL isRefreshing;
 @end
 
 @implementation ReposViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.isRefreshing = false;
     self.reposFilter = @"all";
     self.navigationController.navigationBar.translucent = NO;
     self.progressBarDisplayer = [[ACProgressBarDisplayer alloc] init];
@@ -48,7 +51,8 @@
 
 -(void) refreshTable
 {
-    if(!self.sourceRepos.count)[self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[ACColorManager messageColor]  andIndicator:YES andFaded:NO];
+    self.isRefreshing = true;
+    if(!self.sourceRepos.count)[self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[UIColor messageColor]  andIndicator:YES andFaded:NO];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
@@ -67,13 +71,24 @@
         
         else
         {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.progressBarDisplayer displayOnView:self.view withMessage:@"No repos" andColor:[ACColorManager alertColor] andIndicator:NO andFaded:YES];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                if(self.sourceRepos.count == 0)[self.progressBarDisplayer displayOnView:self.view withMessage:@"No repos" andColor:[UIColor alertColor] andIndicator:NO andFaded:YES];
             });
         }
         
     });
+    self.isRefreshing = false;
     
+}
+
+-(void) searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [self.view endEditing:YES];
+}
+
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self.view endEditing:YES];
 }
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
@@ -97,68 +112,59 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.tableRepos.count ? self.tableRepos.count + 1 : self.tableRepos.count;
+    return self.tableRepos.count;
 }
 
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.row < self.tableRepos.count)
+    RepoTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ownRepoCell"];
+    if(!cell) cell = [[RepoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ownRepoCell"];
+    
+    ACRepo *repo = self.tableRepos[indexPath.row];
+    
+    [ACPictureManager downloadImageByUrlAsync:repo.ownerAvatarUrl andCompletion:^(UIImage* image)
+     {
+         cell.ownerImage.image = image;
+     }];
+    
+    cell.ownerImage.layer.cornerRadius = cell.ownerImage.frame.size.height /2;
+    cell.ownerImage.layer.masksToBounds = YES;
+    cell.ownerImage.layer.borderWidth = 0;
+    cell.repoNameLabel.text = repo.name;
+    cell.forksLabel.text = [NSString stringWithFormat:@"%li", repo.forksCount];
+    cell.stargazersLabel.text = [NSString stringWithFormat:@"%li", repo.stargazersCount];
+    
+    if(indexPath.row == self.tableRepos.count - 1 && !self.isRefreshing)
     {
-        RepoTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ownRepoCell"];
-        if(!cell) cell = [[RepoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ownRepoCell"];
-        
-        ACRepo *repo = self.tableRepos[indexPath.row];
-        
-        [ACPictureManager downloadImageByUrlAsync:repo.ownerAvatarUrl andCompletion:^(UIImage* image)
-         {
-             cell.ownerImage.image = image;
-         }];
-        
-        cell.ownerImage.layer.cornerRadius = cell.ownerImage.frame.size.height /2;
-        cell.ownerImage.layer.masksToBounds = YES;
-        cell.ownerImage.layer.borderWidth = 0;
-        cell.repoNameLabel.text = repo.name;
-        cell.forksLabel.text = [NSString stringWithFormat:@"%li", repo.forksCount];
-        cell.stargazersLabel.text = [NSString stringWithFormat:@"%li", repo.stargazersCount];
-        
-        return cell;
+        self.pageNumber ++;
+        [self refreshTable];
     }
     
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    if(!cell) cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
-    cell.textLabel.text = @"More...";
     return cell;
     
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.row >= self.sourceRepos.count)
+    DetailRepoViewController* drcontroller = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailRepoViewController"];
+    
+    if(drcontroller)
     {
-        self.pageNumber ++;
-        [self refreshTable];
-    }
-    else
-    {
-        DetailRepoViewController* drcontroller = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailRepoViewController"];
-        
-        if(drcontroller)
-        {
-            drcontroller.currentRepo = self.tableRepos[indexPath.row];
-            drcontroller.navigationItem.title = drcontroller.currentRepo.name;
-            [self.navigationController pushViewController:drcontroller animated:YES];
-        }
+        drcontroller.currentRepo = self.tableRepos[indexPath.row];
+        drcontroller.navigationItem.title = drcontroller.currentRepo.name;
+        [self.navigationController pushViewController:drcontroller animated:YES];
     }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return indexPath.row < self.tableRepos.count ? 75.0f : 50.0f;
+    return 75.0f;
 }
 
 - (IBAction)onFilterChanged:(id)sender
 {
+    self.pageNumber = 1;
     [self.sourceRepos removeAllObjects];
     [self.tableRepos removeAllObjects];
         [self.tableView reloadData];

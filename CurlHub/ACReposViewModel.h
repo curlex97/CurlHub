@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "ACUser.h"
+#import "ACRepo.h"
 
 @interface ACReposViewModel : NSObject
 
 -(NSArray*) allReposForUser:(ACUser*)user andPageNumber:(int)pageNumber andFilter:(NSString*)filter;
 -(NSArray*) allReposForQuery:(NSString*)query andPageNumber:(int)pageNumber;
-
+-(ACUser*) repositoryOwner:(ACRepo*)repository;
 @end

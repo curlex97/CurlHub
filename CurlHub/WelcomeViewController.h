@@ -13,5 +13,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
 -(void) login;
+-(void) signOut;
 
 @end

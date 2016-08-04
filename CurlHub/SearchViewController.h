@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ACUser.h"
 
-@interface SearchReposViewController : UIViewController
+@interface SearchViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 

@@ -1,14 +1,15 @@
 //
-//  ACColorManager.m
+//  UIColor+ACAppColors.m
 //  CurlHub
 //
-//  Created by Arthur Chistyak on 29.07.16.
+//  Created by Arthur Chistyak on 04.08.16.
 //  Copyright © 2016 ArthurChistyak. All rights reserved.
 //
 
-#import "ACColorManager.h"
+#import "UIColor+ACAppColors.h"
 
-@implementation ACColorManager
+@implementation UIColor (ACAppColors)
+
 
 +(UIColor *)alertColor
 {

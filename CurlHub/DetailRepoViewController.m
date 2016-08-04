@@ -11,6 +11,8 @@
 #import "DetailDoubleTableViewCell.h"
 #import "ACPictureManager.h"
 #import "RepoContentsViewController.h"
+#import "DetailUserViewController.h"
+#import "ACReposViewModel.h"
 
 @interface DetailRepoViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -21,7 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.tableView.allowsSelection = NO;
+   // self.tableView.allowsSelection = NO;
     
     UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(sharingPressed)];
     self.navigationItem.rightBarButtonItem = shareButton;
@@ -105,10 +107,26 @@
     }
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section == 1 && indexPath.row == 3)
+    {
+        DetailUserViewController* ducontroller = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailUserViewController"];
+        if(ducontroller)
+        {
+            ducontroller.currentUser = [[[ACReposViewModel alloc] init] repositoryOwner: self.currentRepo];
+            ducontroller.navigationItem.title = ducontroller.currentUser.login;
+            [self.navigationController pushViewController:ducontroller animated:YES];
+        }
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 
 }
+
+
 
 
 - (IBAction)watchRepoTapped:(id)sender {

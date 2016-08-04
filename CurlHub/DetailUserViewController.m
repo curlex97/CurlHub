@@ -10,6 +10,7 @@
 #import "ACPictureManager.h"
 #import "DetailCountTableViewCell.h"
 #import "DetailDoubleTableViewCell.h"
+#import "ReposViewController.h"
 
 @interface DetailUserViewController()<UITableViewDelegate, UITableViewDataSource>
 
@@ -98,4 +99,16 @@
 
 
 
+- (IBAction)watchRepositoriesAction:(id)sender {
+    
+    ReposViewController* rvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ReposViewController"];
+    
+    if(rvc)
+    {
+        rvc.currentUser = self.currentUser;
+        rvc.navigationItem.title = [NSString stringWithFormat:@"%@'s Repos", self.currentUser.name];
+        [self.navigationController pushViewController:rvc animated:YES];
+    }
+    
+}
 @end

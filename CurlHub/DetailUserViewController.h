@@ -14,4 +14,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *userName;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property ACUser* currentUser;
+- (IBAction)watchRepositoriesAction:(id)sender;
 @end

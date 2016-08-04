@@ -17,7 +17,7 @@
 
         NSString* localToken = [self readTokenFromFile];
         
-        if(!localToken){
+        if(!localToken || localToken.length == 0){
             localToken =[[[ACHubDataManager alloc] init] tokenFromCode:code];
         }
         
@@ -36,6 +36,10 @@
                 [self writeTokenToFile];
                 completed(self.currentUser);
             }
+        }
+        else
+        {
+            completed(nil);
         }
         
     });
@@ -56,5 +60,15 @@
     NSString *path = [documentsDirectory stringByAppendingPathComponent:@"token.txt"];
     return [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
 }
+
+-(void)logout
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *path = [documentsDirectory stringByAppendingPathComponent:@"token.txt"];
+    [@"" writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:nil];
+}
+
+
 
 @end

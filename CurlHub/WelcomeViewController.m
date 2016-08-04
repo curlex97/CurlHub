@@ -12,7 +12,7 @@
 #import "ACHubDataManager.h"
 #import "NavigateViewController.h"
 #import "ACProgressBarDisplayer.h"
-#import "ACColorManager.h"
+#import "UIColor+ACAppColors.h"
 
 @interface WelcomeViewController ()
 @property ACUserViewModel *userModel;
@@ -23,15 +23,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.title = @"CurlHub";
     self.loginButton.alpha = 0.0f;
     self.navigationController.navigationBar.translucent = NO;
     self.progressBarDisplayer = [[ACProgressBarDisplayer alloc] init];
     self.userModel = [[ACUserViewModel alloc] init];
     
     UINavigationBar *bar = [self.navigationController navigationBar];
-    [bar setBarTintColor:[ACColorManager lightBackgroundColor]];
-    [bar setTitleTextAttributes:@{NSForegroundColorAttributeName : [ACColorManager foregroundColor]}];
-    [bar setTintColor:[ACColorManager foregroundColor]];
+    [bar setBarTintColor:[UIColor lightBackgroundColor]];
+    [bar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor foregroundColor]}];
+    [bar setTintColor:[UIColor foregroundColor]];
     
     
     [self login];
@@ -58,7 +59,7 @@
 -(void)login
 {
     [UIButton animateWithDuration:.2 animations:^{self.loginButton.alpha = 0.0f;}];
-    [self.progressBarDisplayer displayOnView:self.mainView withMessage:@"Logging..." andColor:[ACColorManager messageColor] andIndicator:YES andFaded:NO];
+    [self.progressBarDisplayer displayOnView:self.mainView withMessage:@"Logging..." andColor:[UIColor messageColor] andIndicator:YES andFaded:NO];
     
     dispatch_async(dispatch_get_global_queue(0,0), ^{
         
@@ -76,6 +77,7 @@
                     dispatch_async(dispatch_get_main_queue(), ^{
                     NavigateViewController *navigateViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NavigateViewController"];
                         navigateViewController.currentUser = user;
+                        navigateViewController.parentController = self;
                         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:navigateViewController];
                         navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
                         [self presentViewController:navigationController animated:YES completion:nil];
@@ -87,18 +89,33 @@
 
             }
             else{
-                dispatch_async(dispatch_get_main_queue(), ^{[UIButton animateWithDuration:.2 animations:^{self.loginButton.alpha = 1.0f;}];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.progressBarDisplayer displayOnView:self.mainView withMessage:@"Please sign in" andColor:[UIColor alertColor] andIndicator:NO andFaded:YES];
+                    [UIButton animateWithDuration:.2 animations:^{self.loginButton.alpha = 1.0f;}];
 });
             }
         }
         else
         {dispatch_async(dispatch_get_main_queue(), ^{
-            [self.progressBarDisplayer displayOnView:self.mainView withMessage:@"No internet" andColor:[ACColorManager alertColor] andIndicator:NO andFaded:YES];
+            [self.progressBarDisplayer displayOnView:self.mainView withMessage:@"No internet" andColor:[UIColor alertColor] andIndicator:NO andFaded:YES];
         });
         }
         
     });
 
 }
+
+
+-(void) signOut
+{
+    NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (NSHTTPCookie *cookie in [storage cookies]) {
+        [storage deleteCookie:cookie];
+    }
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [[[ACUserViewModel alloc] init] logout];
+    [self login];
+}
+
 
 @end

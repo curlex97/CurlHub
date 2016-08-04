@@ -12,7 +12,7 @@
 #import "ACProgressBarDisplayer.h"
 #import "ACPictureManager.h"
 #import "ACNews.h"
-#import "ACColorManager.h"
+#import "UIColor+ACAppColors.h"
 
 @interface NewsViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property NSMutableArray *tableNews;
@@ -42,7 +42,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-   if(!self.sourceNews.count) [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[ACColorManager messageColor]  andIndicator:YES andFaded:NO];
+   if(!self.sourceNews.count) [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[UIColor messageColor]  andIndicator:YES andFaded:NO];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
     
@@ -59,7 +59,7 @@
         else
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.progressBarDisplayer displayOnView:self.view withMessage:@"No news" andColor:[ACColorManager alertColor] andIndicator:NO andFaded:YES];
+                [self.progressBarDisplayer displayOnView:self.view withMessage:@"No news" andColor:[UIColor alertColor] andIndicator:NO andFaded:YES];
             });
         }
         
@@ -68,7 +68,24 @@
     
 }
 
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    for (UIView * sb in self.view.subviews){
+        if ([sb isKindOfClass:[UISearchBar class]] && [sb isFirstResponder]) {
+            [sb resignFirstResponder];
+        }
+    }
+}
 
+-(void) searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [self.view endEditing:YES];
+}
+
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self.view endEditing:YES];
+}
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
