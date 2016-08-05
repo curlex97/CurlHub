@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "ACUser.h"
 @interface ACIssueEvent : NSObject
-@property NSString* userName;
+@property ACUser* user;
 @property NSString* event;
 @property NSString* date;
-- (instancetype)initWithEvent:(NSString*)event andUserName:(NSString*)userName andDate:(NSString*)date;
+
+- (instancetype)initWithEvent:(NSString*)event andUser:(ACUser*)user andDate:(NSString*)date;
 @end

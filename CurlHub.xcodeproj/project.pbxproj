@@ -42,6 +42,8 @@
 		28CBF1681D4AA19B0096F5EC /* UIImage+ACImageResizing.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CBF1671D4AA19B0096F5EC /* UIImage+ACImageResizing.m */; };
 		28CBF16B1D4AABA90096F5EC /* ACNews.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CBF16A1D4AABA90096F5EC /* ACNews.m */; };
 		28CBF1711D4AB3FF0096F5EC /* ACNewsViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CBF1701D4AB3FF0096F5EC /* ACNewsViewModel.m */; };
+		28F061131D54994D00401312 /* DetailIssueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F061121D54994D00401312 /* DetailIssueViewController.m */; };
+		28F061161D54A08C00401312 /* EventTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F061151D54A08C00401312 /* EventTableViewCell.m */; };
 		28F1C9761D4D5BE90007BF8B /* ACRepoFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F1C9751D4D5BE90007BF8B /* ACRepoFile.m */; };
 		28F1C9791D4D5C790007BF8B /* ACRepoDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F1C9781D4D5C790007BF8B /* ACRepoDirectory.m */; };
 		28F1C97C1D4D60900007BF8B /* ACRepoContentsViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F1C97B1D4D60900007BF8B /* ACRepoContentsViewModel.m */; };
@@ -122,6 +124,10 @@
 		28CBF16A1D4AABA90096F5EC /* ACNews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACNews.m; sourceTree = "<group>"; };
 		28CBF16F1D4AB3FF0096F5EC /* ACNewsViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACNewsViewModel.h; sourceTree = "<group>"; };
 		28CBF1701D4AB3FF0096F5EC /* ACNewsViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACNewsViewModel.m; sourceTree = "<group>"; };
+		28F061111D54994D00401312 /* DetailIssueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailIssueViewController.h; sourceTree = "<group>"; };
+		28F061121D54994D00401312 /* DetailIssueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailIssueViewController.m; sourceTree = "<group>"; };
+		28F061141D54A08C00401312 /* EventTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventTableViewCell.h; sourceTree = "<group>"; };
+		28F061151D54A08C00401312 /* EventTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventTableViewCell.m; sourceTree = "<group>"; };
 		28F1C9741D4D5BE90007BF8B /* ACRepoFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRepoFile.h; sourceTree = "<group>"; };
 		28F1C9751D4D5BE90007BF8B /* ACRepoFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACRepoFile.m; sourceTree = "<group>"; };
 		28F1C9771D4D5C790007BF8B /* ACRepoDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRepoDirectory.h; sourceTree = "<group>"; };
@@ -213,6 +219,7 @@
 				28FBBC5C1D4B72950020D1E3 /* DetailUser */,
 				28F1C9801D4D6BA30007BF8B /* RepoContents */,
 				28F1C9841D4D70510007BF8B /* FileContent */,
+				28F061171D54A10C00401312 /* DetailIssue */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -384,6 +391,8 @@
 				28BE0F551D47C1B400110482 /* DetailDoubleTableViewCell.m */,
 				28FBBC661D4B88EA0020D1E3 /* IssueTableViewCell.h */,
 				28FBBC671D4B88EA0020D1E3 /* IssueTableViewCell.m */,
+				28F061141D54A08C00401312 /* EventTableViewCell.h */,
+				28F061151D54A08C00401312 /* EventTableViewCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -417,6 +426,15 @@
 				28CBF1631D49FB290096F5EC /* ACProgressBarDisplayer.m */,
 			);
 			name = ProgressBarDisplayer;
+			sourceTree = "<group>";
+		};
+		28F061171D54A10C00401312 /* DetailIssue */ = {
+			isa = PBXGroup;
+			children = (
+				28F061111D54994D00401312 /* DetailIssueViewController.h */,
+				28F061121D54994D00401312 /* DetailIssueViewController.m */,
+			);
+			name = DetailIssue;
 			sourceTree = "<group>";
 		};
 		28F1C9801D4D6BA30007BF8B /* RepoContents */ = {
@@ -569,9 +587,11 @@
 				28CBF16B1D4AABA90096F5EC /* ACNews.m in Sources */,
 				28BE0F3A1D47825400110482 /* ACRepo.m in Sources */,
 				280DC16D1D46808800D6E10F /* ACUser.m in Sources */,
+				28F061131D54994D00401312 /* DetailIssueViewController.m in Sources */,
 				28FBBC651D4B82440020D1E3 /* ACIssuesViewModel.m in Sources */,
 				28CBF1641D49FB290096F5EC /* ACProgressBarDisplayer.m in Sources */,
 				28BE0F3D1D478B5200110482 /* ReposViewController.m in Sources */,
+				28F061161D54A08C00401312 /* EventTableViewCell.m in Sources */,
 				282738E41D535D7D00D16953 /* UIColor+ACAppColors.m in Sources */,
 				280DC1361D45637800D6E10F /* main.m in Sources */,
 				28BE0F561D47C1B400110482 /* DetailDoubleTableViewCell.m in Sources */,

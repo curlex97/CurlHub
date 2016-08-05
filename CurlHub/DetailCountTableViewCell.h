@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface DetailCountTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *stargazersLabel;
-@property (weak, nonatomic) IBOutlet UILabel *watchersLabel;
-@property (weak, nonatomic) IBOutlet UILabel *forksLabel;
-
+@property (weak, nonatomic) IBOutlet UIImageView *leftImage;
+@property (weak, nonatomic) IBOutlet UIImageView *centerImage;
+@property (weak, nonatomic) IBOutlet UIImageView *rightImage;
+@property (weak, nonatomic) IBOutlet UILabel *leftLabel;
+@property (weak, nonatomic) IBOutlet UILabel *centerLabel;
+@property (weak, nonatomic) IBOutlet UILabel *rightLabel;
 @end

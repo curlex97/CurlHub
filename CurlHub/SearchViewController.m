@@ -125,7 +125,6 @@
         cell.leftLabel.text = [NSString stringWithFormat:@"%li", repo.stargazersCount];
         cell.leftImage.image = [UIImage imageNamed:@"starIcon"];
         cell.rightImage.image = [UIImage imageNamed:@"forkIcon"];
-        cell.type = RepositoryContentType;
     }
     
     else if([self.tableContent[indexPath.row] isKindOfClass:[ACUser class]])
@@ -139,7 +138,6 @@
         cell.mainImage.layer.masksToBounds = YES;
         cell.mainImage.layer.borderWidth = 0;
         cell.mainLabel.text = user.login;
-        cell.type = UserContentType;
     }
     
     

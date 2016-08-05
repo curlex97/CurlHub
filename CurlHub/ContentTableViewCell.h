@@ -9,10 +9,6 @@
 #import <UIKit/UIKit.h>
 
 
-typedef enum : NSUInteger {
-    UserContentType,
-    RepositoryContentType,
-} ContentTableViewCellType;
 
 
 @interface ContentTableViewCell : UITableViewCell
@@ -24,6 +20,5 @@ typedef enum : NSUInteger {
 @property (weak, nonatomic) IBOutlet UILabel *rightLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *leftImage;
 @property (weak, nonatomic) IBOutlet UIImageView *rightImage;
-@property ContentTableViewCellType type;
 
 @end

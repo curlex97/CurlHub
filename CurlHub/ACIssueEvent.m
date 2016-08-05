@@ -10,12 +10,12 @@
 
 @implementation ACIssueEvent
 
-- (instancetype)initWithEvent:(NSString*)event andUserName:(NSString*)userName andDate:(NSString*)date
+- (instancetype)initWithEvent:(NSString*)event andUser:(ACUser*)user andDate:(NSString*)date
 {
     self = [super init];
     if (self) {
         self.event = event;
-        self.userName = userName;
+        self.user = user;
         self.date = date;
     }
     return self;

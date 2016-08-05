@@ -65,10 +65,12 @@
         DetailCountTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"drcountCell"];
         if(!cell) cell = [[DetailCountTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"drcountCell"];
         
-        cell.forksLabel.text = [NSString stringWithFormat:@"%li", self.currentRepo.forksCount];
-        cell.watchersLabel.text = [NSString stringWithFormat:@"%li", self.currentRepo.watchersCount];
-        cell.stargazersLabel.text = [NSString stringWithFormat:@"%li", self.currentRepo.stargazersCount];
-
+        cell.rightLabel.text = [NSString stringWithFormat:@"%li", self.currentRepo.forksCount];
+        cell.centerLabel.text = [NSString stringWithFormat:@"%li", self.currentRepo.watchersCount];
+        cell.leftLabel.text = [NSString stringWithFormat:@"%li", self.currentRepo.stargazersCount];
+        cell.leftImage.image = [UIImage imageNamed:@"starIcon"];
+        cell.centerImage.image = [UIImage imageNamed:@"binocularusIcon"];
+        cell.rightImage.image = [UIImage imageNamed:@"forkIcon"];
         
         return cell;
     }
@@ -99,6 +101,7 @@
             case 3:
                 cell.leftLabel.text = @"Owner";
                 cell.rightLabel.text = self.currentRepo.ownerName;
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 break;
         }
         

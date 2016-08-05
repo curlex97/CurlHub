@@ -301,10 +301,9 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
                     long number = [[issueDictionary valueForKeyPath:@"number"] longValue];
                     NSString* eventsUrl = [issueDictionary valueForKeyPath:@"events_url"];
                     
-                    ACIssue *issue = [[ACIssue alloc] initWithNumber:number andState:state andCreateDate:date andTitle:title andUser:nil andEvents:nil andLabelsCount:0 andEventsUrl:eventsUrl];
+                    ACIssue *issue = [[ACIssue alloc] initWithNumber:number andState:state andCreateDate:date andTitle:title andUser:nil andEvents:nil andLabelsCount:0 andEventsUrl:eventsUrl andRepo:userRepo];
                     
                     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                        
                         NSError *innerError;
                         NSData *bData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:[issueDictionary valueForKeyPath:@"labels_url"]] encoding:NSUTF8StringEncoding error:nil]dataUsingEncoding:NSUTF8StringEncoding];
                         if(bData)
@@ -362,7 +361,8 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
 -(NSArray<ACIssueEvent *> *)eventsForIssue:(ACIssue *)issue
 {
-    NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:[ACHubDataManager anotherUrl:issue.eventsUrl]] encoding:NSUTF8StringEncoding error:nil];
+    NSString* path = [ACHubDataManager anotherUrl:issue.eventsUrl];
+    NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:path] encoding:NSUTF8StringEncoding error:nil];
     
     NSError *jsonError = nil;
     NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
@@ -378,7 +378,13 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
             {
                 NSString* event = [issueEventDictionary valueForKeyPath:@"event"];
                 NSString* date = [self formatDateWithString:[issueEventDictionary valueForKeyPath:@"created_at"]];
-                ACIssueEvent* issueEvent = [[ACIssueEvent alloc] initWithEvent:event andUserName:issue.user.login andDate:date];
+                NSString* userUrl = [issueEventDictionary valueForKeyPath:@"actor.url"];
+                ACIssueEvent* issueEvent = [[ACIssueEvent alloc] initWithEvent:event andUser:nil andDate:date];
+                
+                dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                    ACUser* user = [self userFromUrl:userUrl];
+                    issueEvent.user = user;
+                });
                 [array addObject:issueEvent];
             }
             return array;

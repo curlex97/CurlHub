@@ -10,7 +10,7 @@
 
 @implementation ACIssue
 
-- (instancetype)initWithNumber:(long)issueNumber andState:(NSString*)state andCreateDate:(NSString*)createDate andTitle:(NSString*)title andUser:(ACUser*)user andEvents:(NSArray*)events andLabelsCount:(long)labelsCount andEventsUrl:(NSString *)eventsUrl
+- (instancetype)initWithNumber:(long)issueNumber andState:(NSString*)state andCreateDate:(NSString*)createDate andTitle:(NSString*)title andUser:(ACUser*)user andEvents:(NSArray*)events andLabelsCount:(long)labelsCount andEventsUrl:(NSString *)eventsUrl andRepo:(ACRepo *)repo
 {
     self = [super init];
     if (self) {
@@ -22,6 +22,7 @@
         self.events = events;
         self.labelsCount = labelsCount;
         self.eventsUrl = eventsUrl;
+        self.repo = repo;
     }
     return self;
 }

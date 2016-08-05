@@ -14,6 +14,7 @@
 #import "ACPictureManager.h"
 #import "ACIssue.h"
 #import "UIColor+ACAppColors.h"
+#import "DetailIssueViewController.h"
 
 @interface IssuesViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property NSMutableArray *sourceIssues;
@@ -25,8 +26,6 @@
 @implementation IssuesViewController
 
 - (void)viewDidLoad {
-    self.tableView.allowsSelection = NO;
-
     self.issuesFilter = @"all";
     [super viewDidLoad];
     self.navigationController.navigationBar.translucent = NO;
@@ -124,6 +123,19 @@
     
     
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+
+    DetailIssueViewController* ducontroller = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailIssueViewController"];
+    if(ducontroller)
+    {
+        ducontroller.currentIssue = self.tableIssues[indexPath.row];
+        ducontroller.navigationItem.title = @"Issue details";
+        [self.navigationController pushViewController:ducontroller animated:YES];
+    }
+    
 }
 
 
