@@ -7,13 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ACUser.h"
 
 @interface ACIssue : NSObject
 @property NSString* state;
 @property NSString* createDate;
 @property NSString* title;
 @property long issueNumber;
+@property long labelsCount;
+@property ACUser* user;
+@property NSArray* events;
+@property NSString* eventsUrl;
 
-- (instancetype)initWithNumber:(long)issueNumber andState:(NSString*)state andCreateDate:(NSString*)createDate andTitle:(NSString*)title;
+- (instancetype)initWithNumber:(long)issueNumber andState:(NSString*)state andCreateDate:(NSString*)createDate andTitle:(NSString*)title andUser:(ACUser*)user andEvents:(NSArray*)events andLabelsCount:(long)labelsCount andEventsUrl:(NSString*)eventsUrl;
 
 @end

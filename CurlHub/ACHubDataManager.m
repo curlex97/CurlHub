@@ -31,7 +31,6 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
 -(ACUser*)userFromToken:(NSString*)token
 {
-    [self usersForQuery:@"John" andPageNumber:2];
     ACUser* user = [self userFromUrl:[ACHubDataManager userUrl:token]];
     user.accessToken = token;
     return user;
@@ -300,9 +299,25 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
                     NSString* state = [issueDictionary valueForKeyPath:@"state"];
                     NSString* date = [self formatDateWithString:[issueDictionary valueForKeyPath:@"created_at"]];
                     long number = [[issueDictionary valueForKeyPath:@"number"] longValue];
+                    NSString* eventsUrl = [issueDictionary valueForKeyPath:@"events_url"];
                     
-                    ACIssue *issue = [[ACIssue alloc] initWithNumber:number andState:state andCreateDate:date andTitle:title];
-                    [array addObject:issue];
+                    ACIssue *issue = [[ACIssue alloc] initWithNumber:number andState:state andCreateDate:date andTitle:title andUser:nil andEvents:nil andLabelsCount:0 andEventsUrl:eventsUrl];
+                    
+                    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                        
+                        NSError *innerError;
+                        NSData *bData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:[issueDictionary valueForKeyPath:@"labels_url"]] encoding:NSUTF8StringEncoding error:nil]dataUsingEncoding:NSUTF8StringEncoding];
+                        if(bData)
+                        {
+                            NSArray* labelsArray = [NSJSONSerialization JSONObjectWithData:bData options:kNilOptions error:&innerError];
+                            if(!innerError) issue.labelsCount = labelsArray.count;
+                        }
+                        ACUser* user = [self userFromUrl:[issueDictionary valueForKeyPath:@"user.url"]];
+                        issue.user = user;
+                        issue.events = [self eventsForIssue:issue];
+                    });
+                    
+                    [array addObject:issue];  
                 }
             }
         }
@@ -345,6 +360,32 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 }
 
 
+-(NSArray<ACIssueEvent *> *)eventsForIssue:(ACIssue *)issue
+{
+    NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:[ACHubDataManager anotherUrl:issue.eventsUrl]] encoding:NSUTF8StringEncoding error:nil];
+    
+    NSError *jsonError = nil;
+    NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
+    
+    if(data)
+    {
+        NSArray* jsonArray = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
+        if(!jsonError && jsonArray.count)
+        {
+            NSMutableArray* array = [NSMutableArray array];
+            
+            for(NSDictionary* issueEventDictionary in jsonArray)
+            {
+                NSString* event = [issueEventDictionary valueForKeyPath:@"event"];
+                NSString* date = [self formatDateWithString:[issueEventDictionary valueForKeyPath:@"created_at"]];
+                ACIssueEvent* issueEvent = [[ACIssueEvent alloc] initWithEvent:event andUserName:issue.user.login andDate:date];
+                [array addObject:issueEvent];
+            }
+            return array;
+        }
+    }
+    return nil;
+}
 
 
 -(NSString*) formatDateWithString:(NSString*)string

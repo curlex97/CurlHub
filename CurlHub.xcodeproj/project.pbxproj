@@ -35,6 +35,7 @@
 		28BE0F531D47BA3A00110482 /* DetailRepoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F521D47BA3A00110482 /* DetailRepoViewController.m */; };
 		28BE0F561D47C1B400110482 /* DetailDoubleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F551D47C1B400110482 /* DetailDoubleTableViewCell.m */; };
 		28BE0F5B1D47E40B00110482 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BE0F5A1D47E40B00110482 /* SearchViewController.m */; };
+		28C3100E1D54085600A03081 /* ACIssueEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C3100D1D54085600A03081 /* ACIssueEvent.m */; };
 		28CBF15D1D49DB9C0096F5EC /* ACPictureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CBF15C1D49DB9C0096F5EC /* ACPictureManager.m */; };
 		28CBF1601D49F5120096F5EC /* NSString+HtmlPicturePath.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CBF15F1D49F5120096F5EC /* NSString+HtmlPicturePath.m */; };
 		28CBF1641D49FB290096F5EC /* ACProgressBarDisplayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CBF1631D49FB290096F5EC /* ACProgressBarDisplayer.m */; };
@@ -107,6 +108,8 @@
 		28BE0F551D47C1B400110482 /* DetailDoubleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailDoubleTableViewCell.m; sourceTree = "<group>"; };
 		28BE0F591D47E40B00110482 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		28BE0F5A1D47E40B00110482 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		28C3100C1D54085600A03081 /* ACIssueEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACIssueEvent.h; sourceTree = "<group>"; };
+		28C3100D1D54085600A03081 /* ACIssueEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACIssueEvent.m; sourceTree = "<group>"; };
 		28CBF15B1D49DB9C0096F5EC /* ACPictureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACPictureManager.h; sourceTree = "<group>"; };
 		28CBF15C1D49DB9C0096F5EC /* ACPictureManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACPictureManager.m; sourceTree = "<group>"; };
 		28CBF15E1D49F5120096F5EC /* NSString+HtmlPicturePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HtmlPicturePath.h"; sourceTree = "<group>"; };
@@ -249,6 +252,8 @@
 				28F1C9751D4D5BE90007BF8B /* ACRepoFile.m */,
 				28F1C9771D4D5C790007BF8B /* ACRepoDirectory.h */,
 				28F1C9781D4D5C790007BF8B /* ACRepoDirectory.m */,
+				28C3100C1D54085600A03081 /* ACIssueEvent.h */,
+				28C3100D1D54085600A03081 /* ACIssueEvent.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -553,6 +558,7 @@
 				28BE0F401D478C1200110482 /* ACReposViewModel.m in Sources */,
 				28BE0F461D47A48D00110482 /* DetailCountTableViewCell.m in Sources */,
 				28BE0F5B1D47E40B00110482 /* SearchViewController.m in Sources */,
+				28C3100E1D54085600A03081 /* ACIssueEvent.m in Sources */,
 				28FBBC5B1D4B728F0020D1E3 /* DetailUserViewController.m in Sources */,
 				28F1C9761D4D5BE90007BF8B /* ACRepoFile.m in Sources */,
 				280DC1621D464A5800D6E10F /* NewsViewController.m in Sources */,

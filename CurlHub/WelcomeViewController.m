@@ -96,9 +96,13 @@
             }
         }
         else
-        {dispatch_async(dispatch_get_main_queue(), ^{
-            [self.progressBarDisplayer displayOnView:self.mainView withMessage:@"No internet" andColor:[UIColor alertColor] andIndicator:NO andFaded:YES];
-        });
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+            [self.progressBarDisplayer displayOnView:self.mainView withMessage:@"No internet" andColor:[UIColor alertColor] andIndicator:NO andFaded:YES];});
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self login];
+            });
+        
         }
         
     });

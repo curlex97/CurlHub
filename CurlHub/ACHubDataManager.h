@@ -14,6 +14,7 @@
 #import "ACIssue.h"
 #import "ACRepoFile.h"
 #import "ACRepoDirectory.h"
+#import "ACIssueEvent.h"
 
 @interface ACHubDataManager : NSObject
 
@@ -40,6 +41,8 @@
 -(NSArray<ACRepo*>*) reposForUser:(ACUser*)user andPageNumber:(int)pageNumber andFilter:(NSString*)filter;
 -(NSArray<ACRepo*>*) reposForQuery:(NSString*)query andPageNumber:(int)pageNumber;
 -(NSArray<ACUser*>*) usersForQuery:(NSString*)query andPageNumber:(int)pageNumber;
+-(NSArray<ACIssueEvent*>*) eventsForIssue:(ACIssue*)issue;
+
 
 -(NSArray<ACNews*>*) news;
 -(NSArray<ACIssue*>*) issuesForUser:(ACUser*)user andFilter:(NSString*)filter;
