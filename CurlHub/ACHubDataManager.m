@@ -6,18 +6,9 @@
 //  Copyright © 2016 ArthurChistyak. All rights reserved.
 //
 
-/*
- -> PATCH
- -> Also search by users, etc.
- 
- <<<--EXT-->>>
- -> Stars
- -> Comments in repos
- */ //
 
 #import "ACHubDataManager.h"
-#import "ACPictureManager.h"
-#import "NSString+HtmlPicturePath.h"
+
 
 @interface ACHubDataManager()
 
@@ -29,8 +20,39 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 @implementation ACHubDataManager
 
 
+-(void) test
+{
+    // access_token=c2ad0b5cd90d9ba08d468d36fd2c9f13eb963d0c&client_id=07792de91a22f48d76a8&client_secret=3ac64664dc2578449db4c617aefd5ee47c850f62
+    NSURL *URL = [NSURL URLWithString:@"https://api.github.com/user"];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30];
+    [request setHTTPMethod:@"PATCH"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+
+    NSMutableDictionary* dic = [NSMutableDictionary dictionary];
+    [dic setValue:@"bio" forKey:@"something in your mouth"];
+    
+    NSData* data = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
+    [request setHTTPBody:data];
+    [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)data.length] forHTTPHeaderField:@"Content-Length"];
+    [request setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"c2ad0b5cd90d9ba08d468d36fd2c9f13eb963d0c" forHTTPHeaderField:@"access_token"];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request
+                                            completionHandler:
+                                  ^(NSData *data, NSURLResponse *response, NSError *error) {
+                                      
+                                      NSString* newStr = [NSString stringWithUTF8String:[data bytes]];
+                                      NSLog(@"%@", newStr);
+                                  }];
+    
+    [task resume];
+}
+
 -(ACUser*)userFromToken:(NSString*)token
 {
+    [self test];
     ACUser* user = [self userFromUrl:[ACHubDataManager userUrl:token]];
     user.accessToken = token;
     return user;
@@ -94,7 +116,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
             NSString* repoName = [eventDictionary valueForKeyPath: @"repo.name"];
             NSString* refType = [eventDictionary valueForKeyPath: @"payload.ref_type"];
             NSString* ref = [eventDictionary valueForKeyPath: @"payload.ref"];
-            NSString* time = [self formatDateWithString:[eventDictionary valueForKeyPath: @"created_at"]];
+            NSString* time = [NSString formatDateWithString:[eventDictionary valueForKeyPath: @"created_at"]];
             
             if(!refType) refType = @"";
             if(!login) login = user.login;
@@ -175,7 +197,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     return nil;
 }
 
-
+// все методы получения списка репозиториев работают через него
 -(NSArray*) reposFromJsonDictionary:(NSArray*)jsonDictionary
 {
     NSMutableArray *array = [NSMutableArray array];
@@ -186,14 +208,19 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
         NSString* ownerName = [repoDictionary valueForKeyPath:@"owner.login"];
         NSString* avatarUrl = [repoDictionary valueForKeyPath:@"owner.avatar_url"];
         NSString *language = [repoDictionary valueForKeyPath:@"language"];
-        NSString* date = [self formatDateWithString:[repoDictionary valueForKeyPath:@"created_at"]];
+        NSString* date = [NSString formatDateWithString:[repoDictionary valueForKeyPath:@"created_at"]];
         double size = [[repoDictionary valueForKeyPath:@"size"] doubleValue] / 1024;
         NSString* private = [repoDictionary valueForKeyPath:@"private"];
         NSString* issuesUrl = [repoDictionary valueForKeyPath:@"issues_url"];
         NSString* contentsUrl = [repoDictionary valueForKeyPath:@"contents_url"];
         NSString* ownerUrl = [repoDictionary valueForKeyPath:@"owner.url"];
+        NSString* branchesUrl =[repoDictionary valueForKeyPath:@"branches_url"];
+        
+        contentsUrl = [contentsUrl substringToIndex:[contentsUrl rangeOfString:@"{"].location];
+        issuesUrl = [issuesUrl substringToIndex:[issuesUrl rangeOfString:@"{"].location];
+        branchesUrl = [branchesUrl substringToIndex:[branchesUrl rangeOfString:@"{"].location];
 
-        contentsUrl = [contentsUrl substringToIndex:[contentsUrl rangeOfString:@"/{"].location];
+        
         NSString* htmlUrl = [repoDictionary valueForKeyPath:@"html_url"];
         int privateInt = [private intValue];
         BOOL isPrivate = privateInt > 0;
@@ -202,19 +229,21 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
         long stargazersCount = [[repoDictionary valueForKeyPath:@"stargazers_count"] longValue];
         long branchesCount = 0, issuesCount = 0;
         
-        ACRepo *repo = [[ACRepo alloc] initWithName:name andOwnerName:ownerName andOwnerAvatarUrl:avatarUrl andLanguage:language andCreateDate:date andSize:size andForksCount:forksCount andWatchersCount:watchersCount andBranchesCount:branchesCount andStargazersCount:stargazersCount andIssuesCount:issuesCount andPrivate:isPrivate andIssuesUrl:issuesUrl andContentsUrl:contentsUrl andHtmlUrl:htmlUrl andOwnerUrl:ownerUrl];
+        ACRepo *repo = [[ACRepo alloc] initWithName:name andOwnerName:ownerName andOwnerAvatarUrl:avatarUrl andLanguage:language andCreateDate:date andSize:size andForksCount:forksCount andWatchersCount:watchersCount andBranchesCount:branchesCount andStargazersCount:stargazersCount andIssuesCount:issuesCount andPrivate:isPrivate andIssuesUrl:issuesUrl andContentsUrl:contentsUrl andHtmlUrl:htmlUrl andOwnerUrl:ownerUrl andBranchesUrl:branchesUrl];
         
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             
             NSError *innerError;
-            NSData *bData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:[repoDictionary valueForKeyPath:@"branches_url"]] encoding:NSUTF8StringEncoding error:nil]dataUsingEncoding:NSUTF8StringEncoding];
+            
+            
+            NSData *bData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:repo.branchesUrl] encoding:NSUTF8StringEncoding error:nil]dataUsingEncoding:NSUTF8StringEncoding];
             if(bData)
             {
                 NSArray* branchesArray = [NSJSONSerialization JSONObjectWithData:bData options:kNilOptions error:&innerError];
                 if(!innerError) repo.branchesCount = branchesArray.count;
             }
             
-            bData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:[repoDictionary valueForKeyPath:@"issues_url"]] encoding:NSUTF8StringEncoding error:nil] dataUsingEncoding:NSUTF8StringEncoding];
+            bData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:repo.issuesUrl] encoding:NSUTF8StringEncoding error:nil] dataUsingEncoding:NSUTF8StringEncoding];
             
             if(bData)
             {
@@ -297,7 +326,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
                 {
                     NSString* title = [issueDictionary valueForKeyPath:@"title"];
                     NSString* state = [issueDictionary valueForKeyPath:@"state"];
-                    NSString* date = [self formatDateWithString:[issueDictionary valueForKeyPath:@"created_at"]];
+                    NSString* date = [NSString formatDateWithString:[issueDictionary valueForKeyPath:@"created_at"]];
                     long number = [[issueDictionary valueForKeyPath:@"number"] longValue];
                     NSString* eventsUrl = [issueDictionary valueForKeyPath:@"events_url"];
                     
@@ -377,7 +406,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
             for(NSDictionary* issueEventDictionary in jsonArray)
             {
                 NSString* event = [issueEventDictionary valueForKeyPath:@"event"];
-                NSString* date = [self formatDateWithString:[issueEventDictionary valueForKeyPath:@"created_at"]];
+                NSString* date = [NSString formatDateWithString:[issueEventDictionary valueForKeyPath:@"created_at"]];
                 NSString* userUrl = [issueEventDictionary valueForKeyPath:@"actor.url"];
                 ACIssueEvent* issueEvent = [[ACIssueEvent alloc] initWithEvent:event andUser:nil andDate:date];
                 
@@ -393,11 +422,11 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     return nil;
 }
 
-
--(NSString*) formatDateWithString:(NSString*)string
+-(NSString *)textContentWithFile:(ACRepoFile *)file
 {
-    return [[string substringToIndex:[string rangeOfString:@"T"].location] stringByReplacingOccurrencesOfString:@"-" withString:@"."];
+    return [NSString stringWithContentsOfURL:[NSURL URLWithString:file.downloadUrl] encoding:NSUTF8StringEncoding error:nil];
 }
+
 
 
 
@@ -499,6 +528,10 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     return [NSString stringWithFormat:@"%@%@client_id=%@&client_secret=%@", url, sep, clientID, clientSecret];
 }
 
++(NSString *)pageWithVerificationUrl
+{
+    return [NSString stringWithContentsOfURL:[NSURL URLWithString:[ACHubDataManager verificationUrl]] encoding:NSUTF8StringEncoding  error:nil];
+}
 
 
 

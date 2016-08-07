@@ -10,7 +10,7 @@
 
 @implementation ACRepo
 
--(instancetype)initWithName:(NSString *)name andOwnerName:(NSString *)ownerName andOwnerAvatarUrl:(NSString *)ownerAvatarUrl andLanguage:(NSString *)language andCreateDate:(NSString *)createDate andSize:(double)size andForksCount:(long)forksCount andWatchersCount:(long)watchersCount andBranchesCount:(long)branchesCount andStargazersCount:(long)stargazersCount andIssuesCount:(long)issuesCount andPrivate:(BOOL)isPrivate andIssuesUrl:(NSString *)issuesUrl andContentsUrl:(NSString*)contentsUrl andHtmlUrl:(NSString *)htmlUrl andOwnerUrl:(NSString*)ownerUrl
+-(instancetype)initWithName:(NSString *)name andOwnerName:(NSString *)ownerName andOwnerAvatarUrl:(NSString *)ownerAvatarUrl andLanguage:(NSString *)language andCreateDate:(NSString *)createDate andSize:(double)size andForksCount:(long)forksCount andWatchersCount:(long)watchersCount andBranchesCount:(long)branchesCount andStargazersCount:(long)stargazersCount andIssuesCount:(long)issuesCount andPrivate:(BOOL)isPrivate andIssuesUrl:(NSString *)issuesUrl andContentsUrl:(NSString*)contentsUrl andHtmlUrl:(NSString *)htmlUrl andOwnerUrl:(NSString*)ownerUrl andBranchesUrl:(NSString *)branchesUrl
 {
     self = [super init];
     if (self)
@@ -31,6 +31,7 @@
         self.contentsUrl = contentsUrl;
         self.htmlUrl = htmlUrl;
         self.ownerUrl = ownerUrl;
+        self.branchesUrl = branchesUrl;
     }
     return self;
 }

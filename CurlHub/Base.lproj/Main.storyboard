@@ -1610,8 +1610,8 @@
                                                     <exclude reference="EJr-Yy-y7L"/>
                                                     <exclude reference="OV8-m2-Et8"/>
                                                     <exclude reference="5LC-aC-UCI"/>
-                                                    <exclude reference="nxp-a7-Ui8"/>
                                                     <exclude reference="cX9-85-pWE"/>
+                                                    <exclude reference="nxp-a7-Ui8"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>

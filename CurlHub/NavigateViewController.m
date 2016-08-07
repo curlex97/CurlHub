@@ -7,14 +7,7 @@
 //
 
 #import "NavigateViewController.h"
-#import "MenuView.h"
-#import "EventsViewController.h"
-#import "ReposViewController.h"
-#import "SearchViewController.h"
-#import "DetailUserViewController.h"
-#import "IssuesViewController.h"
-#import "UIImage+ACImageResizing.h"
-#import "UIColor+ACAppColors.h"
+
 
 #define SLIDE_WIDTH 200
 
@@ -22,10 +15,20 @@
 @property (weak, nonatomic) IBOutlet MenuView<UITableViewDelegate, UITableViewDataSource> *menu;
 @property (weak, nonatomic) IBOutlet UIView *mainView;
 @property NSMutableDictionary* viewControllers;
+@property WelcomeViewController *parentController;
+
 @end
 
 @implementation NavigateViewController
 
+
+-(void)setParent:(id)parentController
+{
+    if([parentController isKindOfClass:[WelcomeViewController class]])
+    {
+        self.parentController = parentController;
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

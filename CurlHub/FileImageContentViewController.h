@@ -10,8 +10,9 @@
 #import "ACProgressBarDisplayer.h"
 #import "UIColor+ACAppColors.h"
 #import "ACPictureManager.h"
+#import "ACRepoFile.h"
 
 @interface FileImageContentViewController : UIViewController
-@property NSString* url;
+@property ACRepoFile* file;
 @property ACProgressBarDisplayer *progressBarDisplayer;
 @end

@@ -7,12 +7,7 @@
 //
 
 #import "NewsViewController.h"
-#import "ACNewsViewModel.h"
-#import "ActionTableViewCell.h"
-#import "ACProgressBarDisplayer.h"
-#import "ACPictureManager.h"
-#import "ACNews.h"
-#import "UIColor+ACAppColors.h"
+
 
 @interface NewsViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property NSMutableArray *tableNews;

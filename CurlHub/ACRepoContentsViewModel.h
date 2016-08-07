@@ -13,11 +13,10 @@
 
 @interface ACRepoContentsViewModel : NSObject
 
+// список всех файлов и папок по адресу
 -(NSArray*) filesListFromUrl:(NSString*)url;
 
-
-//Not used
-
-+(NSURLRequest *)highlightedTextUrlWithUrl:(NSString *)url;
+// содержимое файла
+-(NSString*) textContentWithFile:(ACRepoFile*)file;
 
 @end

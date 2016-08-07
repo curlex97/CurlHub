@@ -7,12 +7,7 @@
 //
 
 #import "DetailRepoViewController.h"
-#import "DetailCountTableViewCell.h"
-#import "DetailDoubleTableViewCell.h"
-#import "ACPictureManager.h"
-#import "RepoContentsViewController.h"
-#import "DetailUserViewController.h"
-#import "ACReposViewModel.h"
+
 
 @interface DetailRepoViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -60,6 +55,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     if(indexPath.section == 0)
     {
         DetailCountTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"drcountCell"];
@@ -84,7 +80,7 @@
                 cell.leftImage.image = [UIImage imageNamed:@"lockIcon"];
                 cell.rightImage.image = [UIImage imageNamed:@"boxIcon"];
                 cell.leftLabel.text = self.currentRepo.isPrivate ? @"Private" : @"Public";
-                cell.rightLabel.text = self.currentRepo.language;
+                cell.rightLabel.text = ![self.currentRepo.language isKindOfClass:[NSNull class]]? self.currentRepo.language : @"Unknown";
                 break;
             case 1:
                 cell.leftImage.image = [UIImage imageNamed:@"alertIcon"];
@@ -95,12 +91,12 @@
             case 2:
                 cell.leftImage.image = [UIImage imageNamed:@"calendarIcon"];
                 cell.rightImage.image = [UIImage imageNamed:@"toolsIcon"];
-                cell.leftLabel.text = self.currentRepo.createDate;
+                cell.leftLabel.text = ![self.currentRepo.createDate isKindOfClass:[NSNull class]] ? self.currentRepo.createDate : @"";
                 cell.rightLabel.text = [NSString stringWithFormat:@"%.02f MB", self.currentRepo.size];
                 break;
             case 3:
                 cell.leftLabel.text = @"Owner";
-                cell.rightLabel.text = self.currentRepo.ownerName;
+                cell.rightLabel.text = ![self.currentRepo.ownerName isKindOfClass:[NSNull class]] ? self.currentRepo.ownerName : @"";
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 break;
         }

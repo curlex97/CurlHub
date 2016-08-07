@@ -20,7 +20,7 @@
     
     [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[UIColor messageColor] andIndicator:YES andFaded:NO];
     
-    [ACPictureManager downloadImageByUrlAsync:self.url andCompletion:^(UIImage* image){
+    [ACPictureManager downloadImageByUrlAsync:self.file.downloadUrl andCompletion:^(UIImage* image){
         if(image)
         {
             UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
@@ -47,7 +47,7 @@
 
 -(void) sharingPressed
 {
-    NSArray *toShare = @[self.url];
+    NSArray *toShare = @[self.file.downloadUrl];
     UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:toShare applicationActivities:nil];
     [self presentViewController:activityVC animated:YES completion:nil];
 }

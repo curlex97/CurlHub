@@ -8,6 +8,7 @@
 
 #import "FileTextContentViewController.h"
 
+
 @implementation FileTextContentViewController
 
 
@@ -22,7 +23,7 @@
     [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[UIColor messageColor] andIndicator:YES andFaded:NO];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        NSString* text = [NSString stringWithContentsOfURL:[NSURL URLWithString:self.url] encoding:NSUTF8StringEncoding error:nil];
+        NSString* text = [[[ACRepoContentsViewModel alloc] init] textContentWithFile:self.file];
         if(text && text.length)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -41,7 +42,7 @@
 
 -(void) sharingPressed
 {
-    NSArray *toShare = @[self.url];
+    NSArray *toShare = @[self.file.downloadUrl];
     UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:toShare applicationActivities:nil];
     [self presentViewController:activityVC animated:YES completion:nil];
 }

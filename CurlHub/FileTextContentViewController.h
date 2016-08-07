@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "ACProgressBarDisplayer.h"
 #import "UIColor+ACAppColors.h"
+#import "ACRepoFile.h"
+#import "ACRepoContentsViewModel.h"
 
 @interface FileTextContentViewController : UIViewController
-@property NSString* url;
+@property ACRepoFile* file;
 @property (weak, nonatomic) IBOutlet UITextView *contentView;
 @property ACProgressBarDisplayer *progressBarDisplayer;
 

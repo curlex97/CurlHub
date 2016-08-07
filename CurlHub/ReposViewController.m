@@ -7,13 +7,7 @@
 //
 
 #import "ReposViewController.h"
-#import "ACReposViewModel.h"
-#import "ACRepo.h"
-#import "ContentTableViewCell.h"
-#import "DetailRepoViewController.h"
-#import "ACProgressBarDisplayer.h"
-#import "ACPictureManager.h"
-#import "UIColor+ACAppColors.h"
+
 
 @interface ReposViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property NSMutableArray *sourceRepos;

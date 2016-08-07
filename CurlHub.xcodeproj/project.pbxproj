@@ -42,6 +42,8 @@
 		28CBF1681D4AA19B0096F5EC /* UIImage+ACImageResizing.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CBF1671D4AA19B0096F5EC /* UIImage+ACImageResizing.m */; };
 		28CBF16B1D4AABA90096F5EC /* ACNews.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CBF16A1D4AABA90096F5EC /* ACNews.m */; };
 		28CBF1711D4AB3FF0096F5EC /* ACNewsViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CBF1701D4AB3FF0096F5EC /* ACNewsViewModel.m */; };
+		28D759E21D575E340096CAB3 /* NSString+HtmlDateFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D759E11D575E340096CAB3 /* NSString+HtmlDateFormat.m */; };
+		28D759E81D5764540096CAB3 /* ACNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D759E71D5764540096CAB3 /* ACNetworkManager.m */; };
 		28F061131D54994D00401312 /* DetailIssueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F061121D54994D00401312 /* DetailIssueViewController.m */; };
 		28F061161D54A08C00401312 /* EventTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F061151D54A08C00401312 /* EventTableViewCell.m */; };
 		28F1C9761D4D5BE90007BF8B /* ACRepoFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F1C9751D4D5BE90007BF8B /* ACRepoFile.m */; };
@@ -124,6 +126,10 @@
 		28CBF16A1D4AABA90096F5EC /* ACNews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACNews.m; sourceTree = "<group>"; };
 		28CBF16F1D4AB3FF0096F5EC /* ACNewsViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACNewsViewModel.h; sourceTree = "<group>"; };
 		28CBF1701D4AB3FF0096F5EC /* ACNewsViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACNewsViewModel.m; sourceTree = "<group>"; };
+		28D759E01D575E340096CAB3 /* NSString+HtmlDateFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HtmlDateFormat.h"; sourceTree = "<group>"; };
+		28D759E11D575E340096CAB3 /* NSString+HtmlDateFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HtmlDateFormat.m"; sourceTree = "<group>"; };
+		28D759E61D5764540096CAB3 /* ACNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACNetworkManager.h; sourceTree = "<group>"; };
+		28D759E71D5764540096CAB3 /* ACNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACNetworkManager.m; sourceTree = "<group>"; };
 		28F061111D54994D00401312 /* DetailIssueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailIssueViewController.h; sourceTree = "<group>"; };
 		28F061121D54994D00401312 /* DetailIssueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailIssueViewController.m; sourceTree = "<group>"; };
 		28F061141D54A08C00401312 /* EventTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventTableViewCell.h; sourceTree = "<group>"; };
@@ -188,9 +194,9 @@
 				282D01361D46D3AC001B82C9 /* Views */,
 				280DC15B1D46455000D6E10F /* Controllers */,
 				280DC15C1D46455C00D6E10F /* UI */,
-				280DC1401D45637800D6E10F /* Assets.xcassets */,
 				28CBF1611D49F5170096F5EC /* Categories */,
 				280DC1451D45637800D6E10F /* Info.plist */,
+				280DC1401D45637800D6E10F /* Assets.xcassets */,
 				280DC1341D45637800D6E10F /* Supporting Files */,
 			);
 			path = CurlHub;
@@ -272,6 +278,8 @@
 				280DC1681D46579100D6E10F /* ACHubDataManager.m */,
 				28CBF15B1D49DB9C0096F5EC /* ACPictureManager.h */,
 				28CBF15C1D49DB9C0096F5EC /* ACPictureManager.m */,
+				28D759E61D5764540096CAB3 /* ACNetworkManager.h */,
+				28D759E71D5764540096CAB3 /* ACNetworkManager.m */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -415,6 +423,8 @@
 				28CBF1671D4AA19B0096F5EC /* UIImage+ACImageResizing.m */,
 				28CBF15E1D49F5120096F5EC /* NSString+HtmlPicturePath.h */,
 				28CBF15F1D49F5120096F5EC /* NSString+HtmlPicturePath.m */,
+				28D759E01D575E340096CAB3 /* NSString+HtmlDateFormat.h */,
+				28D759E11D575E340096CAB3 /* NSString+HtmlDateFormat.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -564,6 +574,7 @@
 				28FBBC681D4B88EA0020D1E3 /* IssueTableViewCell.m in Sources */,
 				282D012F1D46C9B6001B82C9 /* ACEvent.m in Sources */,
 				280DC1651D464F4800D6E10F /* EventsViewController.m in Sources */,
+				28D759E81D5764540096CAB3 /* ACNetworkManager.m in Sources */,
 				28BE0F531D47BA3A00110482 /* DetailRepoViewController.m in Sources */,
 				28CBF1601D49F5120096F5EC /* NSString+HtmlPicturePath.m in Sources */,
 				282D01321D46CD6F001B82C9 /* ACEventsViewModel.m in Sources */,
@@ -581,6 +592,7 @@
 				28F1C9761D4D5BE90007BF8B /* ACRepoFile.m in Sources */,
 				280DC1621D464A5800D6E10F /* NewsViewController.m in Sources */,
 				280DC1741D46853500D6E10F /* WelcomeViewController.m in Sources */,
+				28D759E21D575E340096CAB3 /* NSString+HtmlDateFormat.m in Sources */,
 				280DC1691D46579100D6E10F /* ACHubDataManager.m in Sources */,
 				280DC1391D45637800D6E10F /* AppDelegate.m in Sources */,
 				282D01351D46D3A4001B82C9 /* ActionTableViewCell.m in Sources */,

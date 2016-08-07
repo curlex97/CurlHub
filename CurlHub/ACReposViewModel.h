@@ -9,10 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "ACUser.h"
 #import "ACRepo.h"
+#import "ACHubDataManager.h"
 
 @interface ACReposViewModel : NSObject
 
+// список репозиториев для пользователя
 -(NSArray*) allReposForUser:(ACUser*)user andPageNumber:(int)pageNumber andFilter:(NSString*)filter;
+
+// список репозиториев по неформатированному запросу
 -(NSArray*) allReposForQuery:(NSString*)query andPageNumber:(int)pageNumber;
+
+// хозяин репозитория
 -(ACUser*) repositoryOwner:(ACRepo*)repository;
 @end

@@ -7,12 +7,7 @@
 //
 
 #import "WelcomeViewController.h"
-#import "LoginViewController.h"
-#import "ACUserViewModel.h"
-#import "ACHubDataManager.h"
-#import "NavigateViewController.h"
-#import "ACProgressBarDisplayer.h"
-#import "UIColor+ACAppColors.h"
+
 
 @interface WelcomeViewController ()
 @property ACUserViewModel *userModel;
@@ -51,7 +46,7 @@
         if([segue.destinationViewController isKindOfClass:[LoginViewController class]])
         {
             LoginViewController *destVc = (LoginViewController*) segue.destinationViewController;
-            destVc.welcomeController = self;
+            [destVc setWelcome: self];
         }
     }
 }
@@ -63,7 +58,7 @@
     
     dispatch_async(dispatch_get_global_queue(0,0), ^{
         
-        NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:[ACHubDataManager verificationUrl]] encoding:NSUTF8StringEncoding  error:nil];
+        NSString* page = [ACHubDataManager pageWithVerificationUrl];
         if(page)
         {
             page = [page substringToIndex:[page rangeOfString:@"<"].location];
@@ -77,7 +72,7 @@
                     dispatch_async(dispatch_get_main_queue(), ^{
                     NavigateViewController *navigateViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NavigateViewController"];
                         navigateViewController.currentUser = user;
-                        navigateViewController.parentController = self;
+                        [navigateViewController setParent: self];
                         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:navigateViewController];
                         navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
                         [self presentViewController:navigationController animated:YES completion:nil];

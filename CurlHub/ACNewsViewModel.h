@@ -11,5 +11,8 @@
 #import "ACHubDataManager.h"
 
 @interface ACNewsViewModel : NSObject
+
+// список всех новостей для пользователя
 -(NSArray*) allNews;
+
 @end

@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "ACUser.h"
+#import "ACEventsViewModel.h"
+#import "ActionTableViewCell.h"
+#import "ACProgressBarDisplayer.h"
+#import "ACPictureManager.h"
+#import "UIColor+ACAppColors.h"
 
 @interface EventsViewController : UIViewController
 @property ACUser *currentUser;

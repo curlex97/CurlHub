@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "ACUser.h"
+#import "ACPictureManager.h"
+#import "DetailCountTableViewCell.h"
+#import "DetailDoubleTableViewCell.h"
+#import "ReposViewController.h"
 
 @interface DetailUserViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIImageView *userAvatar;

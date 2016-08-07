@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "ACIssue.h"
+#import "ACPictureManager.h"
+#import "DetailCountTableViewCell.h"
+#import "DetailDoubleTableViewCell.h"
+#import "EventTableViewCell.h"
+#import "DetailUserViewController.h"
+#import "DetailRepoViewController.h"
+#import "ACIssueEvent.h"
 
 @interface DetailIssueViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIImageView *userImage;

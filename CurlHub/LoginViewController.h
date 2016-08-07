@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ACHubDataManager.h"
 #import "WelcomeViewController.h"
 
 @interface LoginViewController : UIViewController
-@property WelcomeViewController *welcomeController;
+
+// сюда прислать WelcomeViewController
+-(void) setWelcome:(id)welcomeController;
 @end

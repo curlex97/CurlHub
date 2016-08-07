@@ -7,7 +7,6 @@
 //
 
 #import "ACReposViewModel.h"
-#import "ACHubDataManager.h"
 
 @implementation ACReposViewModel
 

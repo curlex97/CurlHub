@@ -7,7 +7,7 @@
 //
 
 #import "ACPictureManager.h"
-#import "NSString+HtmlPicturePath.h"
+
 
 static NSMutableDictionary *picturesDictionary;
 
@@ -63,7 +63,7 @@ static NSMutableDictionary *picturesDictionary;
         UIImage *image = [ACPictureManager getPictureByName:url];
         if(!image)
         {
-            NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: url]];
+            NSData * data = [ACNetworkManager dataByUrl:url];
             image = [UIImage imageWithData: data];
             if(image) [ACPictureManager addPicture:[UIImage imageWithData: data] byName:url];
         }

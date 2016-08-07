@@ -7,11 +7,7 @@
 //
 
 #import "EventsViewController.h"
-#import "ACEventsViewModel.h"
-#import "ActionTableViewCell.h"
-#import "ACProgressBarDisplayer.h"
-#import "ACPictureManager.h"
-#import "UIColor+ACAppColors.h"
+
 
 @interface EventsViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property NSMutableArray *sourceEvents;

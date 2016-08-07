@@ -7,8 +7,7 @@
 //
 
 #import "MenuView.h"
-#import "UIImage+ACImageResizing.h"
-#import "UIColor+ACAppColors.h"
+
 
 #define IMAGE_SIZE 20
 

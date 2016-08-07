@@ -7,14 +7,22 @@
 //
 
 #import "LoginViewController.h"
-#import "ACHubDataManager.h"
+
 
 @interface LoginViewController () <UIWebViewDelegate>
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
-
+@property WelcomeViewController *welcomeController;
 @end
 
 @implementation LoginViewController
+
+-(void)setWelcome:(id)welcomeController
+{
+    if([welcomeController isKindOfClass:[WelcomeViewController class]])
+    {
+        self.welcomeController = welcomeController;
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

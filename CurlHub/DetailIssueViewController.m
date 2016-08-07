@@ -7,13 +7,7 @@
 //
 
 #import "DetailIssueViewController.h"
-#import "ACPictureManager.h"
-#import "DetailCountTableViewCell.h"
-#import "DetailDoubleTableViewCell.h"
-#import "EventTableViewCell.h"
-#import "DetailUserViewController.h"
-#import "DetailRepoViewController.h"
-#import "ACIssueEvent.h"
+
 
 @interface DetailIssueViewController() <UITableViewDataSource, UITableViewDelegate>
 

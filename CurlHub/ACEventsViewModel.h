@@ -12,6 +12,7 @@
 
 @interface ACEventsViewModel : NSObject
 
+// список событий для пользователя
 -(NSArray*) allEventsForUser:(ACUser*)user andPageNumber:(int)pageNumber;
 
 @end

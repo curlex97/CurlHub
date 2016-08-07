@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "ACUser.h"
+#import "ACIssuesViewModel.h"
+#import "ACIssuesViewModel.h"
+#import "IssueTableViewCell.h"
+#import "ACProgressBarDisplayer.h"
+#import "ACPictureManager.h"
+#import "ACIssue.h"
+#import "UIColor+ACAppColors.h"
+#import "DetailIssueViewController.h"
 
 @interface IssuesViewController : UIViewController
 @property ACUser* currentUser;

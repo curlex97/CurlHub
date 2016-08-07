@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "ACUser.h"
+#import "ACReposViewModel.h"
+#import "ACRepo.h"
+#import "ContentTableViewCell.h"
+#import "DetailRepoViewController.h"
+#import "ACProgressBarDisplayer.h"
+#import "ACPictureManager.h"
+#import "UIColor+ACAppColors.h"
 
 @interface ReposViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITableView *tableView;

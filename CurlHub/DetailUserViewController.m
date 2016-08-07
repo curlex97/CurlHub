@@ -7,10 +7,7 @@
 //
 
 #import "DetailUserViewController.h"
-#import "ACPictureManager.h"
-#import "DetailCountTableViewCell.h"
-#import "DetailDoubleTableViewCell.h"
-#import "ReposViewController.h"
+
 
 @interface DetailUserViewController()<UITableViewDelegate, UITableViewDataSource>
 

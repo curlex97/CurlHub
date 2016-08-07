@@ -12,6 +12,7 @@
 #import "ACUser.h"
 @interface ACIssuesViewModel : NSObject
 
+// список всех заданий для пользователя по фиьтру (см. ACHubDataManager)
 -(NSArray*)allIssuesForUser:(ACUser*)user andFilter:(NSString*)filter;
 
 @end

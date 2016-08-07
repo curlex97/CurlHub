@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "ACRepo.h"
+#import "DetailCountTableViewCell.h"
+#import "DetailDoubleTableViewCell.h"
+#import "ACPictureManager.h"
+#import "RepoContentsViewController.h"
+#import "DetailUserViewController.h"
+#import "ACReposViewModel.h"
 
 @interface DetailRepoViewController : UIViewController
 @property ACRepo *currentRepo;
