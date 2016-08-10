@@ -54,6 +54,9 @@
 // адрес для доступа к гитхабу (подставляет идентификатор и секретный ключ)
 +(NSString*) anotherUrl:(NSString*)url;
 
+// адрес для доступа к гитхабу (подставляет идентификатор, секретный ключ и номер страницы)
++(NSString *)anotherUrl:(NSString *)url withPageNumber:(int)pageNaumber;
+
 // страница адреса подтверждения
 +(NSString*) pageWithVerificationUrl;
 
@@ -79,6 +82,12 @@
 
 // список пользователей через неформатированный запрос и номер страницы
 -(NSArray<ACUser*>*) usersForQuery:(NSString*)query andPageNumber:(int)pageNumber;
+
+// список подписчиков пользователя
+-(NSArray<ACUser*>*) userFollowers:(ACUser*)user andPageNumber:(int)pageNumber;
+
+// список подписок пользотвалея
+-(NSArray<ACUser*>*) userFollowing:(ACUser*)user andPageNumber:(int)pageNumber;
 
 // список событий задания через задание
 -(NSArray<ACIssueEvent*>*) eventsForIssue:(ACIssue*)issue;

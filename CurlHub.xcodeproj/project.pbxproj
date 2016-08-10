@@ -52,6 +52,7 @@
 		28F1C97F1D4D61FB0007BF8B /* RepoContentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F1C97E1D4D61FB0007BF8B /* RepoContentsViewController.m */; };
 		28F1C9831D4D70250007BF8B /* FileTextContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F1C9821D4D70250007BF8B /* FileTextContentViewController.m */; };
 		28F1C9881D4D752E0007BF8B /* FileImageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F1C9871D4D752E0007BF8B /* FileImageContentViewController.m */; };
+		28F5FADD1D5B6809000FB2A9 /* FollowingAndFollowersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F5FADC1D5B6809000FB2A9 /* FollowingAndFollowersViewController.m */; };
 		28FBBC5B1D4B728F0020D1E3 /* DetailUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28FBBC5A1D4B728F0020D1E3 /* DetailUserViewController.m */; };
 		28FBBC621D4B7F770020D1E3 /* ACIssue.m in Sources */ = {isa = PBXBuildFile; fileRef = 28FBBC611D4B7F770020D1E3 /* ACIssue.m */; };
 		28FBBC651D4B82440020D1E3 /* ACIssuesViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 28FBBC641D4B82440020D1E3 /* ACIssuesViewModel.m */; };
@@ -146,6 +147,8 @@
 		28F1C9821D4D70250007BF8B /* FileTextContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileTextContentViewController.m; sourceTree = "<group>"; };
 		28F1C9861D4D752E0007BF8B /* FileImageContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileImageContentViewController.h; sourceTree = "<group>"; };
 		28F1C9871D4D752E0007BF8B /* FileImageContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileImageContentViewController.m; sourceTree = "<group>"; };
+		28F5FADB1D5B6809000FB2A9 /* FollowingAndFollowersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FollowingAndFollowersViewController.h; sourceTree = "<group>"; };
+		28F5FADC1D5B6809000FB2A9 /* FollowingAndFollowersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FollowingAndFollowersViewController.m; sourceTree = "<group>"; };
 		28FBBC591D4B728F0020D1E3 /* DetailUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailUserViewController.h; sourceTree = "<group>"; };
 		28FBBC5A1D4B728F0020D1E3 /* DetailUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailUserViewController.m; sourceTree = "<group>"; };
 		28FBBC601D4B7F770020D1E3 /* ACIssue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACIssue.h; sourceTree = "<group>"; };
@@ -213,6 +216,7 @@
 		280DC15B1D46455000D6E10F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				28F5FADE1D5B6816000FB2A9 /* FollowingAndFollowers */,
 				280DC1661D46530600D6E10F /* Home */,
 				28BE0F471D47B97A00110482 /* Issues */,
 				28BE0F481D47B98200110482 /* News */,
@@ -483,6 +487,15 @@
 			name = ImageContent;
 			sourceTree = "<group>";
 		};
+		28F5FADE1D5B6816000FB2A9 /* FollowingAndFollowers */ = {
+			isa = PBXGroup;
+			children = (
+				28F5FADB1D5B6809000FB2A9 /* FollowingAndFollowersViewController.h */,
+				28F5FADC1D5B6809000FB2A9 /* FollowingAndFollowersViewController.m */,
+			);
+			name = FollowingAndFollowers;
+			sourceTree = "<group>";
+		};
 		28FBBC5C1D4B72950020D1E3 /* DetailUser */ = {
 			isa = PBXGroup;
 			children = (
@@ -602,6 +615,7 @@
 				28F061131D54994D00401312 /* DetailIssueViewController.m in Sources */,
 				28FBBC651D4B82440020D1E3 /* ACIssuesViewModel.m in Sources */,
 				28CBF1641D49FB290096F5EC /* ACProgressBarDisplayer.m in Sources */,
+				28F5FADD1D5B6809000FB2A9 /* FollowingAndFollowersViewController.m in Sources */,
 				28BE0F3D1D478B5200110482 /* ReposViewController.m in Sources */,
 				28F061161D54A08C00401312 /* EventTableViewCell.m in Sources */,
 				282738E41D535D7D00D16953 /* UIColor+ACAppColors.m in Sources */,

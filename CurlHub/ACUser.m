@@ -10,7 +10,7 @@
 
 @implementation ACUser
 
-- (instancetype)initWithID:(NSString*)ID andLogin:(NSString*)login andAvatarUrl:(NSString*)avatarUrl andURL:(NSString*)URL andAccessToken:(NSString*)accessToken andName:(NSString*)name andCompany:(NSString*)company andLocation:(NSString*)location andEmail:(NSString*)email andFollowers:(NSString*)followers andFollowing:(NSString*)following
+- (instancetype)initWithID:(NSString*)ID andLogin:(NSString*)login andAvatarUrl:(NSString*)avatarUrl andURL:(NSString*)URL andAccessToken:(NSString*)accessToken andName:(NSString*)name andCompany:(NSString*)company andLocation:(NSString*)location andEmail:(NSString*)email andFollowers:(NSString*)followers andFollowing:(NSString*)following andFollowersCount:(long)followersCount andFollowingCount:(long)followingCount
 {
     self = [super init];
     if (self) {
@@ -24,7 +24,9 @@
         self.email = email;
         self.followers = followers;
         self.following = following;
-        self.avatarUrl = avatarUrl; 
+        self.avatarUrl = avatarUrl;
+        self.followersCount = followersCount;
+        self.followingCount = followingCount;
     }
     return self;
 }

@@ -21,4 +21,11 @@
 
 // список юзеров через неформатированную строку поиска
 -(NSArray*)allUsersForQuery:(NSString *)query andPageNumber:(int)pageNumber;
+
+// список подписчиков пользователя
+-(NSArray<ACUser*>*) userFollowers:(ACUser*)user andPageNumber:(int)pageNumber;
+
+// список подписок пользотвалея
+-(NSArray<ACUser*>*) userFollowing:(ACUser*)user andPageNumber:(int)pageNumber;
+
 @end

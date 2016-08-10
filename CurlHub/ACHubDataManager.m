@@ -64,7 +64,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
 -(ACUser*) userFromUrl:(NSString*)url
 {
-    NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:[ACHubDataManager anotherUrl:url]] encoding:NSUTF8StringEncoding error:nil];
+    NSString* page = [ACNetworkManager stringByUrl:[ACHubDataManager anotherUrl:url]];
     
     if(page && page.length && ![page containsString:@"Bad credentials"])
     {
@@ -76,16 +76,66 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
         if(!jsonError)
         {
             NSString* avatarUrl = dictionary[@"avatar_url"];
-            ACUser *user = [[ACUser alloc] initWithID:dictionary[@"id"] andLogin:dictionary[@"login"] andAvatarUrl:avatarUrl andURL:dictionary[@"url"] andAccessToken:@"" andName:dictionary[@"name"] andCompany:dictionary[@"company"] andLocation:dictionary[@"location"] andEmail:dictionary[@"email"] andFollowers:dictionary[@"followers"] andFollowing:dictionary[@"following"]];
+            NSString* followingUrl = dictionary[@"following_url"];
+            followingUrl = [followingUrl substringToIndex:[followingUrl rangeOfString:@"{"].location];
+            ACUser *user = [[ACUser alloc] initWithID:dictionary[@"id"] andLogin:dictionary[@"login"] andAvatarUrl:avatarUrl andURL:dictionary[@"url"] andAccessToken:@"" andName:dictionary[@"name"] andCompany:dictionary[@"company"] andLocation:dictionary[@"location"] andEmail:dictionary[@"email"] andFollowers:dictionary[@"followers_url"] andFollowing:followingUrl andFollowersCount:[dictionary[@"followers"] longValue] andFollowingCount:[dictionary[@"following"] longValue]];
             return user;
         }
     }
     return nil;
 }
 
+-(NSArray<ACUser *> *)userFollowers:(ACUser *)user andPageNumber:(int)pageNumber
+{
+    NSMutableArray *array = [NSMutableArray array];
+    NSString* path = [ACHubDataManager anotherUrl:user.followers withPageNumber:pageNumber];
+    NSString* page = [ACNetworkManager stringByUrl:path];
+    NSError *jsonError = nil;
+    NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
+    
+    if(!data) return nil;
+    
+    NSArray* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
+    
+    if(!jsonError)
+    {
+        for(NSDictionary* eventDictionary in jsonDictionary)
+        {
+            ACUser* user = [self userFromUrl:[eventDictionary valueForKeyPath:@"url"]];
+            [array addObject:user];
+        }
+    }
+    
+    return array;
+}
+
+-(NSArray<ACUser *> *)userFollowing:(ACUser *)user andPageNumber:(int)pageNumber
+{
+    NSMutableArray *array = [NSMutableArray array];
+    NSString* path = [ACHubDataManager anotherUrl:user.following withPageNumber:pageNumber];
+    NSString* page = [ACNetworkManager stringByUrl:path];
+    NSError *jsonError = nil;
+    NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
+    
+    if(!data) return nil;
+    
+    NSArray* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
+    
+    if(!jsonError)
+    {
+        for(NSDictionary* eventDictionary in jsonDictionary)
+        {
+            ACUser* user = [self userFromUrl:[eventDictionary valueForKeyPath:@"url"]];
+            [array addObject:user];
+        }
+    }
+    
+    return array;
+}
+
 -(NSString *)tokenFromCode:(NSString *)code
 {
-    NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:[ACHubDataManager tokenUrl:code]] encoding:NSUTF8StringEncoding error:nil];
+    NSString* page = [ACNetworkManager stringByUrl:[ACHubDataManager tokenUrl:code]];
     if(page.length > 0 && [page characterAtIndex:0] == 'a')
     {
         page = [page substringToIndex:[page rangeOfString:@"&"].location];
@@ -98,9 +148,10 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
 -(NSArray<ACEvent *> *)eventsForUser:(ACUser *)user andPageNumber:(int)pageNumber
 {
+    
     NSMutableArray *array = [NSMutableArray array];
     NSString *path = [ACHubDataManager eventsUrl:user.login andPageNumber:pageNumber];
-    NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:path] encoding:NSUTF8StringEncoding error:nil];
+    NSString* page = [ACNetworkManager stringByUrl:path];
     
     NSError *jsonError = nil;
     NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
@@ -139,7 +190,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 -(NSArray<ACRepo *> *)reposForUser:(ACUser *)user andPageNumber:(int)pageNumber andFilter:(NSString*)filter
 {
     NSString *path = [ACHubDataManager reposUrl:user.login andPageNumber:pageNumber andFilter:filter];
-    NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:path] encoding:NSUTF8StringEncoding error:nil];
+    NSString* page = [ACNetworkManager stringByUrl:path];
     
     NSError *jsonError = nil;
     NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
@@ -157,7 +208,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     NSString* formatedQuery = [query.lowercaseString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     
     NSString *path = [ACHubDataManager searchReposUrl:formatedQuery andPageNumber:pageNumber];
-    NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:path] encoding:NSUTF8StringEncoding error:nil];
+    NSString* page = [ACNetworkManager stringByUrl:path];
     
     NSError *jsonError = nil;
     NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
@@ -175,7 +226,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     NSString* formatedQuery = [query.lowercaseString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     
     NSString *path = [ACHubDataManager searchUsersUrl:formatedQuery andPageNumber:pageNumber];
-    NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:path] encoding:NSUTF8StringEncoding error:nil];
+    NSString* page = [ACNetworkManager stringByUrl:path];
     
     NSError *jsonError = nil;
     NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
@@ -239,14 +290,14 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
             NSError *innerError;
             
             
-            NSData *bData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:repo.branchesUrl] encoding:NSUTF8StringEncoding error:nil]dataUsingEncoding:NSUTF8StringEncoding];
+            NSData *bData = [ACNetworkManager dataByUrl:repo.branchesUrl];
             if(bData)
             {
                 NSArray* branchesArray = [NSJSONSerialization JSONObjectWithData:bData options:kNilOptions error:&innerError];
                 if(!innerError) repo.branchesCount = branchesArray.count;
             }
             
-            bData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:repo.issuesUrl] encoding:NSUTF8StringEncoding error:nil] dataUsingEncoding:NSUTF8StringEncoding];
+            bData = [ACNetworkManager dataByUrl:repo.issuesUrl];
             
             if(bData)
             {
@@ -265,12 +316,11 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
 -(NSArray<ACNews *> *)news
 {
-    [self test];
     
     NSMutableArray *array = [NSMutableArray array];
     
     NSString *path = [ACHubDataManager newsUrl];
-    NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:path] encoding:NSUTF8StringEncoding error:nil];
+    NSString* page = [ACNetworkManager stringByUrl:path];
     
     if(page)
     {
@@ -301,7 +351,6 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
                 [array addObject:news];
             }
             @catch (NSException *exception) {
-              //  NSLog(@"%@", exception.reason);
             }
         }
         
@@ -318,7 +367,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     for(ACRepo* userRepo in userRepos)
     {
         
-        NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:[ACHubDataManager issuesUrlWithUrl:userRepo.issuesUrl andFilter:filter]] encoding:NSUTF8StringEncoding error:nil];
+        NSString* page = [ACNetworkManager stringByUrl:[ACHubDataManager issuesUrlWithUrl:userRepo.issuesUrl andFilter:filter]];
         
         NSError *jsonError = nil;
         NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
@@ -339,7 +388,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
                     
                     dispatch_async(dispatch_get_global_queue(0, 0), ^{
                         NSError *innerError;
-                        NSData *bData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:[issueDictionary valueForKeyPath:@"labels_url"]] encoding:NSUTF8StringEncoding error:nil]dataUsingEncoding:NSUTF8StringEncoding];
+                        NSData *bData = [ACNetworkManager dataByUrl:[issueDictionary valueForKeyPath:@"labels_url"]];
                         if(bData)
                         {
                             NSArray* labelsArray = [NSJSONSerialization JSONObjectWithData:bData options:kNilOptions error:&innerError];
@@ -364,7 +413,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 {
     NSMutableArray *array = [NSMutableArray array];
     
-    NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:[ACHubDataManager anotherUrl:url]] encoding:NSUTF8StringEncoding error:nil];
+    NSString* page = [ACNetworkManager stringByUrl:[ACHubDataManager anotherUrl:url]];
     NSError *jsonError = nil;
     NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -396,7 +445,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 -(NSArray<ACIssueEvent *> *)eventsForIssue:(ACIssue *)issue
 {
     NSString* path = [ACHubDataManager anotherUrl:issue.eventsUrl];
-    NSString* page = [NSString stringWithContentsOfURL:[NSURL URLWithString:path] encoding:NSUTF8StringEncoding error:nil];
+    NSString* page = [ACNetworkManager stringByUrl:path];
     
     NSError *jsonError = nil;
     NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
@@ -429,7 +478,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
 -(NSString *)textContentWithFile:(ACRepoFile *)file
 {
-    return [NSString stringWithContentsOfURL:[NSURL URLWithString:file.downloadUrl] encoding:NSUTF8StringEncoding error:nil];
+    return [ACNetworkManager stringByUrl:file.downloadUrl];
 }
 
 
@@ -533,9 +582,15 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     return [NSString stringWithFormat:@"%@%@client_id=%@&client_secret=%@", url, sep, clientID, clientSecret];
 }
 
++(NSString *)anotherUrl:(NSString *)url withPageNumber:(int)pageNaumber;
+{
+    NSString* sep = [url containsString:@"?"] ? @"&" : @"?";
+    return [NSString stringWithFormat:@"%@%@client_id=%@&client_secret=%@&page=%i&per_page=10", url, sep, clientID, clientSecret, pageNaumber];
+}
+
 +(NSString *)pageWithVerificationUrl
 {
-    return [NSString stringWithContentsOfURL:[NSURL URLWithString:[ACHubDataManager verificationUrl]] encoding:NSUTF8StringEncoding  error:nil];
+    return [ACNetworkManager stringByUrl:[ACHubDataManager verificationUrl]];
 }
 
 

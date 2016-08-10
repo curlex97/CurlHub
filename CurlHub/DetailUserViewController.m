@@ -54,8 +54,9 @@
     {
         DetailDoubleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"drdoubleCell"];
         if(!cell) cell = [[DetailDoubleTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"drdoubleCell"];
-        cell.leftLabel.text = [NSString stringWithFormat:@"%@ Followers", self.currentUser.followers];
-        cell.rightLabel.text = [NSString stringWithFormat:@"%@ Following", self.currentUser.following];
+        cell.leftLabel.text = [NSString stringWithFormat:@"%ld Followers", self.currentUser.followersCount];
+        cell.rightLabel.text = [NSString stringWithFormat:@"%ld Following", self.currentUser.followingCount];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return cell;
     }
     else
@@ -99,6 +100,17 @@
     {
         NSString *url = [NSString stringWithFormat:@"mailto:%@", self.currentUser.email];
         [[UIApplication sharedApplication]  openURL: [NSURL URLWithString: url]];
+    }
+    
+    else if(indexPath.row == 0)
+    {
+        FollowingAndFollowersViewController* fafvcontroller = [self.storyboard instantiateViewControllerWithIdentifier:@"FollowingAndFollowersViewController"];
+        if(fafvcontroller)
+        {
+            fafvcontroller.currentUser = self.currentUser;
+            fafvcontroller.navigationItem.title = @"Followers And Following";
+            [self.navigationController pushViewController:fafvcontroller animated:YES];
+        }
     }
 }
 

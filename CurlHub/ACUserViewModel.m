@@ -50,6 +50,17 @@
     return [[[ACHubDataManager alloc] init] usersForQuery:query andPageNumber:pageNumber];
 }
 
+-(NSArray<ACUser *> *)userFollowers:(ACUser *)user andPageNumber:(int)pageNumber
+{
+    return [[[ACHubDataManager alloc] init] userFollowers:user andPageNumber:pageNumber];
+}
+
+
+-(NSArray<ACUser *> *)userFollowing:(ACUser *)user andPageNumber:(int)pageNumber
+{
+    return [[[ACHubDataManager alloc] init] userFollowing:user andPageNumber:pageNumber];
+}
+
 -(void) writeTokenToFile
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
