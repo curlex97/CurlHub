@@ -18,7 +18,6 @@
 
 -(void) viewDidLoad
 {
-    self.tableView.allowsSelection = NO;
 
     [super viewDidLoad];
     self.tableView.delegate = self;
@@ -84,6 +83,7 @@
 //              cell.leftImage.image = [UIImage imageNamed:@"calendarIcon"];
                 cell.leftLabel.text = @"Email";
                 cell.rightLabel.text = ![self.currentUser.email isKindOfClass:[NSNull class]] ? self.currentUser.email : @"No email";
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 break;
         }
         
@@ -92,6 +92,15 @@
     }
 }
 
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section == 1 && indexPath.row == 3 && ![self.currentUser.email isKindOfClass:[NSNull class]])
+    {
+        NSString *url = [NSString stringWithFormat:@"mailto:%@", self.currentUser.email];
+        [[UIApplication sharedApplication]  openURL: [NSURL URLWithString: url]];
+    }
+}
 
 
 

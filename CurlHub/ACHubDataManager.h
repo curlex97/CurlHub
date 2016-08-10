@@ -15,7 +15,6 @@
 #import "ACRepoFile.h"
 #import "ACRepoDirectory.h"
 #import "ACIssueEvent.h"
-#import "ACPictureManager.h"
 #import "NSString+HtmlPicturePath.h"
 #import "NSString+HtmlDateFormat.h"
 #import "ACNetworkManager.h"

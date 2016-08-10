@@ -14,4 +14,5 @@
 
 // сюда прислать WelcomeViewController
 -(void) setWelcome:(id)welcomeController;
+
 @end

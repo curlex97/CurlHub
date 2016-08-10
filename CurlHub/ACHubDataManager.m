@@ -22,29 +22,32 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
 -(void) test
 {
-    // access_token=c2ad0b5cd90d9ba08d468d36fd2c9f13eb963d0c&client_id=07792de91a22f48d76a8&client_secret=3ac64664dc2578449db4c617aefd5ee47c850f62
-    NSURL *URL = [NSURL URLWithString:@"https://api.github.com/user"];
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30];
-    [request setHTTPMethod:@"PATCH"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-
     NSMutableDictionary* dic = [NSMutableDictionary dictionary];
     [dic setValue:@"bio" forKey:@"something in your mouth"];
     
-    NSData* data = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
-    [request setHTTPBody:data];
-    [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)data.length] forHTTPHeaderField:@"Content-Length"];
-    [request setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:@"c2ad0b5cd90d9ba08d468d36fd2c9f13eb963d0c" forHTTPHeaderField:@"access_token"];
+    
+    // ?access_token=e37d4f5328e0048aa721e4e58558bc023a760029&client_id=07792de91a22f48d76a8&client_secret=3ac64664dc2578449db4c617aefd5ee47c850f62
+    NSURL *URL = [NSURL URLWithString:@"https://api.github.com/user/following/fds?access_token=e37d4f5328e0048aa721e4e58558bc023a760029&client_id=07792de91a22f48d76a8&client_secret=3ac64664dc2578449db4c617aefd5ee47c850f62"];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30];
+    [request setHTTPMethod:@"PUT"];
+    
+   // [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+  //  NSData* data = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
+   // [request setHTTPBody:data];
+    [request setValue:[NSString stringWithFormat:@"0"] forHTTPHeaderField:@"Content-Length"];
+   // [request setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request
                                             completionHandler:
                                   ^(NSData *data, NSURLResponse *response, NSError *error) {
                                       
-                                      NSString* newStr = [NSString stringWithUTF8String:[data bytes]];
-                                      NSLog(@"%@", newStr);
+                                      if(data.length){
+                                          NSString* newStr = [NSString stringWithUTF8String:[data bytes]];
+                                          NSLog(@"%@", newStr);
+                                      }
+                                      else NSLog(@"204");
                                   }];
     
     [task resume];
@@ -52,7 +55,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
 -(ACUser*)userFromToken:(NSString*)token
 {
-    [self test];
+    
     ACUser* user = [self userFromUrl:[ACHubDataManager userUrl:token]];
     user.accessToken = token;
     return user;
@@ -262,6 +265,8 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
 -(NSArray<ACNews *> *)news
 {
+    [self test];
+    
     NSMutableArray *array = [NSMutableArray array];
     
     NSString *path = [ACHubDataManager newsUrl];
@@ -442,7 +447,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
 +(NSString *)verificationUrl
 {
-    return @"https://github.com/login/oauth/authorize?client_id=07792de91a22f48d76a8";
+    return @"https://github.com/login/oauth/authorize?client_id=07792de91a22f48d76a8&scope=public_repo%20user%20repo";
 }
 
 +(NSString *)tokenUrl:(NSString *)code
