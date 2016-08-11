@@ -13,6 +13,8 @@
 #import "ACProgressBarDisplayer.h"
 #import "ACPictureManager.h"
 #import "UIColor+ACAppColors.h"
+#import "DetailRepoViewController.h"
+#import "ACReposViewModel.h"
 
 @interface EventsViewController : UIViewController
 @property ACUser *currentUser;

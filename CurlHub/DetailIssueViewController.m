@@ -53,7 +53,7 @@
         DetailDoubleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"drdoubleCell"];
         if(!cell) cell = [[DetailDoubleTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"drdoubleCell"];
         cell.leftLabel.text = [NSString stringWithFormat:@"%lu Labels", self.currentIssue.labelsCount];
-        cell.rightLabel.text = [NSString stringWithFormat:@"%i Events", self.currentIssue.events.count];
+        cell.rightLabel.text = [NSString stringWithFormat:@"%lu Events", self.currentIssue.events.count];
         return cell;
     }
     else if(indexPath.section == 1)

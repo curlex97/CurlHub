@@ -164,6 +164,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     {
         for(NSDictionary* eventDictionary in jsonDictionary)
         {
+            NSString* repoUrl = [eventDictionary valueForKeyPath:@"repo.url"];
             NSString* action = [eventDictionary valueForKeyPath:@"type"];
             NSString* login = [eventDictionary valueForKeyPath:@"actor.display_login"];
             NSString* avatarUrl = [eventDictionary valueForKeyPath:@"actor.avatar_url"];
@@ -175,15 +176,26 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
             if(!refType) refType = @"";
             if(!login) login = user.login;
             
-            
-            
-            ACEvent *event = [[ACEvent alloc] initWithLogin:login andAction:action andTime:time andRefType:refType andRepoName:repoName andRef:ref andAvatarUrl:avatarUrl];
+            ACEvent *event = [[ACEvent alloc] initWithLogin:login andAction:action andTime:time andRefType:refType andRepoName:repoName andRef:ref andAvatarUrl:avatarUrl andRepoUrl:repoUrl];
             [array addObject:event];
             
         }
     }
     
     return array;
+}
+
+-(ACRepo *)repoFromUrl:(NSString *)url
+{
+    NSString* page = [ACNetworkManager stringByUrl:url];
+    NSError *jsonError = nil;
+    NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
+    if(data){
+        NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
+        if(jsonDictionary)
+            return [self repoFromJsonDictionary:jsonDictionary];
+    }
+    return nil;
 }
 
 
@@ -197,7 +209,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     
     if(data){
     NSArray* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
-    return jsonError? nil : [self reposFromJsonDictionary:jsonDictionary];
+    return jsonError? nil : [self reposFromJsonArray:jsonDictionary];
     }
     return nil;
     
@@ -216,7 +228,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     if(data){
     NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
     NSArray* reposArray = [jsonDictionary valueForKeyPath:@"items"];
-    return (jsonError && reposArray) ? nil : [self reposFromJsonDictionary:reposArray];
+    return (jsonError && reposArray) ? nil : [self reposFromJsonArray:reposArray];
     }
     return nil;
 }
@@ -252,65 +264,70 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 }
 
 // все методы получения списка репозиториев работают через него
--(NSArray*) reposFromJsonDictionary:(NSArray*)jsonDictionary
+-(NSArray*) reposFromJsonArray:(NSArray*)jsonArray
 {
     NSMutableArray *array = [NSMutableArray array];
 
-    for(NSDictionary* repoDictionary in jsonDictionary)
+    for(NSDictionary* repoDictionary in jsonArray)
     {
-        NSString* name = [repoDictionary valueForKeyPath:@"name"];
-        NSString* ownerName = [repoDictionary valueForKeyPath:@"owner.login"];
-        NSString* avatarUrl = [repoDictionary valueForKeyPath:@"owner.avatar_url"];
-        NSString *language = [repoDictionary valueForKeyPath:@"language"];
-        NSString* date = [NSString formatDateWithString:[repoDictionary valueForKeyPath:@"created_at"]];
-        double size = [[repoDictionary valueForKeyPath:@"size"] doubleValue] / 1024;
-        NSString* private = [repoDictionary valueForKeyPath:@"private"];
-        NSString* issuesUrl = [repoDictionary valueForKeyPath:@"issues_url"];
-        NSString* contentsUrl = [repoDictionary valueForKeyPath:@"contents_url"];
-        NSString* ownerUrl = [repoDictionary valueForKeyPath:@"owner.url"];
-        NSString* branchesUrl =[repoDictionary valueForKeyPath:@"branches_url"];
-        
-        contentsUrl = [contentsUrl substringToIndex:[contentsUrl rangeOfString:@"{"].location];
-        issuesUrl = [issuesUrl substringToIndex:[issuesUrl rangeOfString:@"{"].location];
-        branchesUrl = [branchesUrl substringToIndex:[branchesUrl rangeOfString:@"{"].location];
-
-        
-        NSString* htmlUrl = [repoDictionary valueForKeyPath:@"html_url"];
-        int privateInt = [private intValue];
-        BOOL isPrivate = privateInt > 0;
-        long forksCount = [[repoDictionary valueForKeyPath:@"forks_count"] longValue];
-        long watchersCount = [[repoDictionary valueForKeyPath:@"watchers_count"] longValue];
-        long stargazersCount = [[repoDictionary valueForKeyPath:@"stargazers_count"] longValue];
-        long branchesCount = 0, issuesCount = 0;
-        
-        ACRepo *repo = [[ACRepo alloc] initWithName:name andOwnerName:ownerName andOwnerAvatarUrl:avatarUrl andLanguage:language andCreateDate:date andSize:size andForksCount:forksCount andWatchersCount:watchersCount andBranchesCount:branchesCount andStargazersCount:stargazersCount andIssuesCount:issuesCount andPrivate:isPrivate andIssuesUrl:issuesUrl andContentsUrl:contentsUrl andHtmlUrl:htmlUrl andOwnerUrl:ownerUrl andBranchesUrl:branchesUrl];
-        
-        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            
-            NSError *innerError;
-            
-            
-            NSData *bData = [ACNetworkManager dataByUrl:repo.branchesUrl];
-            if(bData)
-            {
-                NSArray* branchesArray = [NSJSONSerialization JSONObjectWithData:bData options:kNilOptions error:&innerError];
-                if(!innerError) repo.branchesCount = branchesArray.count;
-            }
-            
-            bData = [ACNetworkManager dataByUrl:repo.issuesUrl];
-            
-            if(bData)
-            {
-                NSArray* issuesArray = [NSJSONSerialization JSONObjectWithData:bData options:kNilOptions error:&innerError];
-                if(!innerError) repo.issuesCount = issuesArray.count;
-            }
-        });
-        
-        [array addObject:repo];
-        
+        [array addObject:[self repoFromJsonDictionary:repoDictionary]];
     }
     
     return array;
+
+}
+
+-(ACRepo*) repoFromJsonDictionary:(NSDictionary*)repoDictionary
+{
+    NSString* name = [repoDictionary valueForKeyPath:@"name"];
+    NSString* ownerName = [repoDictionary valueForKeyPath:@"owner.login"];
+    NSString* avatarUrl = [repoDictionary valueForKeyPath:@"owner.avatar_url"];
+    NSString *language = [repoDictionary valueForKeyPath:@"language"];
+    NSString* date = [NSString formatDateWithString:[repoDictionary valueForKeyPath:@"created_at"]];
+    double size = [[repoDictionary valueForKeyPath:@"size"] doubleValue] / 1024;
+    NSString* private = [repoDictionary valueForKeyPath:@"private"];
+    NSString* issuesUrl = [repoDictionary valueForKeyPath:@"issues_url"];
+    NSString* contentsUrl = [repoDictionary valueForKeyPath:@"contents_url"];
+    NSString* ownerUrl = [repoDictionary valueForKeyPath:@"owner.url"];
+    NSString* branchesUrl =[repoDictionary valueForKeyPath:@"branches_url"];
+    
+    contentsUrl = [contentsUrl substringToIndex:[contentsUrl rangeOfString:@"{"].location];
+    issuesUrl = [issuesUrl substringToIndex:[issuesUrl rangeOfString:@"{"].location];
+    branchesUrl = [branchesUrl substringToIndex:[branchesUrl rangeOfString:@"{"].location];
+    
+    
+    NSString* htmlUrl = [repoDictionary valueForKeyPath:@"html_url"];
+    int privateInt = [private intValue];
+    BOOL isPrivate = privateInt > 0;
+    long forksCount = [[repoDictionary valueForKeyPath:@"forks_count"] longValue];
+    long watchersCount = [[repoDictionary valueForKeyPath:@"watchers_count"] longValue];
+    long stargazersCount = [[repoDictionary valueForKeyPath:@"stargazers_count"] longValue];
+    long branchesCount = 0, issuesCount = 0;
+    
+    ACRepo *repo = [[ACRepo alloc] initWithName:name andOwnerName:ownerName andOwnerAvatarUrl:avatarUrl andLanguage:language andCreateDate:date andSize:size andForksCount:forksCount andWatchersCount:watchersCount andBranchesCount:branchesCount andStargazersCount:stargazersCount andIssuesCount:issuesCount andPrivate:isPrivate andIssuesUrl:issuesUrl andContentsUrl:contentsUrl andHtmlUrl:htmlUrl andOwnerUrl:ownerUrl andBranchesUrl:branchesUrl];
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        NSError *innerError;
+        
+        
+        NSData *bData = [ACNetworkManager dataByUrl:repo.branchesUrl];
+        if(bData)
+        {
+            NSArray* branchesArray = [NSJSONSerialization JSONObjectWithData:bData options:kNilOptions error:&innerError];
+            if(!innerError) repo.branchesCount = branchesArray.count;
+        }
+        
+        bData = [ACNetworkManager dataByUrl:repo.issuesUrl];
+        
+        if(bData)
+        {
+            NSArray* issuesArray = [NSJSONSerialization JSONObjectWithData:bData options:kNilOptions error:&innerError];
+            if(!innerError) repo.issuesCount = issuesArray.count;
+        }
+    });
+    
+    return repo;
 
 }
 

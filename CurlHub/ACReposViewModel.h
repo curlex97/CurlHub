@@ -19,6 +19,10 @@
 // список репозиториев по неформатированному запросу
 -(NSArray*) allReposForQuery:(NSString*)query andPageNumber:(int)pageNumber;
 
+-(ACRepo*) repoFromUrl:(NSString*)url;
+
 // хозяин репозитория
 -(ACUser*) repositoryOwner:(ACRepo*)repository;
+
+
 @end

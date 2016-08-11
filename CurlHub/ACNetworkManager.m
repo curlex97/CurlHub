@@ -17,13 +17,13 @@
 
 +(NSString*) stringByUrl:(NSString*)url
 {
-  //  @try{
-    return [NSString stringWithUTF8String:[[ACNetworkManager dataByUrl:url] bytes]];
-   // }
-//    @catch(NSException* ex)
-//    {
-//        return nil;
-//    }
+    @try{
+    return [NSString stringWithContentsOfURL:[NSURL URLWithString: url] encoding:NSUTF8StringEncoding error:nil];
+    }
+   @catch(NSException* ex)
+    {
+        return nil;
+    }
 }
 
 @end

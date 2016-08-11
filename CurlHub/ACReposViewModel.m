@@ -26,4 +26,9 @@
     return user;
 }
 
+-(ACRepo *)repoFromUrl:(NSString *)url
+{
+    return [[[ACHubDataManager alloc] init] repoFromUrl:url];
+}
+
 @end

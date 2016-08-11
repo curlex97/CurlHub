@@ -11,7 +11,7 @@
 @implementation ACEvent
 
 
-- (instancetype)initWithLogin:(NSString*)login andAction:(NSString*)action andTime:(NSString*)time andRefType:(NSString*)refType andRepoName:(NSString*)repoName andRef:(NSString*)ref andAvatarUrl:(NSString*)avatarUrl
+- (instancetype)initWithLogin:(NSString*)login andAction:(NSString*)action andTime:(NSString*)time andRefType:(NSString*)refType andRepoName:(NSString*)repoName andRef:(NSString*)ref andAvatarUrl:(NSString*)avatarUrl andRepoUrl:(NSString *)repoUrl
 {
     self = [super init];
     if (self) {
@@ -23,6 +23,7 @@
         self.repoName = repoName;
         self.ref = ref;
         self.avatarUrl = avatarUrl;
+        self.repoUrl = repoUrl;
     }
     return self;
 }

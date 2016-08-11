@@ -132,6 +132,30 @@
     
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ACEvent *event = self.tableEvents[indexPath.row];
+    if(event && event.repoUrl)
+    {
+        DetailRepoViewController* drcontroller = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailRepoViewController"];
+        
+        if(drcontroller)
+        {
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                ACRepo* repo = [[[ACReposViewModel alloc] init] repoFromUrl:event.repoUrl];
+
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    drcontroller.currentRepo = repo;
+                    drcontroller.navigationItem.title = drcontroller.currentRepo.name;
+                    [self.navigationController pushViewController:drcontroller animated:YES];
+                });
+            
+            });
+            
+        }
+    }
+}
+
 
 
 
