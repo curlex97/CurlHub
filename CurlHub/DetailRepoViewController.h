@@ -15,6 +15,8 @@
 #import "DetailUserViewController.h"
 #import "ACReposViewModel.h"
 #import "ACUserViewModel.h"
+#import "CommitsViewController.h"
+
 @interface DetailRepoViewController : UIViewController
 @property ACRepo *currentRepo;
 @property (weak, nonatomic) IBOutlet UIImageView *ownerImage;

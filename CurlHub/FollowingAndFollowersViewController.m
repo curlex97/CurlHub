@@ -135,7 +135,7 @@
     cell.mainImage.layer.borderWidth = 0;
     cell.mainLabel.text = user.login;
     
-    if(indexPath.row == self.tableUsers.count - 1 && !self.isRefreshing)
+    if(indexPath.row == self.tableUsers.count - 1 && !self.isRefreshing && !self.searchBar.text.length)
     {
         self.pageNumber ++;
         [self refreshTable];

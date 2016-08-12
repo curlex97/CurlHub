@@ -7,9 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ACRepo.h"
 
 @interface ACCommit : NSObject
 
+@property NSString* message;
+@property NSString* date;
+@property NSString* commiterLogin;
+@property NSString* commiterAvatarUrl;
+@property ACRepo* repo;
 
+- (instancetype)initWithMessage:(NSString*)message andDate:(NSString*)date andCommiterLogin:(NSString*)commiterLogin andCommiterAvatarUrl:(NSString*)commiterAvatarUrl andRepo:(ACRepo*)repo;
 
 @end

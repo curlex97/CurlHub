@@ -48,7 +48,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return section == 0 ? 1 : 4;
+    return section == 0 ? 1 : 5;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -98,6 +98,11 @@
                 cell.rightLabel.text = ![self.currentRepo.ownerName isKindOfClass:[NSNull class]] ? self.currentRepo.ownerName : @"";
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 break;
+            case 4:
+                cell.leftLabel.text = @"Commits";
+                cell.rightLabel.text = @"";
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                break;
         }
         
          return cell;
@@ -115,6 +120,16 @@
             ducontroller.currentUser = [[[ACReposViewModel alloc] init] repositoryOwner: self.currentRepo];
             ducontroller.navigationItem.title = ducontroller.currentUser.login;
             [self.navigationController pushViewController:ducontroller animated:YES];
+        }
+    }
+    else if(indexPath.section == 1 && indexPath.row == 4)
+    {
+        CommitsViewController* cvc = [self.storyboard instantiateViewControllerWithIdentifier:@"CommitsViewController"];
+        if(cvc)
+        {
+            cvc.currentRepo = self.currentRepo;
+            cvc.navigationItem.title = [NSString stringWithFormat:@"%@ commits", self.currentRepo.name];
+            [self.navigationController pushViewController:cvc animated:YES];
         }
     }
 }

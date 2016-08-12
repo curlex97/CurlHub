@@ -10,4 +10,17 @@
 
 @implementation ACCommit
 
+- (instancetype)initWithMessage:(NSString*)message andDate:(NSString*)date andCommiterLogin:(NSString*)commiterLogin andCommiterAvatarUrl:(NSString*)commiterAvatarUrl andRepo:(ACRepo*)repo
+{
+    self = [super init];
+    if (self) {
+        self.message = message;
+        self.date = date;
+        self.commiterLogin = commiterLogin;
+        self.commiterAvatarUrl = commiterAvatarUrl;
+        self.repo = repo;
+    }
+    return self;
+}
+
 @end

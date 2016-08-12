@@ -256,13 +256,14 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     NSString* private = [repoDictionary valueForKeyPath:@"private"];
     NSString* issuesUrl = [repoDictionary valueForKeyPath:@"issues_url"];
     NSString* contentsUrl = [repoDictionary valueForKeyPath:@"contents_url"];
+    NSString* commitsUrl = [repoDictionary valueForKeyPath:@"commits_url"];
     NSString* ownerUrl = [repoDictionary valueForKeyPath:@"owner.url"];
     NSString* branchesUrl =[repoDictionary valueForKeyPath:@"branches_url"];
     
     contentsUrl = [contentsUrl substringToIndex:[contentsUrl rangeOfString:@"{"].location];
     issuesUrl = [issuesUrl substringToIndex:[issuesUrl rangeOfString:@"{"].location];
     branchesUrl = [branchesUrl substringToIndex:[branchesUrl rangeOfString:@"{"].location];
-    
+    commitsUrl = [commitsUrl substringToIndex:[commitsUrl rangeOfString:@"{"].location];
     
     NSString* htmlUrl = [repoDictionary valueForKeyPath:@"html_url"];
     int privateInt = [private intValue];
@@ -272,7 +273,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     long stargazersCount = [[repoDictionary valueForKeyPath:@"stargazers_count"] longValue];
     long branchesCount = 0, issuesCount = 0;
     
-    ACRepo *repo = [[ACRepo alloc] initWithName:name andFullName:fullName andOwnerName:ownerName andOwnerAvatarUrl:avatarUrl andLanguage:language andCreateDate:date andSize:size andForksCount:forksCount andWatchersCount:watchersCount andBranchesCount:branchesCount andStargazersCount:stargazersCount andIssuesCount:issuesCount andPrivate:isPrivate andIsStarring:false andIsWatching:false andIssuesUrl:issuesUrl andContentsUrl:contentsUrl andHtmlUrl:htmlUrl andOwnerUrl:ownerUrl andBranchesUrl:branchesUrl];
+    ACRepo *repo = [[ACRepo alloc] initWithName:name andFullName:fullName andOwnerName:ownerName andOwnerAvatarUrl:avatarUrl andLanguage:language andCreateDate:date andSize:size andForksCount:forksCount andWatchersCount:watchersCount andBranchesCount:branchesCount andStargazersCount:stargazersCount andIssuesCount:issuesCount andPrivate:isPrivate andIsStarring:false andIsWatching:false andIssuesUrl:issuesUrl andContentsUrl:contentsUrl andCommitsUrl:commitsUrl andHtmlUrl:htmlUrl andOwnerUrl:ownerUrl andBranchesUrl:branchesUrl];
     
     [self isStarringRepoAsync:repo andUser:user completion:^(BOOL isStar){
         repo.isStarring = isStar;
@@ -470,6 +471,41 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     return nil;
 }
 
+-(NSArray<ACCommit *> *)commitsForRepo:(ACRepo *)repo andPageNumber:(int)pageNumber
+{
+    NSString* path =[ACHubDataManager anotherUrl: repo.commitsUrl withPageNumber:pageNumber];
+    NSString* page = [ACNetworkManager stringByUrl:path];
+    
+    
+    NSError *jsonError = nil;
+    NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
+    
+    if(data)
+    {
+        NSArray* jsonArray = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
+        if(!jsonError && jsonArray.count)
+        {
+            NSMutableArray *commits = [NSMutableArray array];
+            
+            for(NSDictionary* commitEventDictionary in jsonArray)
+            {
+                NSString* message = [commitEventDictionary valueForKeyPath:@"commit.message"];
+                if([message isKindOfClass:[NSNull class]] || !message || !message.length) message = @"No message";
+                NSString* date = [NSString formatDateWithString:[commitEventDictionary valueForKeyPath:@"commit.committer.date"]];
+                NSString* commiterLogin = [commitEventDictionary valueForKeyPath:@"committer.login"];
+                NSString* commiterAvatar = [commitEventDictionary valueForKeyPath:@"committer.avatar_url"];
+                
+                ACCommit* commit = [[ACCommit alloc] initWithMessage:message andDate:date andCommiterLogin:commiterLogin andCommiterAvatarUrl:commiterAvatar andRepo:repo];
+                [commits addObject:commit];
+            }
+            return commits;
+        }
+    }
+    return nil;
+}
+
+
+
 -(NSString *)textContentWithFile:(ACRepoFile *)file
 {
     return [ACNetworkManager stringByUrl:file.downloadUrl];
@@ -547,6 +583,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
                              if(completed) completed();
                           }];
 }
+
 
 
 +(NSString *)eventsUrl:(NSString *)userLogin andPageNumber:(int)pageNumber

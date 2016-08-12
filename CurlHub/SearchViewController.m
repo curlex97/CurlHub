@@ -132,7 +132,7 @@
     }
     
     
-    if(indexPath.row == self.tableContent.count - 1 && !self.isRefreshing)
+    if(indexPath.row == self.tableContent.count - 1 && !self.isRefreshing && !self.searchBar.text.length)
     {
         self.pageNumber ++;
         [self refreshSearch];

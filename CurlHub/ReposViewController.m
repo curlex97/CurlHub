@@ -131,7 +131,7 @@
     cell.leftImage.image = [UIImage imageNamed:@"starIcon"];
     cell.rightImage.image = [UIImage imageNamed:@"forkIcon"];
     
-    if(indexPath.row == self.tableRepos.count - 1 && !self.isRefreshing)
+    if(indexPath.row == self.tableRepos.count - 1 && !self.isRefreshing && !self.searchBar.text.length)
     {
         self.pageNumber ++;
         [self refreshTable];

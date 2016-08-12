@@ -18,6 +18,7 @@
 #import "NSString+HtmlPicturePath.h"
 #import "NSString+HtmlDateFormat.h"
 #import "ACNetworkManager.h"
+#import "ACCommit.h"
 
 @interface ACHubDataManager : NSObject
 
@@ -113,24 +114,34 @@
 // содержимое файла через файл
 -(NSString *)textContentWithFile:(ACRepoFile *)file;
 
+// получаем репозиторий, о котором пишется в событии
 -(ACRepo*) repoFromEvent:(ACEvent*)event andCurrentUser:(ACUser*)user;
+
+// получаем список коммитов репозитория
+-(NSArray<ACCommit*>*) commitsForRepo:(ACRepo*)repo andPageNumber:(int)pageNumber;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+// старим репозиторий (юзер - системный юзер)
 -(void) starRepoAsync:(ACRepo*)repo andUser:(ACUser*)user completion:(void(^)(void))completed;
 
+// анстарим репозиторий (юзер - системный юзер)
 -(void) unstarRepoAsync:(ACRepo*)repo andUser:(ACUser*)user completion:(void(^)(void))completed;
 
+// проверяем застарили ли репозиторий (юзер - системный юзер)
 -(void) isStarringRepoAsync:(ACRepo*)repo andUser:(ACUser*)user completion:(void(^)(BOOL))completed;
 
+// начинаем наблюдать за репозиторием (юзер - системный юзер)
 -(void) watchRepoAsync:(ACRepo*)repo andUser:(ACUser*)user completion:(void(^)(void))completed;
 
+// прекращаем наблюдать за репозиторием (юзер - системный юзер)
 -(void) unwatchRepoAsync:(ACRepo*)repo andUser:(ACUser*)user completion:(void(^)(void))completed;
 
+// проверяем наблюдаем ли за репозиторием (юзер - системный юзер)
 -(void) isWatchingRepoAsync:(ACRepo*)repo andUser:(ACUser*)user completion:(void(^)(BOOL))completed;
 
+// апдейтим информацию о залогиненном пользователе (юзер - системный юзер)
 -(void) updateUserAsync:(NSDictionary*)properties andUser:(ACUser*)user completion:(void(^)(void))completed;
 
 @end

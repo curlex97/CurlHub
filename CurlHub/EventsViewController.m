@@ -121,7 +121,7 @@
     cell.avatarView.layer.masksToBounds = YES;
     cell.avatarView.layer.borderWidth = 0;
     
-    if(indexPath.row == self.tableEvents.count - 1 && !self.isRefreshing)
+    if(indexPath.row == self.tableEvents.count - 1 && !self.isRefreshing && !self.searchBar.text.length)
     {
         self.pageNumber ++;
         [self refreshTable];
