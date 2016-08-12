@@ -86,6 +86,11 @@
     [@"" writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:nil];
 }
 
+-(void)updateUserAsync:(NSDictionary *)properties andUser:(ACUser *)user completion:(void (^)(void))completed
+{
+    [[[ACHubDataManager alloc] init] updateUserAsync:properties andUser:user completion:completed];
+}
+
 +(ACUser *)systemUser
 {
     return systemUser;

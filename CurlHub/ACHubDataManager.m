@@ -232,6 +232,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 // все методы получения списка репозиториев работают через него
 -(NSArray*) reposFromJsonArray:(NSArray*)jsonArray andCurrentUser:(ACUser*)user
 {
+    
     NSMutableArray *array = [NSMutableArray array];
 
     for(NSDictionary* repoDictionary in jsonArray)
@@ -537,6 +538,16 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 }
 
 
+-(void)updateUserAsync:(NSDictionary *)properties andUser:(ACUser *)user completion:(void (^)(void))completed
+{
+    NSString* path = [ACHubDataManager userUpdateUrl];
+    [ACNetworkManager dataByUrlAsync:path andHeaderDictionary:@{@"Authorization":[NSString stringWithFormat:@"token %@", user.accessToken]}
+                   andBodyDictionary:properties andQueryType:@"PATCH"
+                          completion:^(NSData* data){
+                             if(completed) completed();
+                          }];
+}
+
 
 +(NSString *)eventsUrl:(NSString *)userLogin andPageNumber:(int)pageNumber
 {
@@ -630,6 +641,11 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 +(NSString*)watchUrlWithRepo:(ACRepo*)repo
 {
     return [ACHubDataManager anotherUrl:[NSString stringWithFormat:@"https://api.github.com/user/subscriptions/%@", repo.fullName]];
+}
+
++(NSString *)userUpdateUrl
+{
+return [ACHubDataManager anotherUrl:[NSString stringWithFormat:@"https://api.github.com/user"]];
 }
 
 +(NSString *)anotherUrl:(NSString *)url

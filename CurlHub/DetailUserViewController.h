@@ -13,6 +13,7 @@
 #import "DetailDoubleTableViewCell.h"
 #import "ReposViewController.h"
 #import "FollowingAndFollowersViewController.h"
+#import "EditUserViewController.h"
 
 @interface DetailUserViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIImageView *userAvatar;

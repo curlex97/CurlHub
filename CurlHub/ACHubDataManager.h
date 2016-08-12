@@ -63,6 +63,12 @@
 // старринг
 +(NSString*)starUrlWithRepo:(ACRepo*)repo;
 
+// вотчинг
++(NSString*)watchUrlWithRepo:(ACRepo*)repo;
+
+// апдейт пропертей пользователя
++(NSString*)userUpdateUrl;
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // текущий пользователь через токен
@@ -125,5 +131,6 @@
 
 -(void) isWatchingRepoAsync:(ACRepo*)repo andUser:(ACUser*)user completion:(void(^)(BOOL))completed;
 
+-(void) updateUserAsync:(NSDictionary*)properties andUser:(ACUser*)user completion:(void(^)(void))completed;
 
 @end

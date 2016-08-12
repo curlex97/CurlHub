@@ -22,11 +22,18 @@
     [super viewDidLoad];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    
+    if(self.currentUser.login == [ACUserViewModel systemUser].login)
+    {
+        self.currentUser = [ACUserViewModel systemUser];
+    }
+    
     [ACPictureManager downloadImageByUrlAsync:self.currentUser.avatarUrl andCompletion:^(UIImage* image)
     {
         self.userAvatar.image = image;
@@ -35,7 +42,9 @@
         self.userAvatar.layer.borderWidth = 0;
     }];
     self.userName.text = self.currentUser.login;
+    [self.tableView reloadData];
 }
+
 
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -96,10 +105,11 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section == 1 && indexPath.row == 3 && ![self.currentUser.email isKindOfClass:[NSNull class]])
+    if(indexPath.section == 1 && indexPath.row == 3 && ![self.currentUser.email isKindOfClass:[NSNull class]] && self.currentUser.login != [ACUserViewModel systemUser].login)
     {
         NSString *url = [NSString stringWithFormat:@"mailto:%@", self.currentUser.email];
         [[UIApplication sharedApplication]  openURL: [NSURL URLWithString: url]];
+        return;
     }
     
     else if(indexPath.row == 0 && indexPath.section == 0)
@@ -112,6 +122,42 @@
             [self.navigationController pushViewController:fafvcontroller animated:YES];
         }
     }
+    
+    
+        if(self.currentUser.login == [ACUserViewModel systemUser].login)
+        {
+            EditUserViewController* euvc = [self.storyboard instantiateViewControllerWithIdentifier:@"EditUserViewController"];
+            
+            if(euvc)
+            {
+                if(indexPath.section == 1)
+                {
+                    switch (indexPath.row) {
+                        case 0:
+                            euvc.property = @"Name";
+                            euvc.value = self.currentUser.name;
+                            break;
+                        case 1:
+                            euvc.property = @"Company";
+                            euvc.value = self.currentUser.company;
+                            break;
+                        case 2:
+                            euvc.property = @"Location";
+                            euvc.value = self.currentUser.location;
+                            break;
+                        case 3:
+                            euvc.property = @"Email";
+                            euvc.value = self.currentUser.email;
+                            break;
+                        default:
+                            break;
+                    }
+                    euvc.navigationItem.title = self.currentUser.login;
+                    [self.navigationController pushViewController:euvc animated:YES];
+                }
+               
+            }
+        }
 }
 
 

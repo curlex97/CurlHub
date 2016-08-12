@@ -25,6 +25,7 @@
 		280DC1771D468B6100D6E10F /* ACUserViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC1761D468B6100D6E10F /* ACUserViewModel.m */; };
 		282738E41D535D7D00D16953 /* UIColor+ACAppColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 282738E31D535D7D00D16953 /* UIColor+ACAppColors.m */; };
 		282B1DC21D5CDF7E00650F30 /* ACCommit.m in Sources */ = {isa = PBXBuildFile; fileRef = 282B1DC11D5CDF7E00650F30 /* ACCommit.m */; };
+		282B1DC51D5E3AC800650F30 /* EditUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 282B1DC41D5E3AC800650F30 /* EditUserViewController.m */; };
 		282D012F1D46C9B6001B82C9 /* ACEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 282D012E1D46C9B6001B82C9 /* ACEvent.m */; };
 		282D01321D46CD6F001B82C9 /* ACEventsViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 282D01311D46CD6F001B82C9 /* ACEventsViewModel.m */; };
 		282D01351D46D3A4001B82C9 /* ActionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 282D01341D46D3A4001B82C9 /* ActionTableViewCell.m */; };
@@ -94,6 +95,8 @@
 		282738E31D535D7D00D16953 /* UIColor+ACAppColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ACAppColors.m"; sourceTree = "<group>"; };
 		282B1DC01D5CDF7E00650F30 /* ACCommit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACCommit.h; sourceTree = "<group>"; };
 		282B1DC11D5CDF7E00650F30 /* ACCommit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACCommit.m; sourceTree = "<group>"; };
+		282B1DC31D5E3AC800650F30 /* EditUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditUserViewController.h; sourceTree = "<group>"; };
+		282B1DC41D5E3AC800650F30 /* EditUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditUserViewController.m; sourceTree = "<group>"; };
 		282D012D1D46C9B6001B82C9 /* ACEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACEvent.h; sourceTree = "<group>"; };
 		282D012E1D46C9B6001B82C9 /* ACEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACEvent.m; sourceTree = "<group>"; };
 		282D01301D46CD6F001B82C9 /* ACEventsViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACEventsViewModel.h; sourceTree = "<group>"; };
@@ -233,6 +236,7 @@
 				28F1C9801D4D6BA30007BF8B /* RepoContents */,
 				28F1C9841D4D70510007BF8B /* FileContent */,
 				28F061171D54A10C00401312 /* DetailIssue */,
+				282B1DC61D5E3ACF00650F30 /* EditUser */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -310,6 +314,15 @@
 				28F1C97B1D4D60900007BF8B /* ACRepoContentsViewModel.m */,
 			);
 			name = ViewModels;
+			sourceTree = "<group>";
+		};
+		282B1DC61D5E3ACF00650F30 /* EditUser */ = {
+			isa = PBXGroup;
+			children = (
+				282B1DC31D5E3AC800650F30 /* EditUserViewController.h */,
+				282B1DC41D5E3AC800650F30 /* EditUserViewController.m */,
+			);
+			name = EditUser;
 			sourceTree = "<group>";
 		};
 		282D01361D46D3AC001B82C9 /* Views */ = {
@@ -621,6 +634,7 @@
 				28FBBC651D4B82440020D1E3 /* ACIssuesViewModel.m in Sources */,
 				28CBF1641D49FB290096F5EC /* ACProgressBarDisplayer.m in Sources */,
 				28F5FADD1D5B6809000FB2A9 /* FollowingAndFollowersViewController.m in Sources */,
+				282B1DC51D5E3AC800650F30 /* EditUserViewController.m in Sources */,
 				28BE0F3D1D478B5200110482 /* ReposViewController.m in Sources */,
 				28F061161D54A08C00401312 /* EventTableViewCell.m in Sources */,
 				282738E41D535D7D00D16953 /* UIColor+ACAppColors.m in Sources */,

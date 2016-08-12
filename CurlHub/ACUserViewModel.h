@@ -30,8 +30,11 @@ static ACUser* systemUser;
 // список подписок пользотвалея
 -(NSArray<ACUser*>*) userFollowing:(ACUser*)user andPageNumber:(int)pageNumber;
 
+-(void) updateUserAsync:(NSDictionary*)properties andUser:(ACUser*)user completion:(void(^)(void))completed;
+
 
 +(void) setSystemUser:(ACUser*)user;
 +(ACUser*) systemUser;
+
 
 @end
