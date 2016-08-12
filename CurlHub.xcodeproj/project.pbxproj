@@ -24,6 +24,7 @@
 		280DC1741D46853500D6E10F /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC1731D46853500D6E10F /* WelcomeViewController.m */; };
 		280DC1771D468B6100D6E10F /* ACUserViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 280DC1761D468B6100D6E10F /* ACUserViewModel.m */; };
 		282738E41D535D7D00D16953 /* UIColor+ACAppColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 282738E31D535D7D00D16953 /* UIColor+ACAppColors.m */; };
+		282B1DC21D5CDF7E00650F30 /* ACCommit.m in Sources */ = {isa = PBXBuildFile; fileRef = 282B1DC11D5CDF7E00650F30 /* ACCommit.m */; };
 		282D012F1D46C9B6001B82C9 /* ACEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 282D012E1D46C9B6001B82C9 /* ACEvent.m */; };
 		282D01321D46CD6F001B82C9 /* ACEventsViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 282D01311D46CD6F001B82C9 /* ACEventsViewModel.m */; };
 		282D01351D46D3A4001B82C9 /* ActionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 282D01341D46D3A4001B82C9 /* ActionTableViewCell.m */; };
@@ -91,6 +92,8 @@
 		280DC1761D468B6100D6E10F /* ACUserViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACUserViewModel.m; sourceTree = "<group>"; };
 		282738E21D535D7D00D16953 /* UIColor+ACAppColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ACAppColors.h"; sourceTree = "<group>"; };
 		282738E31D535D7D00D16953 /* UIColor+ACAppColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ACAppColors.m"; sourceTree = "<group>"; };
+		282B1DC01D5CDF7E00650F30 /* ACCommit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACCommit.h; sourceTree = "<group>"; };
+		282B1DC11D5CDF7E00650F30 /* ACCommit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACCommit.m; sourceTree = "<group>"; };
 		282D012D1D46C9B6001B82C9 /* ACEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACEvent.h; sourceTree = "<group>"; };
 		282D012E1D46C9B6001B82C9 /* ACEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACEvent.m; sourceTree = "<group>"; };
 		282D01301D46CD6F001B82C9 /* ACEventsViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACEventsViewModel.h; sourceTree = "<group>"; };
@@ -271,6 +274,8 @@
 				28F1C9781D4D5C790007BF8B /* ACRepoDirectory.m */,
 				28C3100C1D54085600A03081 /* ACIssueEvent.h */,
 				28C3100D1D54085600A03081 /* ACIssueEvent.m */,
+				282B1DC01D5CDF7E00650F30 /* ACCommit.h */,
+				282B1DC11D5CDF7E00650F30 /* ACCommit.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -621,6 +626,7 @@
 				282738E41D535D7D00D16953 /* UIColor+ACAppColors.m in Sources */,
 				280DC1361D45637800D6E10F /* main.m in Sources */,
 				28BE0F561D47C1B400110482 /* DetailDoubleTableViewCell.m in Sources */,
+				282B1DC21D5CDF7E00650F30 /* ACCommit.m in Sources */,
 				28CBF1681D4AA19B0096F5EC /* UIImage+ACImageResizing.m in Sources */,
 				28F1C9791D4D5C790007BF8B /* ACRepoDirectory.m in Sources */,
 			);

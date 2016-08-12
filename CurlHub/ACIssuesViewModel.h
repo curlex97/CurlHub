@@ -13,6 +13,6 @@
 @interface ACIssuesViewModel : NSObject
 
 // список всех заданий для пользователя по фиьтру (см. ACHubDataManager)
--(NSArray*)allIssuesForUser:(ACUser*)user andFilter:(NSString*)filter;
+-(NSArray *)allIssuesForUser:(ACUser*)user andFilter:(NSString*)filter andCurrentUser:(ACUser*)currentUser;
 
 @end

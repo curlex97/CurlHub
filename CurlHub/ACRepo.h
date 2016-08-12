@@ -12,6 +12,7 @@
 @interface ACRepo : NSObject
 
 @property NSString* name;
+@property NSString* fullName;
 @property NSString* ownerName;
 @property NSString *ownerAvatarUrl;
 @property NSString* language;
@@ -30,9 +31,10 @@
 @property long issuesCount;
 
 @property BOOL isPrivate;
+@property BOOL isStarring;
+@property BOOL isWatching;
 
 
-
--(instancetype)initWithName:(NSString*)name andOwnerName:(NSString*)ownerName andOwnerAvatarUrl:(NSString*)ownerAvatarUrl andLanguage:(NSString*)language andCreateDate:(NSString*)createDate andSize:(double)size andForksCount:(long)forksCount andWatchersCount:(long)watchersCount andBranchesCount:(long)branchesCount andStargazersCount:(long)stargazersCount andIssuesCount:(long)issuesCount andPrivate:(BOOL)isPrivate andIssuesUrl:(NSString*)issuesUrl andContentsUrl:(NSString*)contentsUrl andHtmlUrl:(NSString*)htmlUrl andOwnerUrl:(NSString*)ownerUrl andBranchesUrl:(NSString*)branchesUrl;
+-(instancetype)initWithName:(NSString*)name andFullName:(NSString*)fullName andOwnerName:(NSString*)ownerName andOwnerAvatarUrl:(NSString*)ownerAvatarUrl andLanguage:(NSString*)language andCreateDate:(NSString*)createDate andSize:(double)size andForksCount:(long)forksCount andWatchersCount:(long)watchersCount andBranchesCount:(long)branchesCount andStargazersCount:(long)stargazersCount andIssuesCount:(long)issuesCount andPrivate:(BOOL)isPrivate andIsStarring:(BOOL)isStarring andIsWatching:(BOOL)isWatching andIssuesUrl:(NSString*)issuesUrl andContentsUrl:(NSString*)contentsUrl andHtmlUrl:(NSString*)htmlUrl andOwnerUrl:(NSString*)ownerUrl andBranchesUrl:(NSString*)branchesUrl;
 
 @end

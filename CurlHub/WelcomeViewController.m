@@ -68,7 +68,6 @@
             if(page.length > 10)
             {
                 [self.userModel loginWithCode:page completion:^(ACUser* user){
-                
                     dispatch_async(dispatch_get_main_queue(), ^{
                     NavigateViewController *navigateViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NavigateViewController"];
                         navigateViewController.currentUser = user;

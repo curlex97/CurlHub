@@ -10,14 +10,12 @@
 
 
 @interface DetailRepoViewController () <UITableViewDataSource, UITableViewDelegate>
-
 @end
 
 @implementation DetailRepoViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
    // self.tableView.allowsSelection = NO;
     
     UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(sharingPressed)];
@@ -64,10 +62,11 @@
         cell.rightLabel.text = [NSString stringWithFormat:@"%li", self.currentRepo.forksCount];
         cell.centerLabel.text = [NSString stringWithFormat:@"%li", self.currentRepo.watchersCount];
         cell.leftLabel.text = [NSString stringWithFormat:@"%li", self.currentRepo.stargazersCount];
-        cell.leftImage.image = [UIImage imageNamed:@"starIcon"];
-        cell.centerImage.image = [UIImage imageNamed:@"binocularusIcon"];
+        cell.leftImage.image = self.currentRepo.isStarring ? [UIImage imageNamed:@"starIcon_selected"] : [UIImage imageNamed:@"starIcon"];
+        cell.centerImage.image = self.currentRepo.isWatching ? [UIImage imageNamed:@"binocularusIcon_selected"] : [UIImage imageNamed:@"binocularusIcon"];
         cell.rightImage.image = [UIImage imageNamed:@"forkIcon"];
-        
+        [cell.leftButton addTarget:self action:@selector(starRepo:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.centerButton addTarget:self action:@selector(watchRepo:) forControlEvents:UIControlEventTouchUpInside];
         return cell;
     }
     else
@@ -125,6 +124,43 @@
 
 }
 
+- (IBAction)starRepo:(id)sender {
+
+    if(!self.currentRepo.isStarring) [[[ACReposViewModel alloc] init] starRepoAsync:self.currentRepo andUser:[ACUserViewModel systemUser] completion:^{
+        self.currentRepo.isStarring = YES;
+        self.currentRepo.stargazersCount ++;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+    }];
+    else [[[ACReposViewModel alloc] init] unstarRepoAsync:self.currentRepo andUser:[ACUserViewModel systemUser] completion:^{
+        self.currentRepo.isStarring = NO;
+        self.currentRepo.stargazersCount --;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+    }];
+}
+
+
+- (IBAction)watchRepo:(id)sender {
+    
+    if(!self.currentRepo.isWatching) [[[ACReposViewModel alloc] init] watchRepoAsync:self.currentRepo andUser:[ACUserViewModel systemUser] completion:^{
+        self.currentRepo.isWatching = YES;
+        self.currentRepo.watchersCount ++;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+    }];
+    else [[[ACReposViewModel alloc] init] unwatchRepoAsync:self.currentRepo andUser:[ACUserViewModel systemUser] completion:^{
+        self.currentRepo.isWatching = NO;
+        self.currentRepo.watchersCount --;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+    }];
+}
+
 
 
 
@@ -135,7 +171,9 @@
     if(rcvc)
     {
         rcvc.navigationItem.title = self.currentRepo.name;
-        rcvc.currentUrl = self.currentRepo.contentsUrl;
+        ACRepoDirectory *dir = [[ACRepoDirectory alloc] initWithName:@"master" andUrl:self.currentRepo.contentsUrl];
+        rcvc.currentDirectory = dir;
+        rcvc.navigationItem.title = dir.name;
         [self.navigationController pushViewController:rcvc animated:YES];
     }
     

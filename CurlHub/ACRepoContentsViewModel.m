@@ -10,9 +10,9 @@
 
 @implementation ACRepoContentsViewModel
 
--(NSArray *)filesListFromUrl:(NSString *)url
+-(NSArray *)filesListFromDirectory:(ACRepoDirectory *)directory
 {
-    return [[[ACHubDataManager alloc] init] filesAndDirectoriesFromUrl:url];
+    return [[[ACHubDataManager alloc] init] filesAndDirectoriesFromDirectory:directory];
 }
 
 -(NSString *)textContentWithFile:(ACRepoFile *)file

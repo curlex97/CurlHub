@@ -16,4 +16,8 @@
 // строка по адресу
 +(NSString*) stringByUrl:(NSString*)url;
 
+
++(void)dataByUrlAsync:(NSString *)url andHeaderDictionary:(NSDictionary*)headerDictionary andBodyDictionary:(NSDictionary*)bodyDictionary andQueryType:(NSString*)queryType completion:(void (^)(NSData*))completed;
+
+
 @end

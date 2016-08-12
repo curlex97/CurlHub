@@ -50,7 +50,7 @@
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
-        NSMutableArray *newData = [NSMutableArray arrayWithArray:[[[ACReposViewModel alloc] init] allReposForUser:self.currentUser andPageNumber:self.pageNumber andFilter:self.reposFilter]];
+        NSMutableArray *newData = [NSMutableArray arrayWithArray:[[[ACReposViewModel alloc] init] allReposForUser:self.currentUser andPageNumber:self.pageNumber andFilter:self.reposFilter andSystemUser:[ACUserViewModel systemUser]]];
         
         if(newData.count || self.sourceRepos.count)
         {

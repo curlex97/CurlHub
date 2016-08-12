@@ -21,4 +21,16 @@
     // Configure the view for the selected state
 }
 
+//- (IBAction)leftButtonPressed:(id)sender {
+//    if(self.leftButtonTapped)
+//        self.leftButtonTapped(0);
+//}
+//
+//- (IBAction)centerButtonPressed:(id)sender {
+//    if(self.centerButtonTapped)self.centerButtonTapped(0);
+//}
+//
+//- (IBAction)rightButtonPressed:(id)sender {
+//    if(self.rightButtonTapped)self.rightButtonTapped(0);
+//}
 @end

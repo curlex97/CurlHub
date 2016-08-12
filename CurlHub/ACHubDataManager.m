@@ -20,42 +20,8 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 @implementation ACHubDataManager
 
 
--(void) test
-{
-    NSMutableDictionary* dic = [NSMutableDictionary dictionary];
-    [dic setValue:@"bio" forKey:@"something in your mouth"];
-    
-    
-    // ?access_token=e37d4f5328e0048aa721e4e58558bc023a760029&client_id=07792de91a22f48d76a8&client_secret=3ac64664dc2578449db4c617aefd5ee47c850f62
-    NSURL *URL = [NSURL URLWithString:@"https://api.github.com/user/following/fds?access_token=e37d4f5328e0048aa721e4e58558bc023a760029&client_id=07792de91a22f48d76a8&client_secret=3ac64664dc2578449db4c617aefd5ee47c850f62"];
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30];
-    [request setHTTPMethod:@"PUT"];
-    
-   // [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-  //  NSData* data = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
-   // [request setHTTPBody:data];
-    [request setValue:[NSString stringWithFormat:@"0"] forHTTPHeaderField:@"Content-Length"];
-   // [request setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *task = [session dataTaskWithRequest:request
-                                            completionHandler:
-                                  ^(NSData *data, NSURLResponse *response, NSError *error) {
-                                      
-                                      if(data.length){
-                                          NSString* newStr = [NSString stringWithUTF8String:[data bytes]];
-                                          NSLog(@"%@", newStr);
-                                      }
-                                      else NSLog(@"204");
-                                  }];
-    
-    [task resume];
-}
-
 -(ACUser*)userFromToken:(NSString*)token
 {
-    
     ACUser* user = [self userFromUrl:[ACHubDataManager userUrl:token]];
     user.accessToken = token;
     return user;
@@ -185,21 +151,21 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     return array;
 }
 
--(ACRepo *)repoFromUrl:(NSString *)url
+-(ACRepo*) repoFromEvent:(ACEvent*)event andCurrentUser:(ACUser*)user
 {
-    NSString* page = [ACNetworkManager stringByUrl:url];
+    NSString* page = [ACNetworkManager stringByUrl:event.repoUrl];
     NSError *jsonError = nil;
     NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
     if(data){
         NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
         if(jsonDictionary)
-            return [self repoFromJsonDictionary:jsonDictionary];
+            return [self repoFromJsonDictionary:jsonDictionary andCurrentUser:user];
     }
     return nil;
 }
 
 
--(NSArray<ACRepo *> *)reposForUser:(ACUser *)user andPageNumber:(int)pageNumber andFilter:(NSString*)filter
+-(NSArray<ACRepo *> *)reposForUser:(ACUser *)user andPageNumber:(int)pageNumber andFilter:(NSString*)filter andCurrentUser:(ACUser*)currentUser
 {
     NSString *path = [ACHubDataManager reposUrl:user.login andPageNumber:pageNumber andFilter:filter];
     NSString* page = [ACNetworkManager stringByUrl:path];
@@ -209,13 +175,13 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     
     if(data){
     NSArray* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
-    return jsonError? nil : [self reposFromJsonArray:jsonDictionary];
+    return jsonError? nil : [self reposFromJsonArray:jsonDictionary andCurrentUser:currentUser];
     }
     return nil;
     
 }
 
--(NSArray<ACRepo *> *)reposForQuery:(NSString *)query andPageNumber:(int)pageNumber
+-(NSArray<ACRepo *> *)reposForQuery:(NSString *)query andPageNumber:(int)pageNumber andCurrentUser:(ACUser*)user
 {
     NSString* formatedQuery = [query.lowercaseString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     
@@ -228,7 +194,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     if(data){
     NSDictionary* jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
     NSArray* reposArray = [jsonDictionary valueForKeyPath:@"items"];
-    return (jsonError && reposArray) ? nil : [self reposFromJsonArray:reposArray];
+    return (jsonError && reposArray) ? nil : [self reposFromJsonArray:reposArray andCurrentUser:user];
     }
     return nil;
 }
@@ -264,22 +230,23 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 }
 
 // все методы получения списка репозиториев работают через него
--(NSArray*) reposFromJsonArray:(NSArray*)jsonArray
+-(NSArray*) reposFromJsonArray:(NSArray*)jsonArray andCurrentUser:(ACUser*)user
 {
     NSMutableArray *array = [NSMutableArray array];
 
     for(NSDictionary* repoDictionary in jsonArray)
     {
-        [array addObject:[self repoFromJsonDictionary:repoDictionary]];
+        [array addObject:[self repoFromJsonDictionary:repoDictionary andCurrentUser:user]];
     }
     
     return array;
 
 }
 
--(ACRepo*) repoFromJsonDictionary:(NSDictionary*)repoDictionary
+-(ACRepo*) repoFromJsonDictionary:(NSDictionary*)repoDictionary andCurrentUser:(ACUser*)user
 {
     NSString* name = [repoDictionary valueForKeyPath:@"name"];
+    NSString* fullName = [repoDictionary valueForKeyPath:@"full_name"];
     NSString* ownerName = [repoDictionary valueForKeyPath:@"owner.login"];
     NSString* avatarUrl = [repoDictionary valueForKeyPath:@"owner.avatar_url"];
     NSString *language = [repoDictionary valueForKeyPath:@"language"];
@@ -304,7 +271,16 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     long stargazersCount = [[repoDictionary valueForKeyPath:@"stargazers_count"] longValue];
     long branchesCount = 0, issuesCount = 0;
     
-    ACRepo *repo = [[ACRepo alloc] initWithName:name andOwnerName:ownerName andOwnerAvatarUrl:avatarUrl andLanguage:language andCreateDate:date andSize:size andForksCount:forksCount andWatchersCount:watchersCount andBranchesCount:branchesCount andStargazersCount:stargazersCount andIssuesCount:issuesCount andPrivate:isPrivate andIssuesUrl:issuesUrl andContentsUrl:contentsUrl andHtmlUrl:htmlUrl andOwnerUrl:ownerUrl andBranchesUrl:branchesUrl];
+    ACRepo *repo = [[ACRepo alloc] initWithName:name andFullName:fullName andOwnerName:ownerName andOwnerAvatarUrl:avatarUrl andLanguage:language andCreateDate:date andSize:size andForksCount:forksCount andWatchersCount:watchersCount andBranchesCount:branchesCount andStargazersCount:stargazersCount andIssuesCount:issuesCount andPrivate:isPrivate andIsStarring:false andIsWatching:false andIssuesUrl:issuesUrl andContentsUrl:contentsUrl andHtmlUrl:htmlUrl andOwnerUrl:ownerUrl andBranchesUrl:branchesUrl];
+    
+    [self isStarringRepoAsync:repo andUser:user completion:^(BOOL isStar){
+        repo.isStarring = isStar;
+    }];
+    
+    [self isWatchingRepoAsync:repo andUser:user completion:^(BOOL isWatch){
+        repo.isWatching = isWatch;
+        if(isWatch && !watchersCount) repo.watchersCount ++;
+    }];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
@@ -376,10 +352,10 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     return array;
 }
 
--(NSArray<ACIssue *> *)issuesForUser:(ACUser *)user andFilter:(NSString*)filter
+-(NSArray<ACIssue *> *)issuesForUser:(ACUser *)user andFilter:(NSString*)filter andCurrentUser:(ACUser*) currentUser
 {
     NSMutableArray *array = [NSMutableArray array];
-    NSArray *userRepos = [self reposForUser:user andPageNumber:1 andFilter:@"all"];
+    NSArray *userRepos = [self reposForUser:user andPageNumber:1 andFilter:@"all" andCurrentUser:currentUser];
     
     for(ACRepo* userRepo in userRepos)
     {
@@ -426,11 +402,11 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     return array;
 }
 
--(NSArray*)filesAndDirectoriesFromUrl:(NSString *)url
+-(NSArray*) filesAndDirectoriesFromDirectory:(ACRepoDirectory*)directory
 {
     NSMutableArray *array = [NSMutableArray array];
     
-    NSString* page = [ACNetworkManager stringByUrl:[ACHubDataManager anotherUrl:url]];
+    NSString* page = [ACNetworkManager stringByUrl:[ACHubDataManager anotherUrl:directory.url]];
     NSError *jsonError = nil;
     NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -499,10 +475,66 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 }
 
 
+-(void)isStarringRepoAsync:(ACRepo *)repo andUser:(ACUser *)user completion:(void (^)(BOOL))completed
+{
+    NSString* path = [ACHubDataManager starUrlWithRepo:repo];
+    [ACNetworkManager dataByUrlAsync:path andHeaderDictionary:@{@"Authorization":[NSString stringWithFormat:@"token %@", user.accessToken]}
+                      andBodyDictionary:nil andQueryType:@"GET"
+                      completion:^(NSData* data){
+        completed(!data.length);
+    }];
+}
+
+-(void)starRepoAsync:(ACRepo *)repo andUser:(ACUser *)user completion:(void (^)(void))completed
+{
+    NSString* path = [ACHubDataManager starUrlWithRepo:repo];
+    [ACNetworkManager dataByUrlAsync:path andHeaderDictionary:@{@"Authorization":[NSString stringWithFormat:@"token %@", user.accessToken]}
+                   andBodyDictionary:nil andQueryType:@"PUT"
+                          completion:^(NSData* data){
+                              completed();
+                          }];
+}
+
+-(void)unstarRepoAsync:(ACRepo *)repo andUser:(ACUser *)user completion:(void (^)(void))completed
+{
+    NSString* path = [ACHubDataManager starUrlWithRepo:repo];
+    [ACNetworkManager dataByUrlAsync:path andHeaderDictionary:@{@"Authorization":[NSString stringWithFormat:@"token %@", user.accessToken]}
+                   andBodyDictionary:nil andQueryType:@"DELETE"
+                          completion:^(NSData* data){
+                              completed();
+                          }];
+}
 
 
+-(void)isWatchingRepoAsync:(ACRepo *)repo andUser:(ACUser *)user completion:(void (^)(BOOL))completed
+{
+    NSString* path = [ACHubDataManager watchUrlWithRepo:repo];
+    [ACNetworkManager dataByUrlAsync:path andHeaderDictionary:@{@"Authorization":[NSString stringWithFormat:@"token %@", user.accessToken]}
+                   andBodyDictionary:nil andQueryType:@"GET"
+                          completion:^(NSData* data){
+                              completed(!data.length);
+                          }];
+}
 
+-(void)watchRepoAsync:(ACRepo *)repo andUser:(ACUser *)user completion:(void (^)(void))completed
+{
+    NSString* path = [ACHubDataManager watchUrlWithRepo:repo];
+    [ACNetworkManager dataByUrlAsync:path andHeaderDictionary:@{@"Authorization":[NSString stringWithFormat:@"token %@", user.accessToken]}
+                   andBodyDictionary:nil andQueryType:@"PUT"
+                          completion:^(NSData* data){
+                              completed();
+                          }];
+}
 
+-(void)unwatchRepoAsync:(ACRepo *)repo andUser:(ACUser *)user completion:(void (^)(void))completed
+{
+    NSString* path = [ACHubDataManager watchUrlWithRepo:repo];
+    [ACNetworkManager dataByUrlAsync:path andHeaderDictionary:@{@"Authorization":[NSString stringWithFormat:@"token %@", user.accessToken]}
+                   andBodyDictionary:nil andQueryType:@"DELETE"
+                          completion:^(NSData* data){
+                              completed();
+                          }];
+}
 
 
 
@@ -572,10 +604,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 {
     NSString* path = [NSString stringWithFormat:@"http://curlex.adr.com.ua/hub.php"];
     
-    //
-    
     NSString *post = [NSString stringWithFormat:@"action=highlight&text=%@", text];
-//stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
     
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     
@@ -591,6 +620,16 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
     
     return request;
+}
+
++(NSString*)starUrlWithRepo:(ACRepo*)repo
+{
+    return [ACHubDataManager anotherUrl:[NSString stringWithFormat:@"https://api.github.com/user/starred/%@", repo.fullName]];
+}
+
++(NSString*)watchUrlWithRepo:(ACRepo*)repo
+{
+    return [ACHubDataManager anotherUrl:[NSString stringWithFormat:@"https://api.github.com/user/subscriptions/%@", repo.fullName]];
 }
 
 +(NSString *)anotherUrl:(NSString *)url

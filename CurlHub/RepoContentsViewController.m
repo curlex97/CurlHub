@@ -35,7 +35,7 @@
     if(!self.sourceFiles.count)[self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[UIColor messageColor] andIndicator:YES andFaded:NO];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        self.sourceFiles = [NSMutableArray arrayWithArray:[[[ACRepoContentsViewModel alloc] init]filesListFromUrl:self.currentUrl]];
+        self.sourceFiles = [NSMutableArray arrayWithArray:[[[ACRepoContentsViewModel alloc] init]filesListFromDirectory:self.currentDirectory]];
         if(self.sourceFiles.count)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -125,7 +125,7 @@
         RepoContentsViewController* rcvc = [self.storyboard instantiateViewControllerWithIdentifier:@"RepoContentsViewController"];
         if(rcvc)
         {
-            rcvc.currentUrl = dir.url;
+            rcvc.currentDirectory = dir;
             rcvc.navigationItem.title = dir.name;
             [self.navigationController pushViewController:rcvc animated:YES];
         }

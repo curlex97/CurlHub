@@ -18,7 +18,7 @@
 #define MAX_OPEN_IMAGE_FILE_SIZE 5000000
 
 @interface RepoContentsViewController : UIViewController
-@property NSString* currentUrl;
+@property ACRepoDirectory* currentDirectory;
 @property (weak, nonatomic) IBOutlet UIView *mainView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;

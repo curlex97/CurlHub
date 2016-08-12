@@ -44,7 +44,7 @@
     if(!self.sourceIssues.count) [self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[UIColor messageColor]  andIndicator:YES andFaded:NO];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        self.sourceIssues =  [NSMutableArray arrayWithArray:[[[ACIssuesViewModel alloc] init] allIssuesForUser:self.currentUser andFilter:self.issuesFilter]];
+        self.sourceIssues =  [NSMutableArray arrayWithArray:[[[ACIssuesViewModel alloc] init] allIssuesForUser:self.currentUser andFilter:self.issuesFilter andCurrentUser:[ACUserViewModel systemUser]]];
         if(self.sourceIssues.count){
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.progressBarDisplayer removeFromView:self.view];

@@ -34,6 +34,7 @@
             if(self.currentUser)
             {
                 [self writeTokenToFile];
+                systemUser = self.currentUser;
                 completed(self.currentUser);
             }
         }
@@ -85,6 +86,15 @@
     [@"" writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:nil];
 }
 
++(ACUser *)systemUser
+{
+    return systemUser;
+}
+
++(void)setSystemUser:(ACUser *)user
+{
+   systemUser = user;
+}
 
 
 @end

@@ -10,6 +10,8 @@
 #import "ACUser.h"
 #import "ACHubDataManager.h"
 
+static ACUser* systemUser;
+
 @interface ACUserViewModel : NSObject
 @property ACUser *currentUser;
 
@@ -27,5 +29,9 @@
 
 // список подписок пользотвалея
 -(NSArray<ACUser*>*) userFollowing:(ACUser*)user andPageNumber:(int)pageNumber;
+
+
++(void) setSystemUser:(ACUser*)user;
++(ACUser*) systemUser;
 
 @end

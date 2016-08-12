@@ -60,6 +60,9 @@
 // страница адреса подтверждения
 +(NSString*) pageWithVerificationUrl;
 
+// старринг
++(NSString*)starUrlWithRepo:(ACRepo*)repo;
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // текущий пользователь через токен
@@ -75,10 +78,10 @@
 -(NSArray<ACEvent*>*) eventsForUser:(ACUser*)user andPageNumber:(int)pageNumber;
 
 // список репозиториев для пользователя через пользователя, номер страницы и фильтр (all, owner, member)
--(NSArray<ACRepo*>*) reposForUser:(ACUser*)user andPageNumber:(int)pageNumber andFilter:(NSString*)filter;
+-(NSArray<ACRepo *> *)reposForUser:(ACUser *)user andPageNumber:(int)pageNumber andFilter:(NSString*)filter andCurrentUser:(ACUser*)currentUser;
 
 // список репозиториев через неформатированный запрос и номер страницы
--(NSArray<ACRepo*>*) reposForQuery:(NSString*)query andPageNumber:(int)pageNumber;
+-(NSArray<ACRepo *> *)reposForQuery:(NSString *)query andPageNumber:(int)pageNumber andCurrentUser:(ACUser*)user;
 
 // список пользователей через неформатированный запрос и номер страницы
 -(NSArray<ACUser*>*) usersForQuery:(NSString*)query andPageNumber:(int)pageNumber;
@@ -96,18 +99,31 @@
 -(NSArray<ACNews*>*) news;
 
 // список заданий для пользователя через пользователя и фильтр (all, open, closed)
--(NSArray<ACIssue*>*) issuesForUser:(ACUser*)user andFilter:(NSString*)filter;
+-(NSArray<ACIssue *> *)issuesForUser:(ACUser *)user andFilter:(NSString*)filter andCurrentUser:(ACUser*) currentUser;
 
 // список файлов и папок через адрес
--(NSArray*) filesAndDirectoriesFromUrl:(NSString*)url;
+-(NSArray*) filesAndDirectoriesFromDirectory:(ACRepoDirectory*)directory;
 
 // содержимое файла через файл
 -(NSString *)textContentWithFile:(ACRepoFile *)file;
 
--(ACRepo*) repoFromUrl:(NSString*)url;
+-(ACRepo*) repoFromEvent:(ACEvent*)event andCurrentUser:(ACUser*)user;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+-(void) starRepoAsync:(ACRepo*)repo andUser:(ACUser*)user completion:(void(^)(void))completed;
+
+-(void) unstarRepoAsync:(ACRepo*)repo andUser:(ACUser*)user completion:(void(^)(void))completed;
+
+-(void) isStarringRepoAsync:(ACRepo*)repo andUser:(ACUser*)user completion:(void(^)(BOOL))completed;
+
+-(void) watchRepoAsync:(ACRepo*)repo andUser:(ACUser*)user completion:(void(^)(void))completed;
+
+-(void) unwatchRepoAsync:(ACRepo*)repo andUser:(ACUser*)user completion:(void(^)(void))completed;
+
+-(void) isWatchingRepoAsync:(ACRepo*)repo andUser:(ACUser*)user completion:(void(^)(BOOL))completed;
 
 
 @end

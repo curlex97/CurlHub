@@ -102,7 +102,7 @@
         [[UIApplication sharedApplication]  openURL: [NSURL URLWithString: url]];
     }
     
-    else if(indexPath.row == 0)
+    else if(indexPath.row == 0 && indexPath.section == 0)
     {
         FollowingAndFollowersViewController* fafvcontroller = [self.storyboard instantiateViewControllerWithIdentifier:@"FollowingAndFollowersViewController"];
         if(fafvcontroller)

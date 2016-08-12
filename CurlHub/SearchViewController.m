@@ -67,11 +67,11 @@
         
         NSMutableArray *newData = nil;
         
-        newData = self.segmentControl.selectedSegmentIndex ? [NSMutableArray arrayWithArray:[[[ACUserViewModel alloc] init] allUsersForQuery:self.query andPageNumber:self.pageNumber]] : [NSMutableArray arrayWithArray:[[[ACReposViewModel alloc] init] allReposForQuery:self.query andPageNumber:self.pageNumber]];
+        newData = self.segmentControl.selectedSegmentIndex ? [NSMutableArray arrayWithArray:[[[ACUserViewModel alloc] init] allUsersForQuery:self.query andPageNumber:self.pageNumber]] : [NSMutableArray arrayWithArray:[[[ACReposViewModel alloc] init] allReposForQuery:self.query andPageNumber:self.pageNumber andSystemUser:[ACUserViewModel systemUser]]];
         
         if(newData.count || self.tableContent.count)
         {
-            self.pageNumber == 1 ? self.tableContent = newData : [self.tableContent addObjectsFromArray:[[[ACReposViewModel alloc] init] allReposForQuery:self.query andPageNumber:self.pageNumber]];
+            self.pageNumber == 1 ? self.tableContent = newData : [self.tableContent addObjectsFromArray:[[[ACReposViewModel alloc] init] allReposForQuery:self.query andPageNumber:self.pageNumber andSystemUser:[ACUserViewModel systemUser]]];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.progressBarDisplayer removeFromView:self.view];
                 [self.tableView reloadData];

@@ -14,7 +14,7 @@
 @interface ACRepoContentsViewModel : NSObject
 
 // список всех файлов и папок по адресу
--(NSArray*) filesListFromUrl:(NSString*)url;
+-(NSArray *)filesListFromDirectory:(ACRepoDirectory *)directory;
 
 // содержимое файла
 -(NSString*) textContentWithFile:(ACRepoFile*)file;

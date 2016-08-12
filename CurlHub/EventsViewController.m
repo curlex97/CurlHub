@@ -142,7 +142,7 @@
         if(drcontroller)
         {
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                ACRepo* repo = [[[ACReposViewModel alloc] init] repoFromUrl:event.repoUrl];
+                ACRepo* repo = [[[ACReposViewModel alloc] init] repoFromEvent:event andSystemUser:[ACUserViewModel systemUser]];
 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     drcontroller.currentRepo = repo;

@@ -8,6 +8,8 @@
 
 #import "ACUser.h"
 
+
+
 @implementation ACUser
 
 - (instancetype)initWithID:(NSString*)ID andLogin:(NSString*)login andAvatarUrl:(NSString*)avatarUrl andURL:(NSString*)URL andAccessToken:(NSString*)accessToken andName:(NSString*)name andCompany:(NSString*)company andLocation:(NSString*)location andEmail:(NSString*)email andFollowers:(NSString*)followers andFollowing:(NSString*)following andFollowersCount:(long)followersCount andFollowingCount:(long)followingCount
@@ -30,5 +32,7 @@
     }
     return self;
 }
+
+
 
 @end
