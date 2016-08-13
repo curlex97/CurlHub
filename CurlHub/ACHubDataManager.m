@@ -487,18 +487,52 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
         {
             NSMutableArray *commits = [NSMutableArray array];
             
-            for(NSDictionary* commitEventDictionary in jsonArray)
+            for(NSDictionary* commitDictionary in jsonArray)
             {
-                NSString* message = [commitEventDictionary valueForKeyPath:@"commit.message"];
+                NSString* message = [commitDictionary valueForKeyPath:@"commit.message"];
                 if([message isKindOfClass:[NSNull class]] || !message || !message.length) message = @"No message";
-                NSString* date = [NSString formatDateWithString:[commitEventDictionary valueForKeyPath:@"commit.committer.date"]];
-                NSString* commiterLogin = [commitEventDictionary valueForKeyPath:@"committer.login"];
-                NSString* commiterAvatar = [commitEventDictionary valueForKeyPath:@"committer.avatar_url"];
+                NSString* date = [NSString formatDateWithString:[commitDictionary valueForKeyPath:@"commit.committer.date"]];
+                NSString* commiterLogin = [commitDictionary valueForKeyPath:@"committer.login"];
+                NSString* commiterAvatar = [commitDictionary valueForKeyPath:@"committer.avatar_url"];
+                NSString* sha = [commitDictionary valueForKeyPath:@"sha"];
+                NSString* commentsUrl = [commitDictionary valueForKeyPath:@"comments_url"];
                 
-                ACCommit* commit = [[ACCommit alloc] initWithMessage:message andDate:date andCommiterLogin:commiterLogin andCommiterAvatarUrl:commiterAvatar andRepo:repo];
+                ACCommit* commit = [[ACCommit alloc] initWithMessage:message andDate:date andCommiterLogin:commiterLogin andCommiterAvatarUrl:commiterAvatar andSha:sha andCommentsUrl:commentsUrl];
                 [commits addObject:commit];
             }
             return commits;
+        }
+    }
+    return nil;
+}
+
+-(NSArray<ACCommit *> *)commentsForCommit:(ACCommit *)commit andPageNumber:(int)pageNumber
+{
+    NSString* path =[ACHubDataManager anotherUrl: commit.commentsUrl withPageNumber:pageNumber];
+    NSString* page = [ACNetworkManager stringByUrl:path];
+    
+    
+    NSError *jsonError = nil;
+    NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
+    
+    if(data)
+    {
+        NSArray* jsonArray = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
+        if(!jsonError && jsonArray.count)
+        {
+            NSMutableArray *comments = [NSMutableArray array];
+            
+            for(NSDictionary* commentDictionary in jsonArray)
+            {
+                NSString* body = [commentDictionary valueForKeyPath:@"body"];
+                NSString* date = [NSString formatDateWithString:[commentDictionary valueForKeyPath:@"updated_at"]];
+                NSString* userLogin = [commentDictionary valueForKeyPath:@"user.login"];
+                NSString* userAvatarUrl = [commentDictionary valueForKeyPath:@"user.avatar_url"];
+                
+                ACComment* comment = [[ACComment alloc] initWithBody:body andDate:date andUserLogin:userLogin andUserAvatarUrl:userAvatarUrl];
+                [comments addObject:comment];
+            }
+            return comments;
         }
     }
     return nil;

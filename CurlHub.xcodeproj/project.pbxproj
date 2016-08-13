@@ -57,6 +57,9 @@
 		28F5FADD1D5B6809000FB2A9 /* FollowingAndFollowersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F5FADC1D5B6809000FB2A9 /* FollowingAndFollowersViewController.m */; };
 		28F6BAFE1D5E72C700582424 /* ACCommitsViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F6BAFD1D5E72C700582424 /* ACCommitsViewModel.m */; };
 		28F6BB011D5E78A100582424 /* CommitsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F6BB001D5E78A100582424 /* CommitsViewController.m */; };
+		28F6BB051D5E942500582424 /* ACComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F6BB041D5E942500582424 /* ACComment.m */; };
+		28F6BB081D5E956D00582424 /* ACCommentsViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F6BB071D5E956D00582424 /* ACCommentsViewModel.m */; };
+		28F6BB0B1D5E97E400582424 /* CommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F6BB0A1D5E97E400582424 /* CommentsViewController.m */; };
 		28FBBC5B1D4B728F0020D1E3 /* DetailUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28FBBC5A1D4B728F0020D1E3 /* DetailUserViewController.m */; };
 		28FBBC621D4B7F770020D1E3 /* ACIssue.m in Sources */ = {isa = PBXBuildFile; fileRef = 28FBBC611D4B7F770020D1E3 /* ACIssue.m */; };
 		28FBBC651D4B82440020D1E3 /* ACIssuesViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 28FBBC641D4B82440020D1E3 /* ACIssuesViewModel.m */; };
@@ -161,6 +164,12 @@
 		28F6BAFD1D5E72C700582424 /* ACCommitsViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACCommitsViewModel.m; sourceTree = "<group>"; };
 		28F6BAFF1D5E78A100582424 /* CommitsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommitsViewController.h; sourceTree = "<group>"; };
 		28F6BB001D5E78A100582424 /* CommitsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommitsViewController.m; sourceTree = "<group>"; };
+		28F6BB031D5E942500582424 /* ACComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACComment.h; sourceTree = "<group>"; };
+		28F6BB041D5E942500582424 /* ACComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACComment.m; sourceTree = "<group>"; };
+		28F6BB061D5E956D00582424 /* ACCommentsViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACCommentsViewModel.h; sourceTree = "<group>"; };
+		28F6BB071D5E956D00582424 /* ACCommentsViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACCommentsViewModel.m; sourceTree = "<group>"; };
+		28F6BB091D5E97E400582424 /* CommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsViewController.h; sourceTree = "<group>"; };
+		28F6BB0A1D5E97E400582424 /* CommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsViewController.m; sourceTree = "<group>"; };
 		28FBBC591D4B728F0020D1E3 /* DetailUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailUserViewController.h; sourceTree = "<group>"; };
 		28FBBC5A1D4B728F0020D1E3 /* DetailUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailUserViewController.m; sourceTree = "<group>"; };
 		28FBBC601D4B7F770020D1E3 /* ACIssue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACIssue.h; sourceTree = "<group>"; };
@@ -244,6 +253,7 @@
 				28F061171D54A10C00401312 /* DetailIssue */,
 				282B1DC61D5E3ACF00650F30 /* EditUser */,
 				28F6BB021D5E7E2200582424 /* Commits */,
+				28F6BB0C1D5E9A4B00582424 /* Comments */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -287,6 +297,8 @@
 				28C3100D1D54085600A03081 /* ACIssueEvent.m */,
 				282B1DC01D5CDF7E00650F30 /* ACCommit.h */,
 				282B1DC11D5CDF7E00650F30 /* ACCommit.m */,
+				28F6BB031D5E942500582424 /* ACComment.h */,
+				28F6BB041D5E942500582424 /* ACComment.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -321,6 +333,8 @@
 				28F1C97B1D4D60900007BF8B /* ACRepoContentsViewModel.m */,
 				28F6BAFC1D5E72C700582424 /* ACCommitsViewModel.h */,
 				28F6BAFD1D5E72C700582424 /* ACCommitsViewModel.m */,
+				28F6BB061D5E956D00582424 /* ACCommentsViewModel.h */,
+				28F6BB071D5E956D00582424 /* ACCommentsViewModel.m */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -532,6 +546,15 @@
 			name = Commits;
 			sourceTree = "<group>";
 		};
+		28F6BB0C1D5E9A4B00582424 /* Comments */ = {
+			isa = PBXGroup;
+			children = (
+				28F6BB091D5E97E400582424 /* CommentsViewController.h */,
+				28F6BB0A1D5E97E400582424 /* CommentsViewController.m */,
+			);
+			name = Comments;
+			sourceTree = "<group>";
+		};
 		28FBBC5C1D4B72950020D1E3 /* DetailUser */ = {
 			isa = PBXGroup;
 			children = (
@@ -619,10 +642,12 @@
 				280DC15F1D46465500D6E10F /* IssuesViewController.m in Sources */,
 				280DC13C1D45637800D6E10F /* NavigateViewController.m in Sources */,
 				28F1C9831D4D70250007BF8B /* FileTextContentViewController.m in Sources */,
+				28F6BB0B1D5E97E400582424 /* CommentsViewController.m in Sources */,
 				280DC1571D461D9400D6E10F /* MenuView.m in Sources */,
 				28FBBC681D4B88EA0020D1E3 /* IssueTableViewCell.m in Sources */,
 				282D012F1D46C9B6001B82C9 /* ACEvent.m in Sources */,
 				280DC1651D464F4800D6E10F /* EventsViewController.m in Sources */,
+				28F6BB081D5E956D00582424 /* ACCommentsViewModel.m in Sources */,
 				28D759E81D5764540096CAB3 /* ACNetworkManager.m in Sources */,
 				28BE0F531D47BA3A00110482 /* DetailRepoViewController.m in Sources */,
 				28CBF1601D49F5120096F5EC /* NSString+HtmlPicturePath.m in Sources */,
@@ -652,6 +677,7 @@
 				28F061131D54994D00401312 /* DetailIssueViewController.m in Sources */,
 				28FBBC651D4B82440020D1E3 /* ACIssuesViewModel.m in Sources */,
 				28CBF1641D49FB290096F5EC /* ACProgressBarDisplayer.m in Sources */,
+				28F6BB051D5E942500582424 /* ACComment.m in Sources */,
 				28F5FADD1D5B6809000FB2A9 /* FollowingAndFollowersViewController.m in Sources */,
 				28F6BAFE1D5E72C700582424 /* ACCommitsViewModel.m in Sources */,
 				282B1DC51D5E3AC800650F30 /* EditUserViewController.m in Sources */,

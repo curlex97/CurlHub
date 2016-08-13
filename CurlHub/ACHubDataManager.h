@@ -19,6 +19,7 @@
 #import "NSString+HtmlDateFormat.h"
 #import "ACNetworkManager.h"
 #import "ACCommit.h"
+#import "ACComment.h"
 
 @interface ACHubDataManager : NSObject
 
@@ -120,6 +121,8 @@
 // получаем список коммитов репозитория
 -(NSArray<ACCommit*>*) commitsForRepo:(ACRepo*)repo andPageNumber:(int)pageNumber;
 
+// получаем список комментариев коммита
+-(NSArray<ACCommit*>*) commentsForCommit:(ACCommit*)commit andPageNumber:(int)pageNumber;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

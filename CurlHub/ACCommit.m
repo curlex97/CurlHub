@@ -10,7 +10,7 @@
 
 @implementation ACCommit
 
-- (instancetype)initWithMessage:(NSString*)message andDate:(NSString*)date andCommiterLogin:(NSString*)commiterLogin andCommiterAvatarUrl:(NSString*)commiterAvatarUrl andRepo:(ACRepo*)repo
+- (instancetype)initWithMessage:(NSString*)message andDate:(NSString*)date andCommiterLogin:(NSString*)commiterLogin andCommiterAvatarUrl:(NSString*)commiterAvatarUrl andSha:(NSString *)sha andCommentsUrl:(NSString *)commentsUrl
 {
     self = [super init];
     if (self) {
@@ -18,7 +18,8 @@
         self.date = date;
         self.commiterLogin = commiterLogin;
         self.commiterAvatarUrl = commiterAvatarUrl;
-        self.repo = repo;
+        self.sha = sha;
+        self.commentsUrl = commentsUrl;
     }
     return self;
 }

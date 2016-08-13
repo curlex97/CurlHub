@@ -20,7 +20,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tableView.allowsSelection = NO;
     self.isRefreshing = false;
     self.navigationController.navigationBar.translucent = NO;
     self.progressBarDisplayer = [[ACProgressBarDisplayer alloc] init];
@@ -131,6 +130,21 @@
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ACCommit *commit = self.tableCommits[indexPath.row];
+    if(commit)
+    {
+        CommentsViewController* comvc = [self.storyboard instantiateViewControllerWithIdentifier:@"CommentsViewController"];
+        
+        if(comvc)
+        {
+            comvc.currentCommit = commit;
+            comvc.navigationItem.title = @"Comments";
+            [self.navigationController pushViewController:comvc animated:YES];
+        }
+    }
+}
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
