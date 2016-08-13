@@ -47,7 +47,7 @@
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
-        NSMutableArray *newData = [NSMutableArray arrayWithArray:[[[ACCommentsViewModel alloc] init] commentsForCommit:self.currentCommit andPageNumber:self.pageNumber]];
+        NSMutableArray *newData = [NSMutableArray arrayWithArray:[[[ACCommentsViewModel alloc] init] commentsForCommit:self.currentCommit andPageNumber:self.pageNumber andCurrentUser:[ACUserViewModel systemUser]]];
         
         if(newData.count || self.tableComments.count)
         {

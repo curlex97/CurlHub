@@ -22,13 +22,13 @@ static ACUser* systemUser;
 -(void) logout;
 
 // список юзеров через неформатированную строку поиска
--(NSArray*)allUsersForQuery:(NSString *)query andPageNumber:(int)pageNumber;
+-(NSArray*)allUsersForQuery:(NSString *)query andPageNumber:(int)pageNumber andCurrentUser:(ACUser*)currentUser;
 
 // список подписчиков пользователя
--(NSArray<ACUser*>*) userFollowers:(ACUser*)user andPageNumber:(int)pageNumber;
+-(NSArray<ACUser*>*) userFollowers:(ACUser*)user andPageNumber:(int)pageNumber andCurrentUser:(ACUser*)currentUser;
 
 // список подписок пользотвалея
--(NSArray<ACUser*>*) userFollowing:(ACUser*)user andPageNumber:(int)pageNumber;
+-(NSArray<ACUser*>*) userFollowing:(ACUser*)user andPageNumber:(int)pageNumber andCurrentUser:(ACUser*)currentUser;
 
 -(void) updateUserAsync:(NSDictionary*)properties andUser:(ACUser*)user completion:(void(^)(void))completed;
 

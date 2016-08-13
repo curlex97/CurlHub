@@ -39,43 +39,43 @@
 +(NSString*) eventsUrl :(NSString*)userLogin andPageNumber:(int)pageNumber;
 
 // адрес получения списка репозиториев пользователя
-+(NSString*) reposUrl :(NSString*)userLogin andPageNumber:(int)pageNumber andFilter:(NSString*)filter;
++(NSString *)reposUrl:(NSString *)userLogin andPageNumber:(int)pageNumber andFilter:(NSString*)filter andUser:(ACUser*)user;
 
 // адрес получения списка репозиториев через поиск
-+(NSString*) searchReposUrl :(NSString*)query andPageNumber:(int)pageNumber;
++(NSString *)searchReposUrl:(NSString *)query andPageNumber:(int)pageNumber andUser:(ACUser*)user;
 
 // адрес получения списка пользователей через поиск
-+(NSString *)searchUsersUrl:(NSString *)query andPageNumber:(int)pageNumber;
++(NSString *)searchUsersUrl:(NSString *)query andPageNumber:(int)pageNumber andUser:(ACUser*)user;
 
 // адрес получения списка новостей
 +(NSString*) newsUrl;
 
 // адрес получения списка заданий
-+(NSString*) issuesUrlWithUrl:(NSString*)issuesUrl andFilter:(NSString*)filter;
++(NSString *)issuesUrlWithUrl:(NSString *)issuesUrl andFilter:(NSString*)filter andUser:(ACUser*)user;
 
 // адрес для доступа к гитхабу (подставляет идентификатор и секретный ключ)
-+(NSString*) anotherUrl:(NSString*)url;
++(NSString*) anotherUrl:(NSString*)url andUser:(ACUser*)user;
 
 // адрес для доступа к гитхабу (подставляет идентификатор, секретный ключ и номер страницы)
-+(NSString *)anotherUrl:(NSString *)url withPageNumber:(int)pageNaumber;
++(NSString *)anotherUrl:(NSString *)url withPageNumber:(int)pageNaumber andUser:(ACUser*)user;
 
 // страница адреса подтверждения
 +(NSString*) pageWithVerificationUrl;
 
 // старринг
-+(NSString*)starUrlWithRepo:(ACRepo*)repo;
++(NSString*)starUrlWithRepo:(ACRepo*)repo andUser:(ACUser*)user;
 
 // вотчинг
-+(NSString*)watchUrlWithRepo:(ACRepo*)repo;
++(NSString*)watchUrlWithRepo:(ACRepo*)repo andUser:(ACUser*)user;
 
 // апдейт пропертей пользователя
-+(NSString*)userUpdateUrl;
++(NSString *)userUpdateUrlWithUser:(ACUser*)user;
 
 // добавить комментарий коммиту
-+(NSString*)commentOnUrlWithCommit:(ACCommit*)commit;
++(NSString *)commentOnUrlWithCommit:(ACCommit *)commit andUser:(ACUser*)user;
 
 // удалить комментарий коммиту
-+(NSString*)deleteCommentUrlWithCommit:(ACCommit*)commit andComment:(ACComment*)comment;
++(NSString *)deleteCommentUrlWithCommit:(ACCommit *)commit andComment:(ACComment *)comment andUser:(ACUser*)user;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -83,7 +83,7 @@
 -(ACUser*)userFromToken:(NSString*)token;
 
 // пользователь через адрес
--(ACUser*)userFromUrl:(NSString*)url;
+-(ACUser*) userFromUrl:(NSString*)url andUser:(ACUser*)user;
 
 // токен через промежуточный код
 -(NSString*) tokenFromCode:(NSString*)code;
@@ -98,16 +98,16 @@
 -(NSArray<ACRepo *> *)reposForQuery:(NSString *)query andPageNumber:(int)pageNumber andCurrentUser:(ACUser*)user;
 
 // список пользователей через неформатированный запрос и номер страницы
--(NSArray<ACUser*>*) usersForQuery:(NSString*)query andPageNumber:(int)pageNumber;
+-(NSArray<ACUser *> *)usersForQuery:(NSString *)query andPageNumber:(int)pageNumber andCurrentUser:(ACUser*)currentUser;
 
 // список подписчиков пользователя
--(NSArray<ACUser*>*) userFollowers:(ACUser*)user andPageNumber:(int)pageNumber;
+-(NSArray<ACUser *> *)userFollowers:(ACUser *)user andPageNumber:(int)pageNumber andCurrentUser:(ACUser*)currentUser;
 
 // список подписок пользотвалея
--(NSArray<ACUser*>*) userFollowing:(ACUser*)user andPageNumber:(int)pageNumber;
+-(NSArray<ACUser *> *)userFollowing:(ACUser *)user andPageNumber:(int)pageNumber andCurrentUser:(ACUser*)currentUser;
 
 // список событий задания через задание
--(NSArray<ACIssueEvent*>*) eventsForIssue:(ACIssue*)issue;
+-(NSArray<ACIssueEvent *> *)eventsForIssue:(ACIssue *)issue andCurrentUser:(ACUser*)currentUser;
 
 // список новостей пользователя
 -(NSArray<ACNews*>*) news;
@@ -116,7 +116,7 @@
 -(NSArray<ACIssue *> *)issuesForUser:(ACUser *)user andFilter:(NSString*)filter andCurrentUser:(ACUser*) currentUser;
 
 // список файлов и папок через адрес
--(NSArray*) filesAndDirectoriesFromDirectory:(ACRepoDirectory*)directory;
+-(NSArray*) filesAndDirectoriesFromDirectory:(ACRepoDirectory*)directory andUser:(ACUser*)user;
 
 // содержимое файла через файл
 -(NSString *)textContentWithFile:(ACRepoFile *)file;
@@ -125,10 +125,10 @@
 -(ACRepo*) repoFromEvent:(ACEvent*)event andCurrentUser:(ACUser*)user;
 
 // получаем список коммитов репозитория
--(NSArray<ACCommit*>*) commitsForRepo:(ACRepo*)repo andPageNumber:(int)pageNumber;
+-(NSArray<ACCommit *> *)commitsForRepo:(ACRepo *)repo andPageNumber:(int)pageNumber andUser:(ACUser*)user;
 
 // получаем список комментариев коммита
--(NSArray<ACCommit*>*) commentsForCommit:(ACCommit*)commit andPageNumber:(int)pageNumber;
+-(NSArray<ACCommit *> *)commentsForCommit:(ACCommit *)commit andPageNumber:(int)pageNumber andUser:(ACUser*)user;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

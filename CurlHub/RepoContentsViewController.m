@@ -35,7 +35,7 @@
     if(!self.sourceFiles.count)[self.progressBarDisplayer displayOnView:self.view withMessage:@"Downloading..." andColor:[UIColor messageColor] andIndicator:YES andFaded:NO];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        self.sourceFiles = [NSMutableArray arrayWithArray:[[[ACRepoContentsViewModel alloc] init]filesListFromDirectory:self.currentDirectory]];
+        self.sourceFiles = [NSMutableArray arrayWithArray:[[[ACRepoContentsViewModel alloc] init]filesListFromDirectory:self.currentDirectory andCurrentUser:[ACUserViewModel systemUser]]];
         if(self.sourceFiles.count)
         {
             dispatch_async(dispatch_get_main_queue(), ^{

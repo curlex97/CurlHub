@@ -46,20 +46,20 @@
     });
 }
 
--(NSArray *)allUsersForQuery:(NSString *)query andPageNumber:(int)pageNumber
+-(NSArray *)allUsersForQuery:(NSString *)query andPageNumber:(int)pageNumber andCurrentUser:(ACUser*) currentUser
 {
-    return [[[ACHubDataManager alloc] init] usersForQuery:query andPageNumber:pageNumber];
+    return [[[ACHubDataManager alloc] init] usersForQuery:query andPageNumber:pageNumber andCurrentUser:currentUser];
 }
 
--(NSArray<ACUser *> *)userFollowers:(ACUser *)user andPageNumber:(int)pageNumber
+-(NSArray<ACUser *> *)userFollowers:(ACUser *)user andPageNumber:(int)pageNumber andCurrentUser:(ACUser*) currentUser
 {
-    return [[[ACHubDataManager alloc] init] userFollowers:user andPageNumber:pageNumber];
+    return [[[ACHubDataManager alloc] init] userFollowers:user andPageNumber:pageNumber andCurrentUser:currentUser];
 }
 
 
--(NSArray<ACUser *> *)userFollowing:(ACUser *)user andPageNumber:(int)pageNumber
+-(NSArray<ACUser *> *)userFollowing:(ACUser *)user andPageNumber:(int)pageNumber andCurrentUser:(ACUser*) currentUser
 {
-    return [[[ACHubDataManager alloc] init] userFollowing:user andPageNumber:pageNumber];
+    return [[[ACHubDataManager alloc] init] userFollowing:user andPageNumber:pageNumber andCurrentUser:currentUser];
 }
 
 -(void) writeTokenToFile

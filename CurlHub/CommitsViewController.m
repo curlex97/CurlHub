@@ -47,7 +47,7 @@
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
-        NSMutableArray *newData = [NSMutableArray arrayWithArray:[[[ACCommitsViewModel alloc] init] commitsForRepo:self.currentRepo andPageNumber:self.pageNumber]];
+        NSMutableArray *newData = [NSMutableArray arrayWithArray:[[[ACCommitsViewModel alloc] init] commitsForRepo:self.currentRepo andPageNumber:self.pageNumber andCurrentUser:[ACUserViewModel systemUser]]];
         
         if(newData.count || self.tableCommits.count)
         {

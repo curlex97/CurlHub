@@ -22,15 +22,17 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
 -(ACUser*)userFromToken:(NSString*)token
 {
-    ACUser* user = [self userFromUrl:[ACHubDataManager userUrl:token]];
+    ACUser *tokenUser = [[ACUser alloc] init];
+    tokenUser.accessToken = token;
+    ACUser* user = [self userFromUrl:[ACHubDataManager userUrl:token] andUser:tokenUser];
     user.accessToken = token;
     return user;
     return nil;
 }
 
--(ACUser*) userFromUrl:(NSString*)url
+-(ACUser*) userFromUrl:(NSString*)url andUser:(ACUser*)user
 {
-    NSString* page = [ACNetworkManager stringByUrl:[ACHubDataManager anotherUrl:url]];
+    NSString* page = [ACNetworkManager stringByUrl:[ACHubDataManager anotherUrl:url andUser:user]];
     
     if(page && page.length && ![page containsString:@"Bad credentials"])
     {
@@ -51,10 +53,10 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     return nil;
 }
 
--(NSArray<ACUser *> *)userFollowers:(ACUser *)user andPageNumber:(int)pageNumber
+-(NSArray<ACUser *> *)userFollowers:(ACUser *)user andPageNumber:(int)pageNumber andCurrentUser:(ACUser*)currentUser
 {
     NSMutableArray *array = [NSMutableArray array];
-    NSString* path = [ACHubDataManager anotherUrl:user.followers withPageNumber:pageNumber];
+    NSString* path = [ACHubDataManager anotherUrl:user.followers withPageNumber:pageNumber andUser:currentUser];
     NSString* page = [ACNetworkManager stringByUrl:path];
     NSError *jsonError = nil;
     NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
@@ -67,7 +69,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     {
         for(NSDictionary* eventDictionary in jsonDictionary)
         {
-            ACUser* user = [self userFromUrl:[eventDictionary valueForKeyPath:@"url"]];
+            ACUser* user = [self userFromUrl:[eventDictionary valueForKeyPath:@"url"]andUser:currentUser];
             [array addObject:user];
         }
     }
@@ -75,10 +77,10 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     return array;
 }
 
--(NSArray<ACUser *> *)userFollowing:(ACUser *)user andPageNumber:(int)pageNumber
+-(NSArray<ACUser *> *)userFollowing:(ACUser *)user andPageNumber:(int)pageNumber andCurrentUser:(ACUser*)currentUser
 {
     NSMutableArray *array = [NSMutableArray array];
-    NSString* path = [ACHubDataManager anotherUrl:user.following withPageNumber:pageNumber];
+    NSString* path = [ACHubDataManager anotherUrl:user.following withPageNumber:pageNumber andUser:currentUser];
     NSString* page = [ACNetworkManager stringByUrl:path];
     NSError *jsonError = nil;
     NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
@@ -91,7 +93,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     {
         for(NSDictionary* eventDictionary in jsonDictionary)
         {
-            ACUser* user = [self userFromUrl:[eventDictionary valueForKeyPath:@"url"]];
+            ACUser* user = [self userFromUrl:[eventDictionary valueForKeyPath:@"url"] andUser:currentUser];
             [array addObject:user];
         }
     }
@@ -167,7 +169,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
 -(NSArray<ACRepo *> *)reposForUser:(ACUser *)user andPageNumber:(int)pageNumber andFilter:(NSString*)filter andCurrentUser:(ACUser*)currentUser
 {
-    NSString *path = [ACHubDataManager reposUrl:user.login andPageNumber:pageNumber andFilter:filter];
+    NSString *path = [ACHubDataManager reposUrl:user.login andPageNumber:pageNumber andFilter:filter andUser:currentUser];
     NSString* page = [ACNetworkManager stringByUrl:path];
     
     NSError *jsonError = nil;
@@ -185,7 +187,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 {
     NSString* formatedQuery = [query.lowercaseString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     
-    NSString *path = [ACHubDataManager searchReposUrl:formatedQuery andPageNumber:pageNumber];
+    NSString *path = [ACHubDataManager searchReposUrl:formatedQuery andPageNumber:pageNumber andUser:user];
     NSString* page = [ACNetworkManager stringByUrl:path];
     
     NSError *jsonError = nil;
@@ -199,11 +201,11 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     return nil;
 }
 
--(NSArray<ACUser *> *)usersForQuery:(NSString *)query andPageNumber:(int)pageNumber
+-(NSArray<ACUser *> *)usersForQuery:(NSString *)query andPageNumber:(int)pageNumber andCurrentUser:(ACUser*)currentUser
 {
     NSString* formatedQuery = [query.lowercaseString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     
-    NSString *path = [ACHubDataManager searchUsersUrl:formatedQuery andPageNumber:pageNumber];
+    NSString *path = [ACHubDataManager searchUsersUrl:formatedQuery andPageNumber:pageNumber andUser:currentUser];
     NSString* page = [ACNetworkManager stringByUrl:path];
     
     NSError *jsonError = nil;
@@ -219,7 +221,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
             for(NSDictionary* userDictionary in reposArray)
             {
                 NSString* url = [userDictionary valueForKeyPath:@"url"];
-                ACUser* user = [self userFromUrl:url];
+                ACUser* user = [self userFromUrl:url andUser:currentUser];
                 if(user)[users addObject:user];
             }
             return users;
@@ -362,7 +364,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     for(ACRepo* userRepo in userRepos)
     {
         
-        NSString* page = [ACNetworkManager stringByUrl:[ACHubDataManager issuesUrlWithUrl:userRepo.issuesUrl andFilter:filter]];
+        NSString* page = [ACNetworkManager stringByUrl:[ACHubDataManager issuesUrlWithUrl:userRepo.issuesUrl andFilter:filter andUser:currentUser]];
         
         NSError *jsonError = nil;
         NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
@@ -389,9 +391,9 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
                             NSArray* labelsArray = [NSJSONSerialization JSONObjectWithData:bData options:kNilOptions error:&innerError];
                             if(!innerError) issue.labelsCount = labelsArray.count;
                         }
-                        ACUser* user = [self userFromUrl:[issueDictionary valueForKeyPath:@"user.url"]];
+                        ACUser* user = [self userFromUrl:[issueDictionary valueForKeyPath:@"user.url"] andUser:currentUser];
                         issue.user = user;
-                        issue.events = [self eventsForIssue:issue];
+                        issue.events = [self eventsForIssue:issue andCurrentUser:currentUser];
                     });
                     
                     [array addObject:issue];  
@@ -404,11 +406,11 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     return array;
 }
 
--(NSArray*) filesAndDirectoriesFromDirectory:(ACRepoDirectory*)directory
+-(NSArray*) filesAndDirectoriesFromDirectory:(ACRepoDirectory*)directory andUser:(ACUser*)user
 {
     NSMutableArray *array = [NSMutableArray array];
     
-    NSString* page = [ACNetworkManager stringByUrl:[ACHubDataManager anotherUrl:directory.url]];
+    NSString* page = [ACNetworkManager stringByUrl:[ACHubDataManager anotherUrl:directory.url andUser:user]];
     NSError *jsonError = nil;
     NSData *data = [page dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -437,9 +439,9 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 }
 
 
--(NSArray<ACIssueEvent *> *)eventsForIssue:(ACIssue *)issue
+-(NSArray<ACIssueEvent *> *)eventsForIssue:(ACIssue *)issue andCurrentUser:(ACUser*)currentUser
 {
-    NSString* path = [ACHubDataManager anotherUrl:issue.eventsUrl];
+    NSString* path = [ACHubDataManager anotherUrl:issue.eventsUrl andUser:currentUser];
     NSString* page = [ACNetworkManager stringByUrl:path];
     
     NSError *jsonError = nil;
@@ -460,7 +462,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
                 ACIssueEvent* issueEvent = [[ACIssueEvent alloc] initWithEvent:event andUser:nil andDate:date];
                 
                 dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                    ACUser* user = [self userFromUrl:userUrl];
+                    ACUser* user = [self userFromUrl:userUrl andUser:currentUser];
                     issueEvent.user = user;
                 });
                 [array addObject:issueEvent];
@@ -471,9 +473,9 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     return nil;
 }
 
--(NSArray<ACCommit *> *)commitsForRepo:(ACRepo *)repo andPageNumber:(int)pageNumber
+-(NSArray<ACCommit *> *)commitsForRepo:(ACRepo *)repo andPageNumber:(int)pageNumber andUser:(ACUser*)user
 {
-    NSString* path =[ACHubDataManager anotherUrl: repo.commitsUrl withPageNumber:pageNumber];
+    NSString* path =[ACHubDataManager anotherUrl: repo.commitsUrl withPageNumber:pageNumber andUser:user];
     NSString* page = [ACNetworkManager stringByUrl:path];
     
     
@@ -506,9 +508,9 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     return nil;
 }
 
--(NSArray<ACCommit *> *)commentsForCommit:(ACCommit *)commit andPageNumber:(int)pageNumber
+-(NSArray<ACCommit *> *)commentsForCommit:(ACCommit *)commit andPageNumber:(int)pageNumber andUser:(ACUser*)user
 {
-    NSString* path =[ACHubDataManager anotherUrl: commit.commentsUrl withPageNumber:pageNumber];
+    NSString* path =[ACHubDataManager anotherUrl: commit.commentsUrl withPageNumber:pageNumber andUser:user];
     NSString* page = [ACNetworkManager stringByUrl:path];
     
     
@@ -549,7 +551,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
 -(void)isStarringRepoAsync:(ACRepo *)repo andUser:(ACUser *)user completion:(void (^)(BOOL))completed
 {
-    NSString* path = [ACHubDataManager starUrlWithRepo:repo];
+    NSString* path = [ACHubDataManager starUrlWithRepo:repo andUser:user];
     [ACNetworkManager dataByUrlAsync:path andHeaderDictionary:@{@"Authorization":[NSString stringWithFormat:@"token %@", user.accessToken]}
                       andBodyDictionary:nil andQueryType:@"GET"
                       completion:^(NSData* data){
@@ -559,7 +561,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
 -(void)starRepoAsync:(ACRepo *)repo andUser:(ACUser *)user completion:(void (^)(void))completed
 {
-    NSString* path = [ACHubDataManager starUrlWithRepo:repo];
+    NSString* path = [ACHubDataManager starUrlWithRepo:repo andUser:user];
     [ACNetworkManager dataByUrlAsync:path andHeaderDictionary:@{@"Authorization":[NSString stringWithFormat:@"token %@", user.accessToken]}
                    andBodyDictionary:nil andQueryType:@"PUT"
                           completion:^(NSData* data){
@@ -569,7 +571,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
 -(void)unstarRepoAsync:(ACRepo *)repo andUser:(ACUser *)user completion:(void (^)(void))completed
 {
-    NSString* path = [ACHubDataManager starUrlWithRepo:repo];
+    NSString* path = [ACHubDataManager starUrlWithRepo:repo andUser:user];
     [ACNetworkManager dataByUrlAsync:path andHeaderDictionary:@{@"Authorization":[NSString stringWithFormat:@"token %@", user.accessToken]}
                    andBodyDictionary:nil andQueryType:@"DELETE"
                           completion:^(NSData* data){
@@ -580,7 +582,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
 -(void)isWatchingRepoAsync:(ACRepo *)repo andUser:(ACUser *)user completion:(void (^)(BOOL))completed
 {
-    NSString* path = [ACHubDataManager watchUrlWithRepo:repo];
+    NSString* path = [ACHubDataManager watchUrlWithRepo:repo andUser:user];
     [ACNetworkManager dataByUrlAsync:path andHeaderDictionary:@{@"Authorization":[NSString stringWithFormat:@"token %@", user.accessToken]}
                    andBodyDictionary:nil andQueryType:@"GET"
                           completion:^(NSData* data){
@@ -590,7 +592,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
 -(void)watchRepoAsync:(ACRepo *)repo andUser:(ACUser *)user completion:(void (^)(void))completed
 {
-    NSString* path = [ACHubDataManager watchUrlWithRepo:repo];
+    NSString* path = [ACHubDataManager watchUrlWithRepo:repo andUser:user];
     [ACNetworkManager dataByUrlAsync:path andHeaderDictionary:@{@"Authorization":[NSString stringWithFormat:@"token %@", user.accessToken]}
                    andBodyDictionary:nil andQueryType:@"PUT"
                           completion:^(NSData* data){
@@ -600,7 +602,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
 -(void)unwatchRepoAsync:(ACRepo *)repo andUser:(ACUser *)user completion:(void (^)(void))completed
 {
-    NSString* path = [ACHubDataManager watchUrlWithRepo:repo];
+    NSString* path = [ACHubDataManager watchUrlWithRepo:repo andUser:user];
     [ACNetworkManager dataByUrlAsync:path andHeaderDictionary:@{@"Authorization":[NSString stringWithFormat:@"token %@", user.accessToken]}
                    andBodyDictionary:nil andQueryType:@"DELETE"
                           completion:^(NSData* data){
@@ -611,7 +613,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
 -(void)updateUserAsync:(NSDictionary *)properties andUser:(ACUser *)user completion:(void (^)(void))completed
 {
-    NSString* path = [ACHubDataManager userUpdateUrl];
+    NSString* path = [ACHubDataManager userUpdateUrlWithUser:user];
     [ACNetworkManager dataByUrlAsync:path andHeaderDictionary:@{@"Authorization":[NSString stringWithFormat:@"token %@", user.accessToken]}
                    andBodyDictionary:properties andQueryType:@"PATCH"
                           completion:^(NSData* data){
@@ -621,7 +623,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
 -(void)commentOnCommitAsync:(NSString *)comment andCommit:(ACCommit *)commit andUser:(ACUser *)user completion:(void (^)(void))completed
 {
-    NSString* path = [ACHubDataManager commentOnUrlWithCommit:commit];
+    NSString* path = [ACHubDataManager commentOnUrlWithCommit:commit andUser:user];
     [ACNetworkManager dataByUrlAsync:path andHeaderDictionary:@{@"Authorization":[NSString stringWithFormat:@"token %@", user.accessToken]}
                    andBodyDictionary:@{@"body" : comment} andQueryType:@"POST"
                           completion:^(NSData* data){
@@ -631,7 +633,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 
 -(void)deleteCommentFromCommitAsync:(ACComment *)comment andCommit:(ACCommit *)commit andUser:(ACUser *)user completion:(void (^)(void))completed
 {
-    NSString* path = [ACHubDataManager deleteCommentUrlWithCommit:commit andComment:comment];
+    NSString* path = [ACHubDataManager deleteCommentUrlWithCommit:commit andComment:comment andUser:user];
     [ACNetworkManager dataByUrlAsync:path andHeaderDictionary:@{@"Authorization":[NSString stringWithFormat:@"token %@", user.accessToken]}
                    andBodyDictionary:nil andQueryType:@"DELETE"
                           completion:^(NSData* data){
@@ -666,20 +668,20 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     }
 }
 
-+(NSString *)reposUrl:(NSString *)userLogin andPageNumber:(int)pageNumber andFilter:(NSString*)filter
++(NSString *)reposUrl:(NSString *)userLogin andPageNumber:(int)pageNumber andFilter:(NSString*)filter andUser:(ACUser*)user
 {
-    return [NSString stringWithFormat:@"https://api.github.com/users/%@/repos?page=%i&per_page=10&client_id=%@&client_secret=%@&state=%@", userLogin, pageNumber, clientID, clientSecret, filter];
+    return [NSString stringWithFormat:@"https://api.github.com/users/%@/repos?page=%i&per_page=10&access_token=%@&state=%@", userLogin, pageNumber, user.accessToken, filter];
 }
 
-+(NSString *)searchReposUrl:(NSString *)query andPageNumber:(int)pageNumber
++(NSString *)searchReposUrl:(NSString *)query andPageNumber:(int)pageNumber andUser:(ACUser*)user
 {
-    return [NSString stringWithFormat:@"https://api.github.com/search/repositories?q=%@&sort=stars&order=desc&page=%i&per_page=10&client_id=%@&client_secret=%@", query, pageNumber, clientID, clientSecret];
+    return [NSString stringWithFormat:@"https://api.github.com/search/repositories?q=%@&sort=stars&order=desc&page=%i&per_page=10&access_token=%@", query, pageNumber, user.accessToken];
     
 }
 
-+(NSString *)searchUsersUrl:(NSString *)query andPageNumber:(int)pageNumber
++(NSString *)searchUsersUrl:(NSString *)query andPageNumber:(int)pageNumber andUser:(ACUser*)user
 {
-    return [NSString stringWithFormat:@"https://api.github.com/search/users?q=%@&sort=followers&order=desc&page=%i&per_page=10&client_id=%@&client_secret=%@", query, pageNumber, clientID, clientSecret];
+    return [NSString stringWithFormat:@"https://api.github.com/search/users?q=%@&sort=followers&order=desc&page=%i&per_page=10&access_token=%@", query, pageNumber, user.accessToken];
     
 }
 
@@ -688,10 +690,10 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
     return @"https://github.com";
 }
 
-+(NSString *)issuesUrlWithUrl:(NSString *)issuesUrl andFilter:(NSString*)filter
++(NSString *)issuesUrlWithUrl:(NSString *)issuesUrl andFilter:(NSString*)filter andUser:(ACUser*)user
 {
     NSString* path = [issuesUrl substringToIndex:[issuesUrl rangeOfString:@"issues"].location + 6];
-    return [NSString stringWithFormat:@"%@?client_id=%@&client_secret=%@&state=%@", path, clientID, clientSecret, filter];
+    return [NSString stringWithFormat:@"%@?access_token=%@&state=%@", path, user.accessToken, filter];
 }
 
 +(NSString *)callbackUrl
@@ -700,31 +702,31 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 }
 
 
-+(NSString*)starUrlWithRepo:(ACRepo*)repo
++(NSString*)starUrlWithRepo:(ACRepo*)repo andUser:(ACUser*)user
 {
-    return [ACHubDataManager anotherUrl:[NSString stringWithFormat:@"https://api.github.com/user/starred/%@", repo.fullName]];
+    return [ACHubDataManager anotherUrl:[NSString stringWithFormat:@"https://api.github.com/user/starred/%@", repo.fullName] andUser:user];
 }
 
-+(NSString*)watchUrlWithRepo:(ACRepo*)repo
++(NSString*)watchUrlWithRepo:(ACRepo*)repo andUser:(ACUser*)user
 {
-    return [ACHubDataManager anotherUrl:[NSString stringWithFormat:@"https://api.github.com/user/subscriptions/%@", repo.fullName]];
+    return [ACHubDataManager anotherUrl:[NSString stringWithFormat:@"https://api.github.com/user/subscriptions/%@", repo.fullName] andUser:user];
 }
 
-+(NSString *)userUpdateUrl
++(NSString *)userUpdateUrlWithUser:(ACUser*)user
 {
-return [ACHubDataManager anotherUrl:[NSString stringWithFormat:@"https://api.github.com/user"]];
+    return [ACHubDataManager anotherUrl:[NSString stringWithFormat:@"https://api.github.com/user"] andUser:user];
 }
 
-+(NSString *)anotherUrl:(NSString *)url
++(NSString *)anotherUrl:(NSString *)url andUser:(ACUser*)user
 {
     NSString* sep = [url containsString:@"?"] ? @"&" : @"?";
-    return [NSString stringWithFormat:@"%@%@client_id=%@&client_secret=%@", url, sep, clientID, clientSecret];
+    return [NSString stringWithFormat:@"%@%@access_token=%@", url, sep, user.accessToken];
 }
 
-+(NSString *)anotherUrl:(NSString *)url withPageNumber:(int)pageNaumber;
++(NSString *)anotherUrl:(NSString *)url withPageNumber:(int)pageNaumber andUser:(ACUser*)user
 {
     NSString* sep = [url containsString:@"?"] ? @"&" : @"?";
-    return [NSString stringWithFormat:@"%@%@client_id=%@&client_secret=%@&page=%i&per_page=10", url, sep, clientID, clientSecret, pageNaumber];
+    return [NSString stringWithFormat:@"%@%@access_token=%@&page=%i&per_page=10", url, sep, user.accessToken, pageNaumber];
 }
 
 +(NSString *)pageWithVerificationUrl
@@ -732,14 +734,14 @@ return [ACHubDataManager anotherUrl:[NSString stringWithFormat:@"https://api.git
     return [ACNetworkManager stringByUrl:[ACHubDataManager verificationUrl]];
 }
 
-+(NSString *)commentOnUrlWithCommit:(ACCommit *)commit
++(NSString *)commentOnUrlWithCommit:(ACCommit *)commit andUser:(ACUser*)user
 {
-    return [ACHubDataManager anotherUrl:[NSString stringWithFormat:@"https://api.github.com/repos/%@/commits/%@/comments", commit.repo.fullName, commit.sha]];
+    return [ACHubDataManager anotherUrl:[NSString stringWithFormat:@"https://api.github.com/repos/%@/commits/%@/comments", commit.repo.fullName, commit.sha] andUser:user];
 }
 
-+(NSString *)deleteCommentUrlWithCommit:(ACCommit *)commit andComment:(ACComment *)comment
++(NSString *)deleteCommentUrlWithCommit:(ACCommit *)commit andComment:(ACComment *)comment andUser:(ACUser*)user
 {
-    return [ACHubDataManager anotherUrl:[NSString stringWithFormat:@"https://api.github.com/repos/%@/comments/%lu", commit.repo.fullName, comment.ID]];
+    return [ACHubDataManager anotherUrl:[NSString stringWithFormat:@"https://api.github.com/repos/%@/comments/%lu", commit.repo.fullName, comment.ID] andUser:user];
 }
 
 @end

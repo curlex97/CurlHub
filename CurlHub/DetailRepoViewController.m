@@ -117,7 +117,7 @@
         DetailUserViewController* ducontroller = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailUserViewController"];
         if(ducontroller)
         {
-            ducontroller.currentUser = [[[ACReposViewModel alloc] init] repositoryOwner: self.currentRepo];
+            ducontroller.currentUser = [[[ACReposViewModel alloc] init] repositoryOwner: self.currentRepo andCurrentUser:[ACUserViewModel systemUser]];
             ducontroller.navigationItem.title = ducontroller.currentUser.login;
             [self.navigationController pushViewController:ducontroller animated:YES];
         }

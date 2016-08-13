@@ -67,7 +67,7 @@
         
         NSMutableArray *newData = nil;
         
-        newData = self.segmentControl.selectedSegmentIndex ? [NSMutableArray arrayWithArray:[[[ACUserViewModel alloc] init] allUsersForQuery:self.query andPageNumber:self.pageNumber]] : [NSMutableArray arrayWithArray:[[[ACReposViewModel alloc] init] allReposForQuery:self.query andPageNumber:self.pageNumber andSystemUser:[ACUserViewModel systemUser]]];
+        newData = self.segmentControl.selectedSegmentIndex ? [NSMutableArray arrayWithArray:[[[ACUserViewModel alloc] init] allUsersForQuery:self.query andPageNumber:self.pageNumber andCurrentUser:[ACUserViewModel systemUser]]] : [NSMutableArray arrayWithArray:[[[ACReposViewModel alloc] init] allReposForQuery:self.query andPageNumber:self.pageNumber andSystemUser:[ACUserViewModel systemUser]]];
         
         if(newData.count || self.tableContent.count)
         {

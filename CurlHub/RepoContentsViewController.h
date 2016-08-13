@@ -13,6 +13,7 @@
 #import "ActionTableViewCell.h"
 #import "FileTextContentViewController.h"
 #import "FileImageContentViewController.h"
+#import "ACUserViewModel.h"
 
 #define MAX_OPEN_TEXT_FILE_SIZE 100000
 #define MAX_OPEN_IMAGE_FILE_SIZE 5000000

@@ -10,9 +10,9 @@
 
 @implementation ACCommitsViewModel
 
--(NSArray<ACCommit *> *)commitsForRepo:(ACRepo *)repo andPageNumber:(int)pageNumber
+-(NSArray<ACCommit *> *)commitsForRepo:(ACRepo *)repo andPageNumber:(int)pageNumber andCurrentUser:(ACUser*)currentUser
 {
-    return [[[ACHubDataManager alloc] init] commitsForRepo:repo andPageNumber:pageNumber];
+    return [[[ACHubDataManager alloc] init] commitsForRepo:repo andPageNumber:pageNumber andUser:currentUser];
 }
 
 @end

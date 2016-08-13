@@ -20,9 +20,9 @@
     return [[[ACHubDataManager alloc] init] reposForQuery:query andPageNumber:pageNumber andCurrentUser:user];
 }
 
--(ACUser *)repositoryOwner:(ACRepo *)repository
+-(ACUser *)repositoryOwner:(ACRepo *)repository andCurrentUser:(ACUser*)currentUser
 {
-    ACUser* user = [[[ACHubDataManager alloc] init] userFromUrl:repository.ownerUrl];
+    ACUser* user = [[[ACHubDataManager alloc] init] userFromUrl:repository.ownerUrl andUser:currentUser];
     return user;
 }
 

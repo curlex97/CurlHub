@@ -22,7 +22,7 @@
 -(ACRepo *)repoFromEvent:(ACEvent *)event andSystemUser:(ACUser*)user;
 
 // хозяин репозитория
--(ACUser*) repositoryOwner:(ACRepo*)repository;
+-(ACUser*) repositoryOwner:(ACRepo*)repository andCurrentUser:(ACUser*)currentUser;
 
 -(void) starRepoAsync:(ACRepo*)repo andUser:(ACUser*)user completion:(void(^)(void))completed;
 

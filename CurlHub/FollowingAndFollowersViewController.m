@@ -52,11 +52,11 @@
         
         NSMutableArray *newData;
         if(self.segmentControl.selectedSegmentIndex){
-            newData = [NSMutableArray arrayWithArray:[[[ACUserViewModel alloc] init] userFollowing:self.currentUser andPageNumber:self.pageNumber]];
+            newData = [NSMutableArray arrayWithArray:[[[ACUserViewModel alloc] init] userFollowing:self.currentUser andPageNumber:self.pageNumber andCurrentUser:[ACUserViewModel systemUser]]];
         }
         
         else{
-            newData = [NSMutableArray arrayWithArray:[[[ACUserViewModel alloc] init] userFollowers:self.currentUser andPageNumber:self.pageNumber]];
+            newData = [NSMutableArray arrayWithArray:[[[ACUserViewModel alloc] init] userFollowers:self.currentUser andPageNumber:self.pageNumber andCurrentUser:[ACUserViewModel systemUser]]];
         }
         
         if(newData.count || self.tableUsers.count)

@@ -11,5 +11,5 @@
 #import "ACHubDataManager.h"
 
 @interface ACCommitsViewModel : NSObject
--(NSArray<ACCommit *> *)commitsForRepo:(ACRepo *)repo andPageNumber:(int)pageNumber;
+-(NSArray<ACCommit *> *)commitsForRepo:(ACRepo *)repo andPageNumber:(int)pageNumber andCurrentUser:(ACUser*)currentUser;
 @end
