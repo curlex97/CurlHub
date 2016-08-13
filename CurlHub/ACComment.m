@@ -10,10 +10,11 @@
 
 @implementation ACComment
 
-- (instancetype)initWithBody:(NSString*)body andDate:(NSString*)date andUserLogin:(NSString*)userLogin andUserAvatarUrl:(NSString*)userAvatarUrl
+- (instancetype)initWithID:(long)ID andBody:(NSString*)body andDate:(NSString*)date andUserLogin:(NSString*)userLogin andUserAvatarUrl:(NSString*)userAvatarUrl
 {
     self = [super init];
     if (self) {
+        self.ID = ID;
         self.body = body;
         self.date = date;
         self.userLogin = userLogin;

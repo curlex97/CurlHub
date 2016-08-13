@@ -20,4 +20,9 @@
     [[[ACHubDataManager alloc] init] commentOnCommitAsync:comment andCommit:commit andUser:user completion:completed];
 }
 
+-(void)deleteCommentFromCommitAsync:(ACComment*)comment andCommit:(ACCommit *)commit andUser:(ACUser *)user completion:(void (^)(void))completed
+{
+    [[[ACHubDataManager alloc] init] deleteCommentFromCommitAsync:comment andCommit:commit andUser:user completion:completed];
+}
+
 @end

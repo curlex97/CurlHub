@@ -9,11 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @interface ACComment : NSObject
+@property long ID;
 @property NSString* body;
 @property NSString* date;
 @property NSString* userLogin;
 @property NSString* userAvatarUrl;
 
-- (instancetype)initWithBody:(NSString*)body andDate:(NSString*)date andUserLogin:(NSString*)userLogin andUserAvatarUrl:(NSString*)userAvatarUrl;
+- (instancetype)initWithID:(long)ID andBody:(NSString*)body andDate:(NSString*)date andUserLogin:(NSString*)userLogin andUserAvatarUrl:(NSString*)userAvatarUrl;
 
 @end

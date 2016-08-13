@@ -71,7 +71,11 @@
 // апдейт пропертей пользователя
 +(NSString*)userUpdateUrl;
 
+// добавить комментарий коммиту
 +(NSString*)commentOnUrlWithCommit:(ACCommit*)commit;
+
+// удалить комментарий коммиту
++(NSString*)deleteCommentUrlWithCommit:(ACCommit*)commit andComment:(ACComment*)comment;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -151,4 +155,5 @@
 
 -(void)commentOnCommitAsync:(NSString *)comment andCommit:(ACCommit *)commit andUser:(ACUser *)user completion:(void (^)(void))completed;
 
+-(void)deleteCommentFromCommitAsync:(ACComment*)comment andCommit:(ACCommit *)commit andUser:(ACUser *)user completion:(void (^)(void))completed;
 @end

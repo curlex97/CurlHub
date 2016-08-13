@@ -123,6 +123,13 @@
     cell.avatarView.layer.masksToBounds = YES;
     cell.avatarView.layer.borderWidth = 0;
     
+    if(comment.userLogin == [ACUserViewModel systemUser].login)
+    {
+        [cell.actionButton setImage:[UIImage imageNamed:@"trashIcon"] forState:UIControlStateNormal];
+        cell.actionButton.tag = indexPath.row;
+        [cell.actionButton addTarget:self action:@selector(trashButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
     if(indexPath.row == self.tableComments.count - 1 && !self.isRefreshing && !self.searchBar.text.length)
     {
         self.pageNumber ++;
@@ -130,6 +137,21 @@
     }
     
     return cell;
+}
+
+- (IBAction)trashButtonTapped:(id)sender {
+    if([sender isKindOfClass:[UIButton class]])
+    {
+        UIButton* button = (UIButton*)sender;
+        ACComment *comment = self.tableComments[button.tag];
+        [[[ACCommentsViewModel alloc] init] deleteCommentFromCommitAsync:comment andCommit:self.currentCommit andUser:[ACUserViewModel systemUser] completion:^{
+             dispatch_async(dispatch_get_main_queue(), ^{
+            self.pageNumber = 1;
+            [self.sourceComments removeAllObjects];
+            [self refreshTable];
+             });
+        }];
+    }
 }
 
 

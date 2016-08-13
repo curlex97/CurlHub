@@ -524,12 +524,13 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
             
             for(NSDictionary* commentDictionary in jsonArray)
             {
+                long ID = [[commentDictionary valueForKeyPath:@"id"] longValue];
                 NSString* body = [commentDictionary valueForKeyPath:@"body"];
                 NSString* date = [NSString formatDateWithString:[commentDictionary valueForKeyPath:@"updated_at"]];
                 NSString* userLogin = [commentDictionary valueForKeyPath:@"user.login"];
                 NSString* userAvatarUrl = [commentDictionary valueForKeyPath:@"user.avatar_url"];
                 
-                ACComment* comment = [[ACComment alloc] initWithBody:body andDate:date andUserLogin:userLogin andUserAvatarUrl:userAvatarUrl];
+                ACComment* comment = [[ACComment alloc] initWithID:ID andBody:body andDate:date andUserLogin:userLogin andUserAvatarUrl:userAvatarUrl];
                 [comments addObject:comment];
             }
             return comments;
@@ -628,6 +629,15 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
                           }];
 }
 
+-(void)deleteCommentFromCommitAsync:(ACComment *)comment andCommit:(ACCommit *)commit andUser:(ACUser *)user completion:(void (^)(void))completed
+{
+    NSString* path = [ACHubDataManager deleteCommentUrlWithCommit:commit andComment:comment];
+    [ACNetworkManager dataByUrlAsync:path andHeaderDictionary:@{@"Authorization":[NSString stringWithFormat:@"token %@", user.accessToken]}
+                   andBodyDictionary:nil andQueryType:@"DELETE"
+                          completion:^(NSData* data){
+                              if(completed) completed();
+                          }];
+}
 
 
 +(NSString *)eventsUrl:(NSString *)userLogin andPageNumber:(int)pageNumber
@@ -690,30 +700,6 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
 }
 
 
-
-//Not used
-+(NSURLRequest *)contentTextUrlWithText:(NSString *)text
-{
-    NSString* path = [NSString stringWithFormat:@"http://curlex.adr.com.ua/hub.php"];
-    
-    NSString *post = [NSString stringWithFormat:@"action=highlight&text=%@", text];
-    
-    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    
-    NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:path]];
-    [request setHTTPMethod:@"POST"];
-    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
-    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    [request setHTTPBody:postData];
-    
-
-    
-    return request;
-}
-
 +(NSString*)starUrlWithRepo:(ACRepo*)repo
 {
     return [ACHubDataManager anotherUrl:[NSString stringWithFormat:@"https://api.github.com/user/starred/%@", repo.fullName]];
@@ -749,6 +735,11 @@ return [ACHubDataManager anotherUrl:[NSString stringWithFormat:@"https://api.git
 +(NSString *)commentOnUrlWithCommit:(ACCommit *)commit
 {
     return [ACHubDataManager anotherUrl:[NSString stringWithFormat:@"https://api.github.com/repos/%@/commits/%@/comments", commit.repo.fullName, commit.sha]];
+}
+
++(NSString *)deleteCommentUrlWithCommit:(ACCommit *)commit andComment:(ACComment *)comment
+{
+    return [ACHubDataManager anotherUrl:[NSString stringWithFormat:@"https://api.github.com/repos/%@/comments/%lu", commit.repo.fullName, comment.ID]];
 }
 
 @end
