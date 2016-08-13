@@ -17,7 +17,8 @@
 @property NSString* commiterAvatarUrl;
 @property NSString* sha;
 @property NSString* commentsUrl;
+@property ACRepo* repo;
 
-- (instancetype)initWithMessage:(NSString*)message andDate:(NSString*)date andCommiterLogin:(NSString*)commiterLogin andCommiterAvatarUrl:(NSString*)commiterAvatarUrl andSha:(NSString*)sha andCommentsUrl:(NSString*)commentsUrl;
+- (instancetype)initWithMessage:(NSString*)message andDate:(NSString*)date andCommiterLogin:(NSString*)commiterLogin andCommiterAvatarUrl:(NSString*)commiterAvatarUrl andSha:(NSString*)sha andCommentsUrl:(NSString*)commentsUrl andRepo:(ACRepo*)repo;
 
 @end

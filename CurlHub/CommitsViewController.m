@@ -144,6 +144,8 @@
             [self.navigationController pushViewController:comvc animated:YES];
         }
     }
+    self.pageNumber = 1;
+
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

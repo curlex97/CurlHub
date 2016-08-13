@@ -139,4 +139,19 @@
     
 }
 
+- (IBAction)commentOnButtonTapped:(id)sender {
+    
+    if(self.messageField.text.length && self.messageField.text.length < 1000)
+    {
+        [[[ACCommentsViewModel alloc] init] commentOnCommitAsync:self.messageField.text andCommit:self.currentCommit andUser:[ACUserViewModel systemUser] completion:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.view endEditing:YES];
+                self.pageNumber = 1;
+                self.messageField.text = @"";
+                [self.sourceComments removeAllObjects];
+                [self refreshTable];
+            });
+        }];
+    }
+}
 @end

@@ -71,6 +71,8 @@
 // апдейт пропертей пользователя
 +(NSString*)userUpdateUrl;
 
++(NSString*)commentOnUrlWithCommit:(ACCommit*)commit;
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // текущий пользователь через токен
@@ -146,5 +148,7 @@
 
 // апдейтим информацию о залогиненном пользователе (юзер - системный юзер)
 -(void) updateUserAsync:(NSDictionary*)properties andUser:(ACUser*)user completion:(void(^)(void))completed;
+
+-(void)commentOnCommitAsync:(NSString *)comment andCommit:(ACCommit *)commit andUser:(ACUser *)user completion:(void (^)(void))completed;
 
 @end

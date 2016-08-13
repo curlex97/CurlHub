@@ -15,4 +15,9 @@
     return [[[ACHubDataManager alloc] init] commentsForCommit:commit andPageNumber:pageNumber];
 }
 
+-(void)commentOnCommitAsync:(NSString *)comment andCommit:(ACCommit *)commit andUser:(ACUser *)user completion:(void (^)(void))completed
+{
+    [[[ACHubDataManager alloc] init] commentOnCommitAsync:comment andCommit:commit andUser:user completion:completed];
+}
+
 @end

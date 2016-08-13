@@ -2218,7 +2218,7 @@
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="37" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="n2q-Sn-ASs">
-                                        <rect key="frame" x="0.0" y="44" width="600" height="536"/>
+                                        <rect key="frame" x="0.0" y="96" width="600" height="484"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="actionCell" rowHeight="85" id="Dtd-4F-QVN" customClass="ActionTableViewCell">
@@ -2274,22 +2274,48 @@
                                         </prototypes>
                                     </tableView>
                                     <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="X2v-wH-rmz">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="52" width="600" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="O7F-Jm-Ckw"/>
                                         </constraints>
                                         <textInputTraits key="textInputTraits"/>
                                     </searchBar>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8KL-To-2CC">
+                                        <rect key="frame" x="481" y="11" width="111" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="111" id="DvA-D5-Td8"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="111" id="sIF-oz-moN"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                        <state key="normal" title="Comment on">
+                                            <color key="titleColor" red="0.2470588235" green="0.57647058819999997" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="commentOnButtonTapped:" destination="dBI-W0-9Bo" eventType="touchUpInside" id="KP4-xp-Ybw"/>
+                                        </connections>
+                                    </button>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zIX-KE-55Y">
+                                        <rect key="frame" x="8" y="11" width="465" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.13" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="n2q-Sn-ASs" firstAttribute="top" secondItem="X2v-wH-rmz" secondAttribute="bottom" id="39H-c3-sUd"/>
                                     <constraint firstAttribute="bottom" secondItem="n2q-Sn-ASs" secondAttribute="bottom" id="DDh-VM-bH1"/>
                                     <constraint firstItem="X2v-wH-rmz" firstAttribute="leading" secondItem="jsd-iz-bAR" secondAttribute="leading" id="KE6-PT-ceW"/>
+                                    <constraint firstItem="8KL-To-2CC" firstAttribute="leading" secondItem="zIX-KE-55Y" secondAttribute="trailing" constant="8" id="LAq-eg-XjF"/>
                                     <constraint firstAttribute="trailing" secondItem="X2v-wH-rmz" secondAttribute="trailing" id="MOw-pQ-PhS"/>
+                                    <constraint firstItem="X2v-wH-rmz" firstAttribute="top" secondItem="8KL-To-2CC" secondAttribute="bottom" constant="11" id="MrM-sf-237"/>
+                                    <constraint firstItem="zIX-KE-55Y" firstAttribute="leading" secondItem="jsd-iz-bAR" secondAttribute="leading" constant="8" id="ON3-nN-TmP"/>
+                                    <constraint firstItem="X2v-wH-rmz" firstAttribute="top" secondItem="zIX-KE-55Y" secondAttribute="bottom" constant="11" id="SoH-GX-77x"/>
+                                    <constraint firstAttribute="trailing" secondItem="8KL-To-2CC" secondAttribute="trailing" constant="8" id="abc-yV-wxF"/>
                                     <constraint firstAttribute="trailing" secondItem="n2q-Sn-ASs" secondAttribute="trailing" id="aui-We-HDV"/>
+                                    <constraint firstItem="zIX-KE-55Y" firstAttribute="top" secondItem="jsd-iz-bAR" secondAttribute="top" constant="11" id="bv0-Qh-Tkk"/>
                                     <constraint firstItem="n2q-Sn-ASs" firstAttribute="leading" secondItem="jsd-iz-bAR" secondAttribute="leading" id="dOr-hV-Kla"/>
-                                    <constraint firstItem="X2v-wH-rmz" firstAttribute="top" secondItem="jsd-iz-bAR" secondAttribute="top" id="gH0-dj-F77"/>
+                                    <constraint firstItem="8KL-To-2CC" firstAttribute="top" secondItem="jsd-iz-bAR" secondAttribute="top" constant="11" id="eVI-tp-qzt"/>
+                                    <constraint firstItem="8KL-To-2CC" firstAttribute="leading" secondItem="zIX-KE-55Y" secondAttribute="trailing" constant="8" id="oYj-pq-4z0"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -2307,6 +2333,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Plb-1x-Fiq"/>
                     <connections>
+                        <outlet property="messageField" destination="zIX-KE-55Y" id="6r4-Ke-eQG"/>
                         <outlet property="searchBar" destination="X2v-wH-rmz" id="gxW-9N-fFi"/>
                         <outlet property="tableView" destination="n2q-Sn-ASs" id="re1-6Q-aLg"/>
                     </connections>

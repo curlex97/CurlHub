@@ -12,9 +12,12 @@
 #import "ACProgressBarDisplayer.h"
 #import "ACPictureManager.h"
 #import "UIColor+ACAppColors.h"
+#import "ACUserViewModel.h"
 
 @interface CommentsViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property ACCommit* currentCommit;
+- (IBAction)commentOnButtonTapped:(id)sender;
+@property (weak, nonatomic) IBOutlet UITextField *messageField;
 @end

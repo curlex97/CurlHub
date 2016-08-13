@@ -497,7 +497,7 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
                 NSString* sha = [commitDictionary valueForKeyPath:@"sha"];
                 NSString* commentsUrl = [commitDictionary valueForKeyPath:@"comments_url"];
                 
-                ACCommit* commit = [[ACCommit alloc] initWithMessage:message andDate:date andCommiterLogin:commiterLogin andCommiterAvatarUrl:commiterAvatar andSha:sha andCommentsUrl:commentsUrl];
+                ACCommit* commit = [[ACCommit alloc] initWithMessage:message andDate:date andCommiterLogin:commiterLogin andCommiterAvatarUrl:commiterAvatar andSha:sha andCommentsUrl:commentsUrl andRepo:repo];
                 [commits addObject:commit];
             }
             return commits;
@@ -615,6 +615,16 @@ static NSString* clientSecret = @"3ac64664dc2578449db4c617aefd5ee47c850f62";
                    andBodyDictionary:properties andQueryType:@"PATCH"
                           completion:^(NSData* data){
                              if(completed) completed();
+                          }];
+}
+
+-(void)commentOnCommitAsync:(NSString *)comment andCommit:(ACCommit *)commit andUser:(ACUser *)user completion:(void (^)(void))completed
+{
+    NSString* path = [ACHubDataManager commentOnUrlWithCommit:commit];
+    [ACNetworkManager dataByUrlAsync:path andHeaderDictionary:@{@"Authorization":[NSString stringWithFormat:@"token %@", user.accessToken]}
+                   andBodyDictionary:@{@"body" : comment} andQueryType:@"POST"
+                          completion:^(NSData* data){
+                              if(completed) completed();
                           }];
 }
 
@@ -736,6 +746,9 @@ return [ACHubDataManager anotherUrl:[NSString stringWithFormat:@"https://api.git
     return [ACNetworkManager stringByUrl:[ACHubDataManager verificationUrl]];
 }
 
-
++(NSString *)commentOnUrlWithCommit:(ACCommit *)commit
+{
+    return [ACHubDataManager anotherUrl:[NSString stringWithFormat:@"https://api.github.com/repos/%@/commits/%@/comments", commit.repo.fullName, commit.sha]];
+}
 
 @end

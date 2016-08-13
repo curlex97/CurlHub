@@ -12,5 +12,5 @@
 @interface ACCommentsViewModel : NSObject
 
 -(NSArray<ACCommit *> *)commentsForCommit:(ACCommit *)commit andPageNumber:(int)pageNumber;
-
+-(void)commentOnCommitAsync:(NSString *)comment andCommit:(ACCommit *)commit andUser:(ACUser *)user completion:(void (^)(void))completed;
 @end
