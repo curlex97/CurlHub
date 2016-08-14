@@ -170,6 +170,7 @@
 		28F6BB071D5E956D00582424 /* ACCommentsViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACCommentsViewModel.m; sourceTree = "<group>"; };
 		28F6BB091D5E97E400582424 /* CommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsViewController.h; sourceTree = "<group>"; };
 		28F6BB0A1D5E97E400582424 /* CommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsViewController.m; sourceTree = "<group>"; };
+		28F6BB0F1D5FF41700582424 /* Пояснительная записка Чистяк.pages */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Пояснительная записка Чистяк.pages"; sourceTree = "<group>"; };
 		28FBBC591D4B728F0020D1E3 /* DetailUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailUserViewController.h; sourceTree = "<group>"; };
 		28FBBC5A1D4B728F0020D1E3 /* DetailUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailUserViewController.m; sourceTree = "<group>"; };
 		28FBBC601D4B7F770020D1E3 /* ACIssue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACIssue.h; sourceTree = "<group>"; };
@@ -210,6 +211,7 @@
 		280DC1331D45637800D6E10F /* CurlHub */ = {
 			isa = PBXGroup;
 			children = (
+				28F6BB0D1D5FEF3900582424 /* Documentation */,
 				280DC1371D45637800D6E10F /* AppDelegate.h */,
 				280DC1381D45637800D6E10F /* AppDelegate.m */,
 				280DC16E1D4682BE00D6E10F /* Managers */,
@@ -553,6 +555,14 @@
 				28F6BB0A1D5E97E400582424 /* CommentsViewController.m */,
 			);
 			name = Comments;
+			sourceTree = "<group>";
+		};
+		28F6BB0D1D5FEF3900582424 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				28F6BB0F1D5FF41700582424 /* Пояснительная записка Чистяк.pages */,
+			);
+			name = Documentation;
 			sourceTree = "<group>";
 		};
 		28FBBC5C1D4B72950020D1E3 /* DetailUser */ = {
